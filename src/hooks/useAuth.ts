@@ -34,7 +34,10 @@ export function useAuth() {
         } else if (event === 'SIGNED_OUT') {
           setUser(null)
         }
-        setLoading(false)
+        // Don't set loading to false here for INITIAL_SESSION
+        if (event !== 'INITIAL_SESSION') {
+          setLoading(false)
+        }
       }
     )
 

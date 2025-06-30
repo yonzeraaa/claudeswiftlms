@@ -66,6 +66,7 @@ export default function LoginForm() {
       
       // Get user profile to determine role
       const user = await getCurrentUser()
+      
       if (user) {
         // Redirect based on user role
         if (user.profile.role === 'admin') {
