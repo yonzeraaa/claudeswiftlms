@@ -1,23 +1,73 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getUsersWithEnrollmentCount, deactivateUser, activateUser, UserProfile } from '@/lib/users'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showModal, setShowModal] = useState(false)
-  // const [selectedUser, setSelectedUser] = useState<null>(null)
+  const [users, setUsers] = useState<Array<UserProfile & { course_count: number }>>([])
+  const [filteredUsers, setFilteredUsers] = useState<Array<UserProfile & { course_count: number }>>([])
+  const [loading, setLoading] = useState(true)
+  const [roleFilter, setRoleFilter] = useState<string>('')
+  const [statusFilter, setStatusFilter] = useState<string>('')
 
-  const users = [
-    { id: 1, name: 'Ana Silva', email: 'ana@email.com', role: 'student', status: 'active', courses: 3, lastLogin: '2024-01-15' },
-    { id: 2, name: 'Carlos Santos', email: 'carlos@email.com', role: 'student', status: 'active', courses: 2, lastLogin: '2024-01-14' },
-    { id: 3, name: 'Maria Oliveira', email: 'maria@email.com', role: 'instructor', status: 'active', courses: 5, lastLogin: '2024-01-16' },
-    { id: 4, name: 'João Silva', email: 'joao@email.com', role: 'student', status: 'inactive', courses: 1, lastLogin: '2024-01-10' },
-  ]
+  useEffect(() => {
+    loadUsers()
+  }, [])
 
-  const filteredUsers = users.filter(user => 
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  useEffect(() => {
+    let filtered = users.filter(user => 
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
+    if (roleFilter) {
+      filtered = filtered.filter(user => user.role === roleFilter)
+    }
+
+    if (statusFilter) {
+      filtered = filtered.filter(user => user.status === statusFilter)
+    }
+
+    setFilteredUsers(filtered)
+  }, [users, searchTerm, roleFilter, statusFilter])
+
+  async function loadUsers() {
+    try {
+      const usersData = await getUsersWithEnrollmentCount()
+      setUsers(usersData)
+    } catch (error) {
+      console.error('Error loading users:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleToggleUserStatus(userId: string, currentStatus: string) {
+    try {
+      if (currentStatus === 'active') {
+        await deactivateUser(userId)
+      } else {
+        await activateUser(userId)
+      }
+      await loadUsers()
+    } catch (error) {
+      console.error('Error toggling user status:', error)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="h-32 bg-gray-200 rounded-xl mb-6"></div>
+          <div className="h-96 bg-gray-200 rounded-xl"></div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6">
@@ -43,16 +93,24 @@ export default function UsersContent() {
               className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
             />
           </div>
-          <select className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
-            <option>Todos os papéis</option>
-            <option>Estudante</option>
-            <option>Instrutor</option>
-            <option>Admin</option>
+          <select 
+            value={roleFilter}
+            onChange={(e) => setRoleFilter(e.target.value)}
+            className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+          >
+            <option value="">Todos os papéis</option>
+            <option value="student">Estudante</option>
+            <option value="instructor">Instrutor</option>
+            <option value="admin">Admin</option>
           </select>
-          <select className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
-            <option>Todos os status</option>
-            <option>Ativo</option>
-            <option>Inativo</option>
+          <select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+          >
+            <option value="">Todos os status</option>
+            <option value="active">Ativo</option>
+            <option value="inactive">Inativo</option>
           </select>
         </div>
       </div>
@@ -86,9 +144,12 @@ export default function UsersContent() {
                   <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.email}</td>
                   <td className="p-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      user.role === 'instructor' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                      user.role === 'instructor' ? 'bg-blue-100 text-blue-800' : 
+                      user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
+                      'bg-green-100 text-green-800'
                     }`}>
-                      {user.role === 'instructor' ? 'Instrutor' : 'Estudante'}
+                      {user.role === 'instructor' ? 'Instrutor' : 
+                       user.role === 'admin' ? 'Admin' : 'Estudante'}
                     </span>
                   </td>
                   <td className="p-3">
@@ -98,8 +159,8 @@ export default function UsersContent() {
                       {user.status === 'active' ? 'Ativo' : 'Inativo'}
                     </span>
                   </td>
-                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.courses}</td>
-                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.lastLogin}</td>
+                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.course_count}</td>
+                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{new Date(user.updated_at).toLocaleDateString('pt-BR')}</td>
                   <td className="p-3">
                     <div className="flex space-x-2">
                       <button 
@@ -108,8 +169,13 @@ export default function UsersContent() {
                       >
                         Editar
                       </button>
-                      <button className="text-red-600 hover:text-red-800 text-sm">
-                        Desativar
+                      <button 
+                        onClick={() => handleToggleUserStatus(user.id, user.status)}
+                        className={`text-sm ${
+                          user.status === 'active' ? 'text-red-600 hover:text-red-800' : 'text-green-600 hover:text-green-800'
+                        }`}
+                      >
+                        {user.status === 'active' ? 'Desativar' : 'Ativar'}
                       </button>
                     </div>
                   </td>

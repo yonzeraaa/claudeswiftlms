@@ -1,12 +1,54 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { getDashboardStats, getChartData, getRecentActivity, ChartData, ActivityItem, DashboardStats } from '@/lib/analytics'
+import { getPopularCourses, Course } from '@/lib/courses'
+
 export default function DashboardContent() {
-  const chartData = [
-    { month: 'Jan', students: 180, completion: 75 },
-    { month: 'Fev', students: 200, completion: 82 },
-    { month: 'Mar', students: 220, completion: 78 },
-    { month: 'Abr', students: 248, completion: 87 },
-  ]
+  const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [chartData, setChartData] = useState<ChartData[]>([])
+  const [popularCourses, setPopularCourses] = useState<Course[]>([])
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadDashboardData() {
+      try {
+        const [statsData, chartData, coursesData, activityData] = await Promise.all([
+          getDashboardStats(),
+          getChartData(),
+          getPopularCourses(4),
+          getRecentActivity()
+        ])
+        
+        setStats(statsData)
+        setChartData(chartData)
+        setPopularCourses(coursesData)
+        setRecentActivity(activityData)
+      } catch (error) {
+        console.error('Error loading dashboard data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDashboardData()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 bg-gray-200 rounded-xl"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6">
@@ -18,8 +60,10 @@ export default function DashboardContent() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[#3D2914] text-sm font-semibold">Total de Alunos</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">248</p>
-              <p className="text-green-600 text-xs">+12% este mês</p>
+              <p className="text-2xl font-bold text-[#2C1A0E]">{stats?.totalStudents || 0}</p>
+              <p className={`text-xs ${stats?.studentGrowth && stats.studentGrowth > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats?.studentGrowth ? `${stats.studentGrowth > 0 ? '+' : ''}${stats.studentGrowth}%` : '0%'} este mês
+              </p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
               <span className="text-[#3D2914] font-bold">👥</span>
@@ -31,8 +75,10 @@ export default function DashboardContent() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[#3D2914] text-sm font-semibold">Cursos Ativos</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">12</p>
-              <p className="text-blue-600 text-xs">2 novos cursos</p>
+              <p className="text-2xl font-bold text-[#2C1A0E]">{stats?.activeCourses || 0}</p>
+              <p className={`text-xs ${stats?.courseGrowth && stats.courseGrowth > 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                {stats?.courseGrowth ? `${stats.courseGrowth > 0 ? '+' : ''}${stats.courseGrowth}%` : '0%'} crescimento
+              </p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
               <span className="text-[#3D2914] font-bold">📚</span>
@@ -44,8 +90,10 @@ export default function DashboardContent() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[#3D2914] text-sm font-semibold">Taxa de Conclusão</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">87%</p>
-              <p className="text-green-600 text-xs">+5% vs mês anterior</p>
+              <p className="text-2xl font-bold text-[#2C1A0E]">{stats?.completionRate || 0}%</p>
+              <p className={`text-xs ${stats?.completionGrowth && stats.completionGrowth > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats?.completionGrowth ? `${stats.completionGrowth > 0 ? '+' : ''}${stats.completionGrowth}%` : '0%'} vs mês anterior
+              </p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
               <span className="text-[#3D2914] font-bold">📈</span>
@@ -57,8 +105,10 @@ export default function DashboardContent() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[#3D2914] text-sm font-semibold">Receita Mensal</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">R$ 45.2k</p>
-              <p className="text-green-600 text-xs">+18% crescimento</p>
+              <p className="text-2xl font-bold text-[#2C1A0E]">R$ {((stats?.monthlyRevenue || 0) / 1000).toFixed(1)}k</p>
+              <p className={`text-xs ${stats?.revenueGrowth && stats.revenueGrowth > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats?.revenueGrowth ? `${stats.revenueGrowth > 0 ? '+' : ''}${stats.revenueGrowth}%` : '0%'} crescimento
+              </p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
               <span className="text-[#3D2914] font-bold">💰</span>
@@ -88,21 +138,16 @@ export default function DashboardContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Cursos Mais Populares</h2>
           <div className="space-y-4">
-            {[
-              { name: 'JavaScript Fundamentals', students: 89, progress: 92 },
-              { name: 'React para Iniciantes', students: 76, progress: 85 },
-              { name: 'Node.js Backend', students: 54, progress: 78 },
-              { name: 'Python Básico', students: 43, progress: 90 },
-            ].map((course, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
+            {popularCourses.map((course) => (
+              <div key={course.id} className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
                 <div className="flex-1">
-                  <p className="text-[#2C1A0E] font-semibold">{course.name}</p>
-                  <p className="text-[#3D2914] text-sm font-medium">{course.students} alunos matriculados</p>
+                  <p className="text-[#2C1A0E] font-semibold">{course.title}</p>
+                  <p className="text-[#3D2914] text-sm font-medium">{course.enrollment_count || 0} alunos matriculados</p>
                   <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                    <div className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] h-2 rounded-full" style={{width: `${course.progress}%`}}></div>
+                    <div className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] h-2 rounded-full" style={{width: `${course.progress || 85}%`}}></div>
                   </div>
                 </div>
-                <span className="text-[#2C1A0E] font-bold ml-4">{course.progress}%</span>
+                <span className="text-[#2C1A0E] font-bold ml-4">{course.progress || 85}%</span>
               </div>
             ))}
           </div>
@@ -113,17 +158,12 @@ export default function DashboardContent() {
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
         <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Atividade Recente</h2>
         <div className="space-y-4">
-          {[
-            { type: 'completion', user: 'Ana Silva', action: 'concluiu "Introdução ao JavaScript"', time: 'há 2 horas', color: 'green' },
-            { type: 'course', user: 'Sistema', action: 'Novo curso "React Avançado" foi adicionado', time: 'há 4 horas', color: 'blue' },
-            { type: 'signup', user: 'Sistema', action: '3 novos usuários se cadastraram', time: 'hoje', color: 'orange' },
-            { type: 'assessment', user: 'Carlos Santos', action: 'completou avaliação "Python Básico"', time: 'há 1 dia', color: 'purple' },
-          ].map((activity, index) => (
+          {recentActivity.map((activity, index) => (
             <div key={index} className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
               <div className="flex items-center">
                 <div className={`w-8 h-8 bg-${activity.color}-100 rounded-full flex items-center justify-center mr-3`}>
                   <span className={`text-${activity.color}-600 text-sm`}>
-                    {activity.type === 'completion' ? '✓' : activity.type === 'course' ? '📚' : activity.type === 'signup' ? '👤' : '📝'}
+                    {activity.type === 'completion' ? '✓' : activity.type === 'enrollment' ? '📚' : activity.type === 'signup' ? '👤' : '📝'}
                   </span>
                 </div>
                 <div>
