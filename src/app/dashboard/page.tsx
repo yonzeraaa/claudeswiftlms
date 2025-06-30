@@ -1,10 +1,13 @@
 import DashboardLayout from '@/components/DashboardLayout'
 import DashboardContent from '@/components/DashboardContent'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function Dashboard() {
   return (
-    <DashboardLayout>
-      <DashboardContent />
-    </DashboardLayout>
+    <ProtectedRoute requiredRole="admin">
+      <DashboardLayout>
+        <DashboardContent />
+      </DashboardLayout>
+    </ProtectedRoute>
   )
 }

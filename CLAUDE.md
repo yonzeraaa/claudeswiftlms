@@ -5,8 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Developer Behavior
 - Act as a senior developer
 - Keep responses short and concise
+- Be extremely succinct - use only short responses
 - Do exactly what is requested, nothing more
+- No explanations unless explicitly asked
 - Always document changes in swiftedu.md
+- When updating code, build upon existing implementation rather than removing
 
 ## Development Commands
 

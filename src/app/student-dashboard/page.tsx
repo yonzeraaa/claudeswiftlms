@@ -1,7 +1,12 @@
 'use client'
 
 import StudentDashboardLayout from '@/components/StudentDashboardLayout'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function StudentDashboard() {
-  return <StudentDashboardLayout />
+  return (
+    <ProtectedRoute requiredRole="student">
+      <StudentDashboardLayout />
+    </ProtectedRoute>
+  )
 }

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { signInWithEmail, getCurrentUser } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -12,6 +14,7 @@ export default function LoginForm() {
   const [capsLockOn, setCapsLockOn] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [loginError, setLoginError] = useState('')
+  const router = useRouter()
   
   const fullText = 'Faça login para acessar sua conta'
   
@@ -57,30 +60,32 @@ export default function LoginForm() {
     setIsLoading(true)
     setLoginError('')
     
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      // Authenticate with Supabase
+      await signInWithEmail(email, password)
       
-      // Verificar se é administrador
-      if (email === 'admin@admin.com' && password === 'admin123') {
-        window.location.href = '/dashboard'
-      } 
-      // Verificar se é administrador com senha incorreta
-      else if (email === 'admin@admin.com' && password !== 'admin123') {
-        setLoginError('Senha incorreta para conta de administrador')
+      // Get user profile to determine role
+      const user = await getCurrentUser()
+      if (user) {
+        // Redirect based on user role
+        if (user.profile.role === 'admin') {
+          router.push('/dashboard')
+        } else {
+          router.push('/student-dashboard')
+        }
+      } else {
+        setLoginError('Erro ao carregar perfil do usuário')
       }
-      // Qualquer outro email válido é considerado estudante
-      else if (email.includes('@') && email.includes('.')) {
-        window.location.href = '/student-dashboard'
-      }
-      // Email inválido
-      else {
-        setLoginError('Email inválido')
-      }
-    }, 1000)
+    } catch (error: any) {
+      console.error('Login error:', error)
+      setLoginError(error.message || 'Erro ao fazer login')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#654321] via-[#8B4513] via-[#A0522D] to-[#8B4513] flex items-center justify-center p-4 xs:p-6 md:p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#654321] via-[#8B4513] via-[#A0522D] to-[#8B4513] flex items-center justify-center p-4 xs:p-6 md:p-8 lg:p-12 xl:p-16 relative overflow-hidden">
       <div className="absolute inset-0 pattern-dots opacity-40"></div>
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-[#FFD700]/5 to-transparent"></div>
       
@@ -97,20 +102,20 @@ export default function LoginForm() {
       <div className="absolute bottom-10 left-10 w-16 h-16 bg-gradient-to-tr from-[#B8860B]/15 to-[#FFD700]/20 morphing-shape opacity-25" style={{animationDelay: '5s'}}></div>
       <div className="absolute top-1/2 left-5 w-12 h-12 bg-gradient-to-r from-[#FFA500]/20 to-[#FFD700]/15 morphing-shape opacity-20" style={{animationDelay: '10s'}}></div>
       
-      <div className={`glass-card rounded-2xl xs:rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-[#FFD700] p-6 xs:p-8 md:p-8 w-full max-w-xs xs:max-w-sm md:max-w-md relative z-10 hover:shadow-[0_35px_60px_-12px_rgba(255,215,0,0.2)] hover:border-[#FFA500] transition-all duration-500 before:absolute before:inset-0 before:rounded-2xl xs:before:rounded-3xl before:p-[2px] before:bg-gradient-to-r before:from-[#FFD700] before:via-[#FFA500] before:to-[#FFD700] before:-z-10 before:opacity-50 ${showCard ? 'animate-slide-in-up' : 'opacity-0'}`}>
-        <div className="text-center mb-6 xs:mb-8">
-          <div className="flex items-center justify-center mb-4 xs:mb-6 animate-fade-in-scale">
-            <div className="w-10 h-10 xs:w-12 xs:h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg xs:rounded-xl flex items-center justify-center mr-2 xs:mr-3 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-pulse-gold">
-              <span className="text-[#3D2914] font-bold text-lg xs:text-xl font-montserrat">S</span>
+      <div className={`glass-card rounded-2xl xs:rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-[#FFD700] p-6 xs:p-8 md:p-10 lg:p-12 xl:p-14 w-full max-w-xs xs:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl relative z-10 hover:shadow-[0_35px_60px_-12px_rgba(255,215,0,0.2)] hover:border-[#FFA500] transition-all duration-500 before:absolute before:inset-0 before:rounded-2xl xs:before:rounded-3xl before:p-[2px] before:bg-gradient-to-r before:from-[#FFD700] before:via-[#FFA500] before:to-[#FFD700] before:-z-10 before:opacity-50 ${showCard ? 'animate-slide-in-up' : 'opacity-0'}`}>
+        <div className="text-center mb-6 xs:mb-8 lg:mb-10 xl:mb-12">
+          <div className="flex items-center justify-center mb-4 xs:mb-6 lg:mb-8 animate-fade-in-scale">
+            <div className="w-10 h-10 xs:w-12 xs:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg xs:rounded-xl flex items-center justify-center mr-2 xs:mr-3 lg:mr-4 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-pulse-gold">
+              <span className="text-[#3D2914] font-bold text-lg xs:text-xl lg:text-2xl xl:text-3xl font-montserrat">S</span>
             </div>
-            <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold text-[#3D2914] font-montserrat">SwiftEDU</h1>
+            <h1 className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#2C1A0E] font-montserrat">SwiftEDU</h1>
           </div>
-          <p className="text-[#3D2914] font-medium text-sm xs:text-base min-h-[1.5rem]">
+          <p className="text-[#3D2914] font-medium text-sm xs:text-base lg:text-lg xl:text-xl min-h-[1.5rem]">
             {typedText}<span className="animate-pulse">|</span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 xs:space-y-5 md:space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 xs:space-y-5 md:space-y-6 lg:space-y-7 xl:space-y-8">
           <div className="group animate-slide-in-left">
             <label htmlFor="email" className="block text-xs xs:text-sm font-semibold text-[#2C1A0E] mb-2 xs:mb-3 transition-colors duration-200 group-focus-within:text-[#B8860B]">
               Email

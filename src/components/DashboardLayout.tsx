@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { signOut } from '@/lib/auth'
+import { useAuth } from '@/hooks/useAuth'
 import DashboardContent from './DashboardContent'
 import UsersContent from './UsersContent'
 import CoursesContent from './CoursesContent'
@@ -17,6 +19,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [activeSection, setActiveSection] = useState('dashboard')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
+  const { user } = useAuth()
 
   const sections: Record<string, React.ComponentType> = {
     dashboard: DashboardContent,
@@ -41,14 +44,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { id: 'settings', label: 'Configurações', icon: '⚙️' },
   ]
 
-  const handleLogout = () => {
-    router.push('/')
+  const handleLogout = async () => {
+    try {
+      await signOut()
+      router.push('/')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#654321] via-[#8B4513] to-[#654321]">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-white/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
         <div className="flex items-center justify-center h-16 bg-gradient-to-r from-[#FFD700] to-[#B8860B] border-b-2 border-[#8B4513]">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-[#654321] rounded-lg flex items-center justify-center mr-2">
@@ -88,7 +96,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="lg:pl-64 flex flex-col flex-1">
+      <div className="lg:pl-64 xl:pl-80 flex flex-col flex-1">
         {/* Header */}
         <div className="relative z-10 flex-shrink-0 flex h-16 bg-white/90 backdrop-blur-xl border-b-2 border-[#FFD700] shadow-lg">
           <button
