@@ -10,6 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - No explanations unless explicitly asked
 - Always document changes in swiftedu.md
 - When updating code, build upon existing implementation rather than removing
+- At end of each stage: test build, then commit changes and push to remote
 
 ## Development Commands
 

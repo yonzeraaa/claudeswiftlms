@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [activeSection, setActiveSection] = useState('dashboard')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
-  const { user } = useAuth()
+  const { } = useAuth()
 
   const sections: Record<string, React.ComponentType> = {
     dashboard: DashboardContent,

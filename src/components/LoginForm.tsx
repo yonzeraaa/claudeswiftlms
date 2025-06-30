@@ -76,9 +76,9 @@ export default function LoginForm() {
       } else {
         setLoginError('Erro ao carregar perfil do usuário')
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error)
-      setLoginError(error.message || 'Erro ao fazer login')
+      setLoginError(error instanceof Error ? error.message : 'Erro ao fazer login')
     } finally {
       setIsLoading(false)
     }

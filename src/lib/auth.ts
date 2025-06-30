@@ -112,7 +112,7 @@ export async function isAdmin(userId: string): Promise<boolean> {
 }
 
 // Create profile after signup (trigger function)
-export async function createProfile(user: any) {
+export async function createProfile(user: { id: string; email: string; user_metadata?: { full_name?: string } }) {
   const { data, error } = await supabase
     .from('profiles')
     .insert({

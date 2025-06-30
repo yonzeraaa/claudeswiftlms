@@ -82,7 +82,7 @@ export interface Question {
   assessment_id: string
   question_text: string
   question_type: 'multiple_choice' | 'true_false' | 'essay'
-  options?: any // JSONB for multiple choice options
+  options?: Record<string, unknown> // JSONB for multiple choice options
   correct_answer?: string
   points: number
   order_index: number
@@ -92,7 +92,7 @@ export interface AssessmentSubmission {
   id: string
   student_id: string
   assessment_id: string
-  answers: any // JSONB
+  answers: Record<string, unknown> // JSONB
   score?: number
   max_score?: number
   submitted_at: string
@@ -138,7 +138,7 @@ export interface Task {
 export interface SystemSetting {
   id: string
   key: string
-  value?: any // JSONB
+  value?: Record<string, unknown> // JSONB
   description?: string
   updated_at: string
 }
