@@ -18,7 +18,7 @@ export default function UsersContent() {
 
   useEffect(() => {
     let filtered = users.filter(user => 
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
@@ -26,9 +26,10 @@ export default function UsersContent() {
       filtered = filtered.filter(user => user.role === roleFilter)
     }
 
-    if (statusFilter) {
-      filtered = filtered.filter(user => user.status === statusFilter)
-    }
+    // Removendo filtro de status por enquanto - não temos campo status na tabela
+    // if (statusFilter) {
+    //   filtered = filtered.filter(user => user.status === statusFilter)
+    // }
 
     setFilteredUsers(filtered)
   }, [users, searchTerm, roleFilter, statusFilter])
@@ -136,27 +137,22 @@ export default function UsersContent() {
                   <td className="p-3">
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-full flex items-center justify-center mr-3">
-                        <span className="text-[#2C1A0E] font-semibold font-bold text-sm">{user.name[0]}</span>
+                        <span className="text-[#2C1A0E] font-semibold font-bold text-sm">{user.full_name[0]}</span>
                       </div>
-                      <span className="text-[#2C1A0E] font-semibold font-medium">{user.name}</span>
+                      <span className="text-[#2C1A0E] font-semibold font-medium">{user.full_name}</span>
                     </div>
                   </td>
                   <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.email}</td>
                   <td className="p-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      user.role === 'instructor' ? 'bg-blue-100 text-blue-800' : 
-                      user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
-                      'bg-green-100 text-green-800'
+                      user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'
                     }`}>
-                      {user.role === 'instructor' ? 'Instrutor' : 
-                       user.role === 'admin' ? 'Admin' : 'Estudante'}
+                      {user.role === 'admin' ? 'Admin' : 'Estudante'}
                     </span>
                   </td>
                   <td className="p-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {user.status === 'active' ? 'Ativo' : 'Inativo'}
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      Ativo
                     </span>
                   </td>
                   <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.course_count}</td>
@@ -170,12 +166,10 @@ export default function UsersContent() {
                         Editar
                       </button>
                       <button 
-                        onClick={() => handleToggleUserStatus(user.id, user.status)}
-                        className={`text-sm ${
-                          user.status === 'active' ? 'text-red-600 hover:text-red-800' : 'text-green-600 hover:text-green-800'
-                        }`}
+                        onClick={() => handleToggleUserStatus(user.id, 'active')}
+                        className="text-red-600 hover:text-red-800 text-sm"
                       >
-                        {user.status === 'active' ? 'Desativar' : 'Ativar'}
+                        Desativar
                       </button>
                     </div>
                   </td>

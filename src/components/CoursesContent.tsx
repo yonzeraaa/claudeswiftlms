@@ -7,14 +7,14 @@ export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
   const [courses, setCourses] = useState<Course[]>([])
   const [stats, setStats] = useState<CourseStats | null>(null)
-  const [instructors, setInstructors] = useState<Array<{id: string, name: string}>>([])
+  const [instructors, setInstructors] = useState<Array<{id: string, full_name: string}>>([])
   const [loading, setLoading] = useState(true)
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     category: '',
     instructor_id: '',
-    duration: 0,
+    duration_hours: 0,
     price: 0
   })
 
@@ -52,7 +52,7 @@ export default function CoursesContent() {
         description: '',
         category: '',
         instructor_id: '',
-        duration: 0,
+        duration_hours: 0,
         price: 0
       })
       await loadData()
@@ -121,12 +121,12 @@ export default function CoursesContent() {
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-2">{course.title}</h3>
                 <p className="text-[#2C1A0E] font-semibold font-medium text-sm mb-2">Categoria: {course.category}</p>
-                <p className="text-[#2C1A0E] font-semibold font-medium text-sm">Instrutor: {course.instructor?.name || 'N/A'}</p>
+                <p className="text-[#2C1A0E] font-semibold font-medium text-sm">Instrutor: {course.instructor?.full_name || 'N/A'}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                course.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                course.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
               }`}>
-                {course.status === 'active' ? 'Ativo' : 'Rascunho'}
+                {course.status === 'published' ? 'Publicado' : 'Rascunho'}
               </span>
             </div>
 
@@ -142,7 +142,7 @@ export default function CoursesContent() {
 
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
-                <span className="text-[#2C1A0E] font-semibold font-medium text-sm">📅 {course.duration}h</span>
+                <span className="text-[#2C1A0E] font-semibold font-medium text-sm">📅 {course.duration_hours}h</span>
                 <span className="text-[#2C1A0E] font-semibold font-medium text-sm ml-4">💰 R$ {course.price}</span>
               </div>
             </div>
@@ -205,15 +205,15 @@ export default function CoursesContent() {
               >
                 <option value="">Selecionar instrutor</option>
                 {instructors.map(instructor => (
-                  <option key={instructor.id} value={instructor.id}>{instructor.name}</option>
+                  <option key={instructor.id} value={instructor.id}>{instructor.full_name}</option>
                 ))}
               </select>
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="number"
                   placeholder="Carga horária"
-                  value={formData.duration || ''}
-                  onChange={(e) => setFormData({...formData, duration: Number(e.target.value)})}
+                  value={formData.duration_hours || ''}
+                  onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
                   className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                   required
                 />

@@ -6,15 +6,15 @@ export interface Course {
   description: string
   category: string
   price: number
-  duration: number
-  status: 'active' | 'draft' | 'archived'
+  duration_hours: number
+  status: 'published' | 'draft' | 'archived'
   created_at: string
   updated_at: string
   instructor_id: string
   thumbnail_url?: string
   instructor?: {
     id: string
-    name: string
+    full_name: string
   }
   enrollment_count?: number
   progress?: number
@@ -34,7 +34,7 @@ export async function getAllCourses(): Promise<Course[]> {
     .from('courses')
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name),
+      instructor:profiles!instructor_id(id, full_name),
       enrollments(count)
     `)
     .order('created_at', { ascending: false })
@@ -52,7 +52,7 @@ export async function getCourseById(id: string): Promise<Course | null> {
     .from('courses')
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name),
+      instructor:profiles!instructor_id(id, full_name),
       enrollments(count)
     `)
     .eq('id', id)
@@ -81,7 +81,7 @@ export async function getCourseStats(): Promise<CourseStats> {
   
   const stats = courses.reduce((acc, course) => {
     acc.totalCourses++
-    if (course.status === 'active') acc.activeCourses++
+    if (course.status === 'published') acc.activeCourses++
     if (course.status === 'draft') acc.draftCourses++
     if (course.status === 'archived') acc.archivedCourses++
     return acc
@@ -103,7 +103,7 @@ export async function createCourse(course: Omit<Course, 'id' | 'created_at' | 'u
     .insert(course)
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name)
+      instructor:profiles!instructor_id(id, full_name)
     `)
     .single()
   
@@ -118,7 +118,7 @@ export async function updateCourse(id: string, updates: Partial<Course>): Promis
     .eq('id', id)
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name)
+      instructor:profiles!instructor_id(id, full_name)
     `)
     .single()
   
@@ -140,10 +140,10 @@ export async function getPopularCourses(limit: number = 5): Promise<Course[]> {
     .from('courses')
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name),
+      instructor:profiles!instructor_id(id, full_name),
       enrollments(count)
     `)
-    .eq('status', 'active')
+    .eq('status', 'published')
     .order('created_at', { ascending: false })
     .limit(limit)
   
@@ -160,7 +160,7 @@ export async function getCoursesByInstructor(instructorId: string): Promise<Cour
     .from('courses')
     .select(`
       *,
-      instructor:profiles!instructor_id(id, name),
+      instructor:profiles!instructor_id(id, full_name),
       enrollments(count)
     `)
     .eq('instructor_id', instructorId)
@@ -174,13 +174,12 @@ export async function getCoursesByInstructor(instructorId: string): Promise<Cour
   }))
 }
 
-export async function getInstructors(): Promise<Array<{id: string, name: string}>> {
+export async function getInstructors(): Promise<Array<{id: string, full_name: string}>> {
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, name')
-    .eq('role', 'instructor')
-    .eq('status', 'active')
-    .order('name')
+    .select('id, full_name')
+    .eq('role', 'admin') // Por enquanto, apenas admins podem ser instrutores
+    .order('full_name')
   
   if (error) throw error
   return data || []
