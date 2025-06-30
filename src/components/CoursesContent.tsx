@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getAllCourses, getCourseStats, createCourse, getInstructors, Course, CourseStats } from '@/lib/courses'
+import { getAllCourses, getCourseStats, createCourse, updateCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
 
 export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
@@ -17,6 +17,11 @@ export default function CoursesContent() {
     duration_hours: 0,
     price: 0
   })
+  const [editingCourse, setEditingCourse] = useState<Course | null>(null)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showDetailModal, setShowDetailModal] = useState(false)
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     loadData()
@@ -41,6 +46,7 @@ export default function CoursesContent() {
 
   async function handleCreateCourse(e: React.FormEvent) {
     e.preventDefault()
+    setSubmitting(true)
     try {
       await createCourse({
         ...formData,
@@ -58,6 +64,59 @@ export default function CoursesContent() {
       await loadData()
     } catch (error) {
       console.error('Error creating course:', error)
+      alert('Erro ao criar curso.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleEditCourse(course: Course) {
+    setEditingCourse(course)
+    setFormData({
+      title: course.title,
+      description: course.description,
+      category: course.category,
+      instructor_id: course.instructor_id,
+      duration_hours: course.duration_hours,
+      price: course.price
+    })
+    setShowEditModal(true)
+  }
+
+  async function handleUpdateCourse(e: React.FormEvent) {
+    e.preventDefault()
+    if (!editingCourse) return
+    
+    setSubmitting(true)
+    try {
+      await updateCourse(editingCourse.id, formData)
+      setShowEditModal(false)
+      setEditingCourse(null)
+      setFormData({
+        title: '',
+        description: '',
+        category: '',
+        instructor_id: '',
+        duration_hours: 0,
+        price: 0
+      })
+      await loadData()
+    } catch (error) {
+      console.error('Error updating course:', error)
+      alert('Erro ao atualizar curso.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleViewCourse(courseId: string) {
+    try {
+      const course = await getCourseById(courseId)
+      setSelectedCourse(course)
+      setShowDetailModal(true)
+    } catch (error) {
+      console.error('Error loading course details:', error)
+      alert('Erro ao carregar detalhes do curso.')
     }
   }
 
@@ -149,12 +208,15 @@ export default function CoursesContent() {
 
             <div className="flex space-x-2">
               <button 
-                onClick={() => console.log('Edit course:', course.id)}
+                onClick={() => handleEditCourse(course)}
                 className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all text-sm"
               >
                 Editar
               </button>
-              <button className="px-4 py-2 border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium rounded-lg hover:bg-[#FFD700]/20 transition-colors text-sm">
+              <button 
+                onClick={() => handleViewCourse(course.id)}
+                className="px-4 py-2 border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium rounded-lg hover:bg-[#FFD700]/20 transition-colors text-sm"
+              >
                 Ver Detalhes
               </button>
             </div>
@@ -230,18 +292,166 @@ export default function CoursesContent() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
                 >
-                  Salvar
+                  {submitting ? 'Criando...' : 'Salvar'}
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Course Modal */}
+      {showEditModal && editingCourse && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
+            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Editar Curso</h3>
+            <form onSubmit={handleUpdateCourse} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Título do curso"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                required
+              />
+              <textarea
+                placeholder="Descrição do curso"
+                rows={3}
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                required
+              />
+              <select 
+                value={formData.category}
+                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                required
+              >
+                <option value="">Selecionar categoria</option>
+                <option value="Programação">Programação</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Design">Design</option>
+              </select>
+              <select 
+                value={formData.instructor_id}
+                onChange={(e) => setFormData({...formData, instructor_id: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                required
+              >
+                <option value="">Selecionar instrutor</option>
+                {instructors.map(instructor => (
+                  <option key={instructor.id} value={instructor.id}>{instructor.full_name}</option>
+                ))}
+              </select>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="number"
+                  placeholder="Carga horária"
+                  value={formData.duration_hours || ''}
+                  onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
+                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  required
+                />
+                <input
+                  type="number"
+                  placeholder="Preço (R$)"
+                  value={formData.price || ''}
+                  onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
+                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  required
+                />
+              </div>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
+                >
+                  {submitting ? 'Salvando...' : 'Salvar'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Course Detail Modal */}
+      {showDetailModal && selectedCourse && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-2xl font-bold text-[#2C1A0E] font-semibold">{selectedCourse.title}</h3>
+              <button 
+                onClick={() => setShowDetailModal(false)}
+                className="text-[#2C1A0E] text-2xl font-bold hover:text-[#8B4513]"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Categoria:</strong> {selectedCourse.category}</p>
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Instrutor:</strong> {selectedCourse.instructor?.full_name}</p>
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Carga Horária:</strong> {selectedCourse.duration_hours}h</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Preço:</strong> R$ {selectedCourse.price}</p>
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Status:</strong> 
+                    <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${
+                      selectedCourse.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {selectedCourse.status === 'published' ? 'Publicado' : 'Rascunho'}
+                    </span>
+                  </p>
+                  <p className="text-[#2C1A0E] font-semibold"><strong>Matrículas:</strong> {selectedCourse.enrollment_count || 0}</p>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-2">Descrição</h4>
+                <p className="text-[#2C1A0E] font-semibold leading-relaxed">{selectedCourse.description}</p>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-2">Informações do Sistema</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-[#2C1A0E] font-semibold">
+                  <p><strong>Criado em:</strong> {new Date(selectedCourse.created_at).toLocaleDateString('pt-BR')}</p>
+                  <p><strong>Atualizado em:</strong> {new Date(selectedCourse.updated_at).toLocaleDateString('pt-BR')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+              >
+                Fechar
+              </button>
+            </div>
           </div>
         </div>
       )}

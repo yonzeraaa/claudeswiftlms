@@ -114,3 +114,37 @@ export async function getUsersWithEnrollmentCount(): Promise<Array<UserProfile &
     course_count: user.enrollments?.[0]?.count || 0
   }))
 }
+
+export async function createUser(userData: {
+  email: string
+  full_name: string
+  role: 'admin' | 'student'
+  password: string
+}): Promise<UserProfile> {
+  // Criar usuário no Supabase Auth
+  const { data: authData, error: authError } = await supabase.auth.signUp({
+    email: userData.email,
+    password: userData.password,
+    options: {
+      data: {
+        full_name: userData.full_name,
+        role: userData.role
+      }
+    }
+  })
+  
+  if (authError) throw authError
+  
+  // O perfil será criado automaticamente via trigger
+  // Retornamos o perfil criado
+  if (!authData.user) throw new Error('Falha na criação do usuário')
+  
+  const { data: profileData, error: profileError } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', authData.user.id)
+    .single()
+  
+  if (profileError) throw profileError
+  return profileData
+}

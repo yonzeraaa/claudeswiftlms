@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getUsersWithEnrollmentCount, deactivateUser, activateUser, UserProfile } from '@/lib/users'
+import { getUsersWithEnrollmentCount, deactivateUser, activateUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -11,6 +11,15 @@ export default function UsersContent() {
   const [loading, setLoading] = useState(true)
   const [roleFilter, setRoleFilter] = useState<string>('')
   const [statusFilter, setStatusFilter] = useState<string>('')
+  const [formData, setFormData] = useState({
+    full_name: '',
+    email: '',
+    role: 'student' as 'admin' | 'student',
+    password: ''
+  })
+  const [submitting, setSubmitting] = useState(false)
+  const [editingUser, setEditingUser] = useState<UserProfile | null>(null)
+  const [showEditModal, setShowEditModal] = useState(false)
 
   useEffect(() => {
     loadUsers()
@@ -55,6 +64,73 @@ export default function UsersContent() {
       await loadUsers()
     } catch (error) {
       console.error('Error toggling user status:', error)
+    }
+  }
+
+  async function handleCreateUser(e: React.FormEvent) {
+    e.preventDefault()
+    setSubmitting(true)
+    
+    try {
+      await createUser(formData)
+      await loadUsers()
+      setShowModal(false)
+      setFormData({
+        full_name: '',
+        email: '',
+        role: 'student',
+        password: ''
+      })
+    } catch (error) {
+      console.error('Error creating user:', error)
+      alert('Erro ao criar usuário. Verifique se o email não está em uso.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  function handleInputChange(field: string, value: string) {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  function handleEditUser(user: UserProfile) {
+    setEditingUser(user)
+    setFormData({
+      full_name: user.full_name,
+      email: user.email,
+      role: user.role,
+      password: ''
+    })
+    setShowEditModal(true)
+  }
+
+  async function handleUpdateUser(e: React.FormEvent) {
+    e.preventDefault()
+    if (!editingUser) return
+    
+    setSubmitting(true)
+    try {
+      await updateUserProfile(editingUser.id, {
+        full_name: formData.full_name,
+        role: formData.role
+      })
+      await loadUsers()
+      setShowEditModal(false)
+      setEditingUser(null)
+      setFormData({
+        full_name: '',
+        email: '',
+        role: 'student',
+        password: ''
+      })
+    } catch (error) {
+      console.error('Error updating user:', error)
+      alert('Erro ao atualizar usuário.')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -160,7 +236,7 @@ export default function UsersContent() {
                   <td className="p-3">
                     <div className="flex space-x-2">
                       <button 
-                        onClick={() => console.log('Edit user:', user.id)}
+                        onClick={() => handleEditUser(user)}
                         className="text-blue-600 hover:text-blue-800 text-sm"
                       >
                         Editar
@@ -185,34 +261,106 @@ export default function UsersContent() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-md mx-4">
             <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Novo Usuário</h3>
-            <form className="space-y-4">
+            <form onSubmit={handleCreateUser} className="space-y-4">
               <input
                 type="text"
                 placeholder="Nome completo"
+                value={formData.full_name}
+                onChange={(e) => handleInputChange('full_name', e.target.value)}
+                required
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <input
                 type="email"
                 placeholder="Email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                required
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
-              <select className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
-                <option>Estudante</option>
-                <option>Instrutor</option>
+              <input
+                type="password"
+                placeholder="Senha temporária"
+                value={formData.password}
+                onChange={(e) => handleInputChange('password', e.target.value)}
+                required
+                minLength={6}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              />
+              <select 
+                value={formData.role}
+                onChange={(e) => handleInputChange('role', e.target.value)}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="student">Estudante</option>
+                <option value="admin">Admin</option>
               </select>
               <div className="flex space-x-4">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
                 >
-                  Salvar
+                  {submitting ? 'Criando...' : 'Salvar'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditModal && editingUser && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-md mx-4">
+            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Editar Usuário</h3>
+            <form onSubmit={handleUpdateUser} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Nome completo"
+                value={formData.full_name}
+                onChange={(e) => handleInputChange('full_name', e.target.value)}
+                required
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                disabled
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-gray-100 opacity-60"
+              />
+              <select 
+                value={formData.role}
+                onChange={(e) => handleInputChange('role', e.target.value)}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="student">Estudante</option>
+                <option value="admin">Admin</option>
+              </select>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
+                >
+                  {submitting ? 'Salvando...' : 'Salvar'}
                 </button>
               </div>
             </form>

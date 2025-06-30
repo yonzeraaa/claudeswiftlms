@@ -237,8 +237,20 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - **Analytics**: Atividade recente, crescimento e relatórios
 - **Interface reativa**: Loading states e tratamento de erros
 
+### 🎯 Estágio 25: Botões Funcionais da Dashboard Admin ✅
+- [x] Implementar funcionalidade do botão 'Novo Usuário' com modal e formulário
+- [x] Adicionar validação e submissão do formulário de usuário para Supabase
+- [x] Implementar funcionalidade de edição de usuários
+- [x] Implementar botões de edição e visualização de cursos
+
+**Funcionalidades implementadas:**
+- **Gestão de Usuários**: Criação e edição funcional com validação
+- **Gestão de Cursos**: Edição e visualização detalhada com modais
+- **Estados de Loading**: Feedback visual durante operações
+- **Validação**: Formulários com validação client-side e server-side
+
 ---
-*Última atualização: Estágio 24 CONCLUÍDO - Dashboard Admin Funcional*
+*Última atualização: Estágio 25 CONCLUÍDO - Botões Funcionais da Dashboard Admin*
 
 ---
 
