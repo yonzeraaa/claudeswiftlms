@@ -437,7 +437,6 @@ export default function CoursesContent() {
                   <p className="text-slate-300"><strong className="text-white">Carga Horária:</strong> {selectedCourse.duration_hours}h</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-slate-300"><strong className="text-white">Preço:</strong> R$ {selectedCourse.price}</p>
                   <p className="text-slate-300"><strong className="text-white">Status:</strong> 
                     <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${
                       selectedCourse.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
