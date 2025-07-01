@@ -1,30 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getDashboardStats, getChartData, getRecentActivity, ChartData, ActivityItem, DashboardStats } from '@/lib/analytics'
-import { getPopularCourses, Course } from '@/lib/courses'
+import { getDashboardStats, DashboardStats } from '@/lib/analytics'
 
 export default function DashboardContent() {
   const [stats, setStats] = useState<DashboardStats | null>(null)
-  const [chartData, setChartData] = useState<ChartData[]>([])
-  const [popularCourses, setPopularCourses] = useState<Course[]>([])
-  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadDashboardData() {
       try {
-        const [statsData, chartData, coursesData, activityData] = await Promise.all([
-          getDashboardStats(),
-          getChartData(),
-          getPopularCourses(4),
-          getRecentActivity()
-        ])
-        
+        const statsData = await getDashboardStats()
         setStats(statsData)
-        setChartData(chartData)
-        setPopularCourses(coursesData)
-        setRecentActivity(activityData)
       } catch (error) {
         console.error('Error loading dashboard data:', error)
       } finally {
@@ -55,7 +42,7 @@ export default function DashboardContent() {
       <h1 className="text-3xl font-bold text-white mb-6 font-montserrat">Dashboard</h1>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
           <div className="flex items-center justify-between">
             <div>
@@ -117,64 +104,6 @@ export default function DashboardContent() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Engagement Chart */}
-        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
-          <h2 className="text-xl font-bold text-white mb-4 font-montserrat">Engajamento dos Alunos</h2>
-          <div className="h-64 flex items-end justify-between space-x-2">
-            {chartData.map((data, index) => (
-              <div key={index} className="flex-1 flex flex-col items-center">
-                <div className="w-full bg-sky-400/20 rounded-t-lg relative" style={{height: `${data.completion * 2}px`}}>
-                  <div className="absolute bottom-0 w-full bg-gradient-to-t from-sky-400 to-sky-500 rounded-t-lg" style={{height: `${data.completion * 1.5}px`}}></div>
-                </div>
-                <p className="text-slate-300 text-sm mt-2 font-medium">{data.month}</p>
-                <p className="text-white text-xs font-semibold">{data.completion}%</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Top Courses */}
-        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
-          <h2 className="text-xl font-bold text-white mb-4 font-montserrat">Cursos Mais Populares</h2>
-          <div className="space-y-4">
-            {popularCourses.map((course) => (
-              <div key={course.id} className="flex items-center justify-between p-3 bg-slate-800/80 rounded-lg">
-                <div className="flex-1">
-                  <p className="text-white font-semibold">{course.title}</p>
-                  <p className="text-slate-300 text-sm font-medium">{course.enrollment_count || 0} alunos matriculados</p>
-                  <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                    <div className="bg-gradient-to-r from-sky-400 to-sky-500 h-2 rounded-full" style={{width: `${course.progress || 85}%`}}></div>
-                  </div>
-                </div>
-                <span className="text-white font-bold ml-4">{course.progress || 85}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
-        <h2 className="text-xl font-bold text-white mb-4 font-montserrat">Atividade Recente</h2>
-        <div className="space-y-4">
-          {recentActivity.map((activity, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-slate-800/80 rounded-lg">
-              <div className="flex items-center">
-                <div className={`w-8 h-8 bg-${activity.color}-100 rounded-full flex items-center justify-center mr-3`}>
-                  <span className={`text-${activity.color}-600 text-sm`}>
-                    {activity.type === 'completion' ? '✓' : activity.type === 'enrollment' ? '📚' : activity.type === 'signup' ? '👤' : '📝'}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-white font-semibold">{activity.user} {activity.action}</p>
-                  <p className="text-slate-300 text-sm font-medium">{activity.time}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

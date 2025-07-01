@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getAllCourses, getCourseStats, createCourse, updateCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
+import { getAllCourses, getCourseStats, createCourse, updateCourse, deleteCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
 
 export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
@@ -14,8 +14,7 @@ export default function CoursesContent() {
     description: '',
     category: '',
     instructor_id: '',
-    duration_hours: 0,
-    price: 0
+    duration_hours: 0
   })
   const [editingCourse, setEditingCourse] = useState<Course | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -59,8 +58,7 @@ export default function CoursesContent() {
         category: '',
         instructor_id: '',
         duration_hours: 0,
-        price: 0
-      })
+              })
       await loadData()
     } catch (error) {
       console.error('Error creating course:', error)
@@ -78,8 +76,7 @@ export default function CoursesContent() {
       category: course.category,
       instructor_id: course.instructor_id,
       duration_hours: course.duration_hours,
-      price: course.price
-    })
+          })
     setShowEditModal(true)
   }
 
@@ -98,8 +95,7 @@ export default function CoursesContent() {
         category: '',
         instructor_id: '',
         duration_hours: 0,
-        price: 0
-      })
+              })
       await loadData()
     } catch (error) {
       console.error('Error updating course:', error)
@@ -117,6 +113,18 @@ export default function CoursesContent() {
     } catch (error) {
       console.error('Error loading course details:', error)
       alert('Erro ao carregar detalhes do curso.')
+    }
+  }
+
+  async function handleDeleteCourse(courseId: string, courseTitle: string) {
+    if (confirm(`Tem certeza que deseja excluir o curso "${courseTitle}"? Esta ação não pode ser desfeita.`)) {
+      try {
+        await deleteCourse(courseId)
+        await loadData()
+      } catch (error) {
+        console.error('Error deleting course:', error)
+        alert('Erro ao excluir curso.')
+      }
     }
   }
 
@@ -203,7 +211,6 @@ export default function CoursesContent() {
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
                 <span className="text-slate-300 font-medium text-sm">📅 {course.duration_hours}h</span>
-                <span className="text-slate-300 font-medium text-sm ml-4">💰 R$ {course.price}</span>
               </div>
             </div>
 
@@ -220,7 +227,14 @@ export default function CoursesContent() {
                 className="relative z-50 cursor-pointer px-4 py-2 border-2 border-slate-600 text-slate-300 font-medium rounded-lg hover:bg-slate-800/50 transition-colors text-sm"
                 style={{ pointerEvents: 'auto' }}
               >
-                Ver Detalhes
+                Ver
+              </button>
+              <button 
+                onClick={() => handleDeleteCourse(course.id, course.title)}
+                className="relative z-50 cursor-pointer px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all text-sm"
+                style={{ pointerEvents: 'auto' }}
+              >
+                🗑️
               </button>
             </div>
           </div>
@@ -273,24 +287,14 @@ export default function CoursesContent() {
                   <option key={instructor.id} value={instructor.id}>{instructor.full_name}</option>
                 ))}
               </select>
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="number"
-                  placeholder="Carga horária"
-                  value={formData.duration_hours || ''}
-                  onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
-                  required
-                />
-                <input
-                  type="number"
-                  placeholder="Preço (R$)"
-                  value={formData.price || ''}
-                  onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
-                  required
-                />
-              </div>
+              <input
+                type="number"
+                placeholder="Carga horária"
+                value={formData.duration_hours || ''}
+                onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
+                required
+              />
               <div className="flex space-x-4">
                 <button
                   type="button"
@@ -359,24 +363,14 @@ export default function CoursesContent() {
                   <option key={instructor.id} value={instructor.id}>{instructor.full_name}</option>
                 ))}
               </select>
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="number"
-                  placeholder="Carga horária"
-                  value={formData.duration_hours || ''}
-                  onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
-                  required
-                />
-                <input
-                  type="number"
-                  placeholder="Preço (R$)"
-                  value={formData.price || ''}
-                  onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
-                  required
-                />
-              </div>
+              <input
+                type="number"
+                placeholder="Carga horária"
+                value={formData.duration_hours || ''}
+                onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
+                required
+              />
               <div className="flex space-x-4">
                 <button
                   type="button"

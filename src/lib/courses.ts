@@ -5,7 +5,6 @@ export interface Course {
   title: string
   description: string
   category: string
-  price: number
   duration_hours: number
   status: 'published' | 'draft' | 'archived'
   created_at: string
