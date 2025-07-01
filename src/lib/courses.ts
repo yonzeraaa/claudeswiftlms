@@ -96,6 +96,23 @@ export async function getCourseStats(): Promise<CourseStats> {
 }
 
 export async function createCourse(course: Omit<Course, 'id' | 'created_at' | 'updated_at'>): Promise<Course> {
+  // Verificar se o usuário está autenticado e é admin
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    throw new Error('Usuário não autenticado')
+  }
+
+  // Verificar se é admin
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.role !== 'admin') {
+    throw new Error('Apenas administradores podem criar cursos')
+  }
+
   const { data, error } = await supabase
     .from('courses')
     .insert(course)
@@ -110,6 +127,23 @@ export async function createCourse(course: Omit<Course, 'id' | 'created_at' | 'u
 }
 
 export async function updateCourse(id: string, updates: Partial<Course>): Promise<Course> {
+  // Verificar se o usuário está autenticado e é admin
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    throw new Error('Usuário não autenticado')
+  }
+
+  // Verificar se é admin
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.role !== 'admin') {
+    throw new Error('Apenas administradores podem atualizar cursos')
+  }
+
   const { data, error } = await supabase
     .from('courses')
     .update(updates)
