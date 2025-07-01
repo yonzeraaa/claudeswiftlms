@@ -81,8 +81,7 @@ export default function CoursesContent() {
           user.id,
           'Curso Criado',
           `O curso "${formData.title}" foi criado com sucesso.`,
-          'success',
-          'medium'
+          'success'
         )
       }
       
@@ -130,8 +129,7 @@ export default function CoursesContent() {
           user.id,
           'Curso Atualizado',
           `O curso "${editingCourse.title}" foi atualizado com sucesso.`,
-          'info',
-          'medium'
+          'info'
         )
       }
       
@@ -178,8 +176,7 @@ export default function CoursesContent() {
             user.id,
             'Curso Excluído',
             `O curso "${courseTitle}" foi excluído com sucesso.`,
-            'warning',
-            'medium'
+            'warning'
           )
         }
         

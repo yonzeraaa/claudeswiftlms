@@ -7,7 +7,6 @@ export interface Notification {
   message: string;
   type: 'info' | 'success' | 'warning' | 'error' | 'assignment' | 'message' | 'system';
   read: boolean;
-  priority: 'low' | 'medium' | 'high';
   action_url?: string;
   metadata?: Record<string, unknown>;
   created_at: string;
@@ -119,7 +118,6 @@ export const notificationService = {
     title: string,
     message: string,
     type: Notification['type'] = 'info',
-    priority: Notification['priority'] = 'medium',
     actionUrl?: string,
     metadata?: Record<string, unknown>
   ) {
@@ -128,7 +126,6 @@ export const notificationService = {
       title,
       message,
       type,
-      priority,
       read: false,
       action_url: actionUrl,
       metadata,
@@ -139,15 +136,13 @@ export const notificationService = {
     userIds: string[],
     title: string,
     message: string,
-    type: Notification['type'] = 'info',
-    priority: Notification['priority'] = 'medium'
+    type: Notification['type'] = 'info'
   ) {
     const notifications = userIds.map(userId => ({
       user_id: userId,
       title,
       message,
       type,
-      priority,
       read: false,
     }));
 
@@ -223,34 +218,29 @@ export const notificationTemplates = {
     title: 'Novo Curso Atribuído',
     message: `Você foi inscrito no curso: ${courseName}`,
     type: 'info' as const,
-    priority: 'medium' as const,
   }),
 
   assignmentDue: (assignmentName: string, dueDate: string) => ({
     title: 'Prazo de Atividade',
     message: `A atividade "${assignmentName}" vence em ${dueDate}`,
     type: 'warning' as const,
-    priority: 'high' as const,
   }),
 
   gradePosted: (courseName: string, grade: string) => ({
     title: 'Nova Nota Disponível',
     message: `Sua nota em ${courseName}: ${grade}`,
     type: 'success' as const,
-    priority: 'medium' as const,
   }),
 
   messageReceived: (senderName: string) => ({
     title: 'Nova Mensagem',
     message: `Você recebeu uma mensagem de ${senderName}`,
     type: 'message' as const,
-    priority: 'medium' as const,
   }),
 
   systemMaintenance: (maintenanceDate: string) => ({
     title: 'Manutenção Programada',
     message: `Sistema em manutenção em ${maintenanceDate}`,
     type: 'system' as const,
-    priority: 'high' as const,
   }),
 };

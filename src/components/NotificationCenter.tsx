@@ -119,11 +119,12 @@ export default function NotificationCenter() {
     }
   };
 
-  const getPriorityColor = (priority: Notification['priority']) => {
-    switch (priority) {
-      case 'high': return 'border-l-red-500';
-      case 'medium': return 'border-l-yellow-500';
-      case 'low': return 'border-l-green-500';
+  const getTypeColor = (type: Notification['type']) => {
+    switch (type) {
+      case 'success': return 'border-l-green-500';
+      case 'warning': return 'border-l-yellow-500';
+      case 'error': return 'border-l-red-500';
+      case 'info': return 'border-l-blue-500';
       default: return 'border-l-blue-500';
     }
   };
@@ -237,8 +238,8 @@ export default function NotificationCenter() {
                   {filteredNotifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`relative p-3 mb-2 rounded-lg border-l-4 ${getPriorityColor(
-                        notification.priority
+                      className={`relative p-3 mb-2 rounded-lg border-l-4 ${getTypeColor(
+                        notification.type
                       )} ${
                         notification.read
                           ? 'bg-gray-50/50'

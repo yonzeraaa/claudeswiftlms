@@ -89,8 +89,7 @@ export default function UsersContent() {
           user.id,
           'Usuário Excluído',
           `O usuário "${userToDelete.full_name}" foi excluído com sucesso.`,
-          'warning',
-          'medium'
+          'warning'
         )
       }
       
@@ -137,8 +136,7 @@ export default function UsersContent() {
           user.id,
           'Usuário Criado',
           `O usuário "${formData.full_name}" foi criado com sucesso.`,
-          'success',
-          'medium'
+          'success'
         )
       }
       
