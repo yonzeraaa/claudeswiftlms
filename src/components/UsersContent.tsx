@@ -63,7 +63,7 @@ export default function UsersContent() {
       await loadUsers()
     } catch (error) {
       console.error('Error deleting user:', error)
-      alert('Erro ao excluir usuário.')
+      alert('Erro ao excluir usuário: ' + (error as Error).message)
     }
   }
 
@@ -73,7 +73,7 @@ export default function UsersContent() {
       await loadUsers()
     } catch (error) {
       console.error('Error freezing user:', error)
-      alert('Erro ao congelar usuário.')
+      alert('Erro ao congelar usuário: ' + (error as Error).message)
     }
   }
 
@@ -83,7 +83,7 @@ export default function UsersContent() {
       await loadUsers()
     } catch (error) {
       console.error('Error unfreezing user:', error)
-      alert('Erro ao descongelar usuário.')
+      alert('Erro ao descongelar usuário: ' + (error as Error).message)
     }
   }
 
