@@ -119,11 +119,14 @@ export default function CoursesContent() {
   async function handleDeleteCourse(courseId: string, courseTitle: string) {
     if (confirm(`Tem certeza que deseja excluir o curso "${courseTitle}"? Esta ação não pode ser desfeita.`)) {
       try {
+        console.log('Tentando excluir curso:', courseId)
         await deleteCourse(courseId)
+        console.log('Curso excluído com sucesso')
+        alert('Curso excluído com sucesso!')
         await loadData()
       } catch (error) {
         console.error('Error deleting course:', error)
-        alert('Erro ao excluir curso.')
+        alert(`Erro ao excluir curso: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
       }
     }
   }

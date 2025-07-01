@@ -126,12 +126,19 @@ export async function updateCourse(id: string, updates: Partial<Course>): Promis
 }
 
 export async function deleteCourse(id: string): Promise<void> {
+  console.log('Iniciando exclusão do curso:', id)
+  
   const { error } = await supabase
     .from('courses')
     .delete()
     .eq('id', id)
   
-  if (error) throw error
+  if (error) {
+    console.error('Erro na exclusão do curso:', error)
+    throw new Error(`Falha ao excluir curso: ${error.message}`)
+  }
+  
+  console.log('Curso excluído com sucesso no banco')
 }
 
 export async function getPopularCourses(limit: number = 5): Promise<Course[]> {
