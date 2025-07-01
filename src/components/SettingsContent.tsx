@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getSystemSettings, updateSystemSettings, getNotificationSettings, updateNotificationSettings, getAllIntegrations, updateIntegration, triggerBackup, uploadLogo, SystemSettings, NotificationSettings, Integration } from '@/lib/settings'
+import { getSystemSettings, updateSystemSettings, getNotificationSettings, updateNotificationSettings, getAllIntegrations, updateIntegration, triggerBackup, uploadLogo, SystemSettings, NotificationSettings as NotificationSettingsType, Integration } from '@/lib/settings'
+import NotificationSettings from './NotificationSettings'
 
 export default function SettingsContent() {
   const [activeTab, setActiveTab] = useState('general')
   const [systemSettings, setSystemSettings] = useState<SystemSettings | null>(null)
-  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings | null>(null)
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettingsType | null>(null)
   const [integrations, setIntegrations] = useState<Integration[]>([])  // Used in integrations tab
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -315,28 +316,7 @@ export default function SettingsContent() {
 
       {/* Notifications Settings */}
       {activeTab === 'notifications' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-4">Configurações de Notificações</h3>
-          <div className="space-y-4">
-            {[
-              { key: 'newStudent', label: 'Novo aluno cadastrado', description: 'Notificar quando um novo aluno se cadastrar' },
-              { key: 'courseCompletion', label: 'Conclusão de curso', description: 'Notificar quando um aluno concluir um curso' },
-              { key: 'assessmentSubmission', label: 'Nova avaliação', description: 'Notificar sobre novas submissões de avaliação' },
-              { key: 'systemUpdates', label: 'Atualizações do sistema', description: 'Notificar sobre atualizações e manutenções' },
-              { key: 'weeklyReports', label: 'Relatórios semanais', description: 'Enviar relatórios de desempenho semanalmente' },
-            ].map((notification) => (
-              <div key={notification.key} className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
-                <div>
-                  <h4 className="text-[#2C1A0E] font-semibold font-medium">{notification.label}</h4>
-                  <p className="text-[#2C1A0E] font-semibold font-medium text-sm">{notification.description}</p>
-                </div>
-                <button className="w-12 h-6 bg-green-500 rounded-full">
-                  <div className="w-5 h-5 bg-white rounded-full translate-x-6"></div>
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <NotificationSettings />
       )}
 
       {/* Certificates Settings */}

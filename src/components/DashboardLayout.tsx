@@ -11,6 +11,7 @@ import AssessmentsContent from './AssessmentsContent'
 import ReportsContent from './ReportsContent'
 import SettingsContent from './SettingsContent'
 import ContentManager from './ContentManager'
+import NotificationCenter from './NotificationCenter'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -119,7 +120,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </h2>
             </div>
 
-            <div className="ml-4 flex items-center md:ml-6">
+            <div className="ml-4 flex items-center md:ml-6 gap-4">
+              <NotificationCenter />
               <div className="relative">
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-full flex items-center justify-center">
