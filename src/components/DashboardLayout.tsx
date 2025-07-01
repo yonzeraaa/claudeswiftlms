@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#654321] via-[#8B4513] to-[#654321]">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-white/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-white/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0`}>
         <div className="flex items-center justify-center h-16 bg-gradient-to-r from-[#FFD700] to-[#B8860B] border-b-2 border-[#8B4513]">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-[#654321] rounded-lg flex items-center justify-center mr-2">
@@ -70,7 +70,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
         </div>
 
-        <nav className="mt-5 px-2">
+        <nav className="mt-5 px-2 h-full overflow-y-auto pb-20">
           {menuItems.map((item) => (
             <button
               key={item.id}
@@ -100,7 +100,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="lg:pl-64 xl:pl-80 flex flex-col flex-1">
+      <div className="lg:pl-64 xl:pl-80 min-h-screen">
         {/* Header */}
         <div className="relative z-10 flex-shrink-0 flex h-16 bg-white/90 backdrop-blur-xl border-b-2 border-[#FFD700] shadow-lg">
           <button
