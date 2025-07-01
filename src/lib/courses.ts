@@ -128,6 +128,27 @@ export async function updateCourse(id: string, updates: Partial<Course>): Promis
 export async function deleteCourse(id: string): Promise<void> {
   console.log('Iniciando exclusão do curso:', id)
   
+  // Verificar usuário atual e permissões
+  const { data: user } = await supabase.auth.getUser()
+  console.log('Usuário atual:', user?.user?.id)
+  
+  if (!user?.user) {
+    throw new Error('Usuário não autenticado')
+  }
+  
+  // Verificar se é admin
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.user.id)
+    .single()
+  
+  console.log('Perfil do usuário:', profile)
+  
+  if (profile?.role !== 'admin') {
+    throw new Error('Apenas administradores podem excluir cursos')
+  }
+  
   const { data, error } = await supabase
     .from('courses')
     .delete()
