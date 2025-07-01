@@ -12,9 +12,9 @@ export default function CoursesContent() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: '',
     instructor_id: '',
-    duration_hours: 0
+    duration_hours: 0,
+    status: 'draft' as 'published' | 'draft' | 'archived'
   })
   const [editingCourse, setEditingCourse] = useState<Course | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -52,18 +52,15 @@ export default function CoursesContent() {
     e.preventDefault()
     setSubmitting(true)
     try {
-      await createCourse({
-        ...formData,
-        status: 'draft'
-      })
+      await createCourse(formData)
       setShowModal(false)
       setFormData({
         title: '',
         description: '',
-        category: '',
         instructor_id: '',
         duration_hours: 0,
-              })
+        status: 'draft' as 'published' | 'draft' | 'archived'
+      })
       await loadData()
     } catch (error) {
       console.error('Error creating course:', error)
@@ -78,10 +75,10 @@ export default function CoursesContent() {
     setFormData({
       title: course.title,
       description: course.description,
-      category: course.category,
       instructor_id: course.instructor_id,
       duration_hours: course.duration_hours,
-          })
+      status: course.status
+    })
     setShowEditModal(true)
   }
 
@@ -97,10 +94,10 @@ export default function CoursesContent() {
       setFormData({
         title: '',
         description: '',
-        category: '',
         instructor_id: '',
         duration_hours: 0,
-              })
+        status: 'draft' as 'published' | 'draft' | 'archived'
+      })
       await loadData()
     } catch (error) {
       console.error('Error updating course:', error)
@@ -209,13 +206,14 @@ export default function CoursesContent() {
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-white mb-2">{course.title}</h3>
-                <p className="text-slate-300 font-medium text-sm mb-2">Categoria: {course.category}</p>
                 <p className="text-slate-300 font-medium text-sm">Instrutor: {course.instructor?.full_name || 'N/A'}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                course.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                course.status === 'published' ? 'bg-green-100 text-green-800' : 
+                course.status === 'archived' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
               }`}>
-                {course.status === 'published' ? 'Publicado' : 'Rascunho'}
+                {course.status === 'published' ? 'Ativo' : 
+                 course.status === 'archived' ? 'Inativo' : 'Rascunho'}
               </span>
             </div>
 
@@ -285,17 +283,14 @@ export default function CoursesContent() {
                 required
               />
               <select 
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                value={formData.status}
+                onChange={(e) => setFormData({...formData, status: e.target.value as 'published' | 'draft' | 'archived'})}
                 className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
-                <option value="">Selecionar categoria</option>
-                <option value="Programação">Programação</option>
-                <option value="Frontend">Frontend</option>
-                <option value="Backend">Backend</option>
-                <option value="Mobile">Mobile</option>
-                <option value="Design">Design</option>
+                <option value="draft">Rascunho</option>
+                <option value="published">Ativo</option>
+                <option value="archived">Inativo</option>
               </select>
               <select 
                 value={formData.instructor_id}
@@ -361,17 +356,14 @@ export default function CoursesContent() {
                 required
               />
               <select 
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                value={formData.status}
+                onChange={(e) => setFormData({...formData, status: e.target.value as 'published' | 'draft' | 'archived'})}
                 className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
-                <option value="">Selecionar categoria</option>
-                <option value="Programação">Programação</option>
-                <option value="Frontend">Frontend</option>
-                <option value="Backend">Backend</option>
-                <option value="Mobile">Mobile</option>
-                <option value="Design">Design</option>
+                <option value="draft">Rascunho</option>
+                <option value="published">Ativo</option>
+                <option value="archived">Inativo</option>
               </select>
               <select 
                 value={formData.instructor_id}
@@ -432,16 +424,17 @@ export default function CoursesContent() {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <p className="text-slate-300"><strong className="text-white">Categoria:</strong> {selectedCourse.category}</p>
                   <p className="text-slate-300"><strong className="text-white">Instrutor:</strong> {selectedCourse.instructor?.full_name}</p>
                   <p className="text-slate-300"><strong className="text-white">Carga Horária:</strong> {selectedCourse.duration_hours}h</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-slate-300"><strong className="text-white">Status:</strong> 
                     <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${
-                      selectedCourse.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      selectedCourse.status === 'published' ? 'bg-green-100 text-green-800' : 
+                      selectedCourse.status === 'archived' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
                     }`}>
-                      {selectedCourse.status === 'published' ? 'Publicado' : 'Rascunho'}
+                      {selectedCourse.status === 'published' ? 'Ativo' : 
+                       selectedCourse.status === 'archived' ? 'Inativo' : 'Rascunho'}
                     </span>
                   </p>
                   <p className="text-slate-300"><strong className="text-white">Matrículas:</strong> {selectedCourse.enrollment_count || 0}</p>

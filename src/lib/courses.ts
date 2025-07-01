@@ -4,7 +4,6 @@ export interface Course {
   id: string
   title: string
   description: string
-  category: string
   duration_hours: number
   status: 'published' | 'draft' | 'archived'
   created_at: string
