@@ -344,16 +344,34 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - [x] Adicionar logging detalhado no storage.ts
 - [x] Implementar mensagens de erro específicas para usuários
 
-### 💬 Estágio 34: Chat e Mensagens ⏳
+### 👥 Estágio 34: Sistema de Gestão de Usuários Completo ✅
+- [x] Implementar criação de instrutores com roles corretos
+- [x] Resolver inconsistência teacher/instructor nos tipos e banco
+- [x] Adicionar sistema de status para usuários (active/frozen/deleted)
+- [x] Implementar exclusão completa (profiles + Supabase Auth)
+- [x] Corrigir problemas de permissões RLS para operações admin
+- [x] Adicionar botões estilizados com ícones para ações
+- [x] Resolver travamento na criação de usuários
+- [x] Implementar API route para exclusão server-side
+
+**Correções críticas implementadas:**
+- **Roles**: Padronização completa teacher → instructor
+- **Status**: Sistema ativo/congelado/excluído preservando progresso
+- **Exclusão**: Remove do Auth + marca como deleted na tabela
+- **Permissões**: Políticas RLS corrigidas para admins
+- **UX**: Botões premium com micro-interações
+- **Performance**: Retry mechanism para criação de usuários
+
+### 💬 Estágio 35: Chat e Mensagens ⏳
 - [ ] Chat em tempo real entre alunos e professores
 - [ ] Fóruns de discussão por curso/módulo
 - [ ] Sistema de mensagens privadas
 - [ ] Suporte técnico integrado
 
-**🎆 ESTÁGIOS 28-30 CONCLUÍDOS COM SUCESSO!**
+**🎆 ESTÁGIOS 28-34 CONCLUÍDOS COM SUCESSO!**
 
 ---
-*Última atualização: Planejamento Estágios 31-33 - Dashboard Professor, Notificações e Chat*
+*Última atualização: Gestão de Usuários Completa - Sistema de Status e Permissões*
 
 ---
 
@@ -365,7 +383,7 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 ✅ **Autenticação**: Sistema automático de redirecionamento  
 ✅ **Dashboard Admin**: Analytics e métricas em tempo real  
 ✅ **Dashboard Aluno**: Interface completa para estudantes  
-✅ **Gestão de Usuários**: CRUD completo com filtros e busca  
+✅ **Gestão de Usuários**: CRUD completo, sistema de status, exclusão real  
 ✅ **Gestão de Cursos**: Criação e organização de conteúdo  
 ✅ **Sistema de Avaliações**: Quizzes, provas e banco de questões completo
 ✅ **Questões Avançadas**: Editor com preview, múltipla escolha, V/F, dissertativa
