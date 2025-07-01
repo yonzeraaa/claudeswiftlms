@@ -332,11 +332,11 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - [x] Interface para correção de provas dissertativas
 - [x] Comunicação direta com alunos da turma
 
-### 🔔 Estágio 32: Sistema de Notificações ⏳
-- [ ] Implementar notificações em tempo real com WebSockets
-- [ ] Sistema de email notifications automático
-- [ ] Centro de notificações na interface
-- [ ] Configurações de preferências de notificação
+### 🔔 Estágio 32: Sistema de Notificações ✅
+- [x] Implementar notificações em tempo real com WebSockets
+- [x] Sistema de email notifications automático
+- [x] Centro de notificações na interface
+- [x] Configurações de preferências de notificação
 
 ### 💬 Estágio 33: Chat e Mensagens ⏳
 - [ ] Chat em tempo real entre alunos e professores

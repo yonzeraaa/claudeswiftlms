@@ -161,15 +161,17 @@ export const notificationService = {
   },
 
   async registerPushSubscription(userId: string, subscription: PushSubscription) {
+    const keys = subscription.getKey ? {
+      p256dh: subscription.getKey('p256dh') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('p256dh')!))) : '',
+      auth: subscription.getKey('auth') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('auth')!))) : '',
+    } : { p256dh: '', auth: '' };
+
     const { data, error } = await supabase
       .from('notification_subscriptions')
       .insert({
         user_id: userId,
         endpoint: subscription.endpoint,
-        keys: {
-          p256dh: subscription.keys.p256dh,
-          auth: subscription.keys.auth,
-        },
+        keys,
       })
       .select()
       .single();
