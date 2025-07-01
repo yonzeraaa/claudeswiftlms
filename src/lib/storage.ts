@@ -28,7 +28,10 @@ export async function uploadFile({ file, path, bucket }: FileUpload): Promise<Up
       upsert: false
     })
 
-  if (error) throw error
+  if (error) {
+    console.error('Erro no upload para storage:', error)
+    throw new Error(`Falha no upload: ${error.message}`)
+  }
 
   // Obter URL pública
   const { data: urlData } = supabase.storage
@@ -50,7 +53,10 @@ export async function uploadFile({ file, path, bucket }: FileUpload): Promise<Up
     .select()
     .single()
 
-  if (dbError) throw dbError
+  if (dbError) {
+    console.error('Erro ao salvar metadados:', dbError)
+    throw new Error(`Falha ao salvar arquivo no banco: ${dbError.message}`)
+  }
 
   return fileRecord
 }

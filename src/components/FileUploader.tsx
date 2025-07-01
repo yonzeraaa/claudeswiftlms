@@ -161,8 +161,9 @@ export default function FileUploader({
         fileInputRef.current.value = ''
       }
 
-    } catch {
-      setErrors(prev => [...prev, 'Erro durante o upload. Tente novamente.'])
+    } catch (error) {
+      console.error('Erro de upload:', error)
+      setErrors(prev => [...prev, `Erro durante o upload: ${error instanceof Error ? error.message : 'Erro desconhecido'}`])
     } finally {
       setUploading(false)
       setUploadProgress(0)
