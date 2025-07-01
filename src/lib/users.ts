@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase, supabaseAdmin } from './supabase'
 
 export interface UserProfile {
   id: string
@@ -89,8 +89,8 @@ export async function deleteUser(id: string): Promise<void> {
   
   if (profileError) throw profileError
 
-  // Depois, deletar do Supabase Auth usando admin API
-  const { error: authError } = await supabase.auth.admin.deleteUser(id)
+  // Depois, deletar do Supabase Auth usando admin client
+  const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id)
   
   if (authError) {
     console.error('Error deleting from auth:', authError)
@@ -99,7 +99,7 @@ export async function deleteUser(id: string): Promise<void> {
       .from('profiles')
       .update({ status: 'active' })
       .eq('id', id)
-    throw new Error('Falha ao excluir usuário do sistema de autenticação')
+    throw new Error('Falha ao excluir usuário do sistema de autenticação: ' + authError.message)
   }
 }
 
