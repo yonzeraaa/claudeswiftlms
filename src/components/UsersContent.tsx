@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { getUsersWithEnrollmentCount, deleteUser, freezeUser, unfreezeUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
+import { supabase } from '@/lib/supabase'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -44,10 +45,28 @@ export default function UsersContent() {
 
   async function loadUsers() {
     try {
+      setLoading(true)
+      
+      // Verificar se o usuário está autenticado
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        console.error('Usuário não autenticado')
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      
       const usersData = await getUsersWithEnrollmentCount()
       setUsers(usersData)
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error loading users:', error)
+      // Se o erro for de autenticação, redirecionar para login
+      if (error instanceof Error && (error.message?.includes('JWT') || error.message?.includes('auth'))) {
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      alert('Erro ao carregar usuários. Tente novamente.')
     } finally {
       setLoading(false)
     }

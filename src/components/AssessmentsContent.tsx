@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getAllAssessments, getAssessmentStats, createAssessment, updateAssessment, getQuestionsByAssessment, Assessment, AssessmentStats, Question } from '@/lib/assessments'
 import { getAllCourses, Course } from '@/lib/courses'
+import { supabase } from '@/lib/supabase'
 import QuestionBank from './QuestionBank'
 
 export default function AssessmentsContent() {
@@ -31,6 +32,17 @@ export default function AssessmentsContent() {
 
   async function loadData() {
     try {
+      setLoading(true)
+      
+      // Verificar se o usuário está autenticado
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        console.error('Usuário não autenticado')
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      
       const [assessmentsData, statsData, coursesData] = await Promise.all([
         getAllAssessments(),
         getAssessmentStats(),
@@ -39,8 +51,15 @@ export default function AssessmentsContent() {
       setAssessments(assessmentsData)
       setStats(statsData)
       setCourses(coursesData)
-    } catch {
-      // Error loading assessments data
+    } catch (error: unknown) {
+      console.error('Error loading assessments data:', error)
+      // Se o erro for de autenticação, redirecionar para login
+      if (error instanceof Error && (error.message?.includes('JWT') || error.message?.includes('auth'))) {
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      alert('Erro ao carregar avaliações. Tente novamente.')
     } finally {
       setLoading(false)
     }

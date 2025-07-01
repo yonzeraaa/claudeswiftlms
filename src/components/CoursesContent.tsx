@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { getAllCourses, getCourseStats, createCourse, updateCourse, deleteCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
+import { supabase } from '@/lib/supabase'
 
 export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
@@ -28,7 +29,18 @@ export default function CoursesContent() {
 
   async function loadData() {
     try {
+      setLoading(true)
       console.log('Carregando dados dos cursos...')
+      
+      // Verificar se o usuário está autenticado
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        console.error('Usuário não autenticado')
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      
       const [coursesData, statsData, instructorsData] = await Promise.all([
         getAllCourses(),
         getCourseStats(), 
@@ -41,8 +53,15 @@ export default function CoursesContent() {
       setCourses(coursesData)
       setStats(statsData)
       setInstructors(instructorsData)
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error loading courses data:', error)
+      // Se o erro for de autenticação, redirecionar para login
+      if (error instanceof Error && (error.message?.includes('JWT') || error.message?.includes('auth'))) {
+        alert('Sessão expirada. Faça login novamente.')
+        window.location.href = '/'
+        return
+      }
+      alert('Erro ao carregar dados. Tente novamente.')
     } finally {
       setLoading(false)
     }
