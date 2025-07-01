@@ -1,4 +1,4 @@
-import { supabase, supabaseAdmin } from './supabase'
+import { supabase } from './supabase'
 
 export interface UserProfile {
   id: string
@@ -81,25 +81,17 @@ export async function updateUserProfile(id: string, updates: Partial<UserProfile
 }
 
 export async function deleteUser(id: string): Promise<void> {
-  // Primeiro, marcar como deletado na tabela profiles
-  const { error: profileError } = await supabase
-    .from('profiles')
-    .update({ status: 'deleted' })
-    .eq('id', id)
-  
-  if (profileError) throw profileError
+  const response = await fetch('/api/admin/delete-user', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userId: id }),
+  })
 
-  // Depois, deletar do Supabase Auth usando admin client
-  const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id)
-  
-  if (authError) {
-    console.error('Error deleting from auth:', authError)
-    // Se falhar ao deletar do auth, reverter o status do profile
-    await supabase
-      .from('profiles')
-      .update({ status: 'active' })
-      .eq('id', id)
-    throw new Error('Falha ao excluir usuário do sistema de autenticação: ' + authError.message)
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error || 'Falha ao excluir usuário')
   }
 }
 
