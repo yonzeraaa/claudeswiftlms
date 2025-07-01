@@ -171,6 +171,17 @@ export async function deleteCourse(id: string): Promise<void> {
     throw new Error(`Falha ao excluir matrículas do curso: ${enrollmentsError.message}`)
   }
   
+  // Excluir todos os eventos relacionados ao curso
+  const { error: eventsError } = await supabase
+    .from('events')
+    .delete()
+    .eq('course_id', id)
+  
+  if (eventsError) {
+    console.error('Erro ao excluir eventos do curso:', eventsError)
+    throw new Error(`Falha ao excluir eventos do curso: ${eventsError.message}`)
+  }
+  
   // Por fim, excluir o curso
   const { data, error } = await supabase
     .from('courses')
