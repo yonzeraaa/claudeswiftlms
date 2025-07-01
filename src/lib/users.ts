@@ -81,12 +81,26 @@ export async function updateUserProfile(id: string, updates: Partial<UserProfile
 }
 
 export async function deleteUser(id: string): Promise<void> {
-  const { error } = await supabase
+  // Primeiro, marcar como deletado na tabela profiles
+  const { error: profileError } = await supabase
     .from('profiles')
     .update({ status: 'deleted' })
     .eq('id', id)
   
-  if (error) throw error
+  if (profileError) throw profileError
+
+  // Depois, deletar do Supabase Auth usando admin API
+  const { error: authError } = await supabase.auth.admin.deleteUser(id)
+  
+  if (authError) {
+    console.error('Error deleting from auth:', authError)
+    // Se falhar ao deletar do auth, reverter o status do profile
+    await supabase
+      .from('profiles')
+      .update({ status: 'active' })
+      .eq('id', id)
+    throw new Error('Falha ao excluir usuário do sistema de autenticação')
+  }
 }
 
 export async function freezeUser(id: string): Promise<void> {
