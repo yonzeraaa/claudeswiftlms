@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getAllAssessments, getAssessmentStats, createAssessment, updateAssessment, getQuestionsByAssessment, Assessment, AssessmentStats, Question } from '@/lib/assessments'
 import { getAllCourses, Course } from '@/lib/courses'
+import QuestionBank from './QuestionBank'
 
 export default function AssessmentsContent() {
   const [showModal, setShowModal] = useState(false)
@@ -141,13 +142,22 @@ export default function AssessmentsContent() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Sistema de Avaliações</h1>
-        <button 
-          onClick={() => setShowModal(true)}
-          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
-          style={{ pointerEvents: 'auto' }}
-        >
-          + Nova Avaliação
-        </button>
+        <div className="flex space-x-3">
+          <button 
+            onClick={() => setActiveTab('questions')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium relative z-50 cursor-pointer"
+            style={{ pointerEvents: 'auto' }}
+          >
+            🗄️ Banco de Questões
+          </button>
+          <button 
+            onClick={() => setShowModal(true)}
+            className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+            style={{ pointerEvents: 'auto' }}
+          >
+            + Nova Avaliação
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -277,6 +287,10 @@ export default function AssessmentsContent() {
 
       {/* Questions Tab */}
       {activeTab === 'questions' && (
+        <QuestionBank mode="bank" />
+      )}
+
+      {activeTab === 'questions-old' && (
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold">Banco de Questões</h3>

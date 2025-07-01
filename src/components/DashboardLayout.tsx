@@ -10,6 +10,7 @@ import CoursesContent from './CoursesContent'
 import AssessmentsContent from './AssessmentsContent'
 import ReportsContent from './ReportsContent'
 import SettingsContent from './SettingsContent'
+import ContentManager from './ContentManager'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -26,6 +27,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     users: UsersContent,
     courses: CoursesContent,
     assessments: AssessmentsContent,
+    content: ContentManager,
     reports: ReportsContent,
     settings: SettingsContent,
   }
@@ -40,6 +42,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { id: 'users', label: 'Usuários', icon: '👥' },
     { id: 'courses', label: 'Cursos', icon: '📚' },
     { id: 'assessments', label: 'Avaliações', icon: '📝' },
+    { id: 'content', label: 'Conteúdo', icon: '🗂️' },
     { id: 'reports', label: 'Relatórios', icon: '📈' },
     { id: 'settings', label: 'Configurações', icon: '⚙️' },
   ]

@@ -284,8 +284,52 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - **Cursor**: `cursor-pointer` para feedback visual
 - **25 botões**: Todos componentes corrigidos simultaneamente
 
+### 🎯 Estágio 28: Sistema de Questões Completo ✅
+- [x] Criar lib/questions.ts com CRUD completo e funcionalidades avançadas
+- [x] Implementar QuestionEditor.tsx com preview e multiple choice/essay/true-false
+- [x] Criar QuestionBank.tsx com filtros, busca, categorias e tags
+- [x] Adicionar import/export CSV para banco de questões
+- [x] Integrar com AssessmentsContent via aba "Banco de Questões"
+
+**Funcionalidades implementadas:**
+- **Editor avançado**: Múltipla escolha, V/F, dissertativa, lacunas
+- **Banco de questões**: Filtros por categoria, dificuldade, tags
+- **Import/Export**: CSV com validação e bulk operations
+- **Preview**: Visualização em tempo real das questões
+- **Gestão**: Duplicar, editar, excluir questões
+
+### 🎥 Estágio 29: Player de Vídeo Avançado ✅
+- [x] Criar VideoPlayer.tsx com controles customizados premium
+- [x] Implementar tracking automático de progresso no Supabase
+- [x] Adicionar sistema de anotações e marcadores temporais
+- [x] Controles avançados: velocidade, volume, legendas, qualidade
+- [x] Funcionalidades premium: notas coloridas, bookmarks, fullscreen
+
+**Funcionalidades implementadas:**
+- **Player customizado**: Brand SwiftEDU com design premium
+- **Progresso automático**: Salva posição e percentual no banco
+- **Anotações**: Sistema de notas com cores e timestamps
+- **Marcadores**: Bookmarks para navegação rápida
+- **Controles avançados**: Velocidade variável, qualidade, legendas
+
+### 🗂️ Estágio 30: Upload e Gestão de Conteúdo ✅
+- [x] Criar lib/storage.ts com Supabase Storage integration
+- [x] Implementar FileUploader.tsx com drag-and-drop
+- [x] Criar ContentManager.tsx para gestão completa de arquivos
+- [x] Sistema de validação e compressão automática
+- [x] Organização hierárquica por curso/lição/tipo
+
+**Funcionalidades implementadas:**
+- **Upload avançado**: Drag-and-drop, múltiplos arquivos, progress
+- **Gestão completa**: Grid/lista, preview, filtros, busca
+- **Storage otimizado**: Validação, thumbnails, organização automática
+- **Estatísticas**: Analytics de uso de storage por tipo/curso
+- **Integração**: Nova aba "Conteúdo" na dashboard admin
+
+**🎆 ESTÁGIOS 28-30 CONCLUÍDOS COM SUCESSO!**
+
 ---
-*Última atualização: Estágio 27 CONCLUÍDO - Correção de Z-Index dos Botões*
+*Última atualização: Estágio 30 CONCLUÍDO - Upload e Gestão de Conteúdo*
 
 ---
 
@@ -299,7 +343,10 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 ✅ **Dashboard Aluno**: Interface completa para estudantes  
 ✅ **Gestão de Usuários**: CRUD completo com filtros e busca  
 ✅ **Gestão de Cursos**: Criação e organização de conteúdo  
-✅ **Sistema de Avaliações**: Quizzes, provas e banco de questões  
+✅ **Sistema de Avaliações**: Quizzes, provas e banco de questões completo
+✅ **Questões Avançadas**: Editor com preview, múltipla escolha, V/F, dissertativa
+✅ **Player de Vídeo**: Controles premium, progresso automático, anotações
+✅ **Gestão de Conteúdo**: Upload drag-and-drop, storage otimizado, thumbnails  
 ✅ **Relatórios Avançados**: Analytics detalhados e exportação  
 ✅ **Configurações**: Personalização completa da plataforma  
 ✅ **UX Premium**: Interface responsiva e profissional  
