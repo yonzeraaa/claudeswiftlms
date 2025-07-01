@@ -124,15 +124,15 @@ export default function CoursesContent() {
     return (
       <div className="p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="h-8 bg-slate-700 rounded w-1/4 mb-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-20 bg-gray-200 rounded-xl"></div>
+              <div key={i} className="h-20 bg-slate-700 rounded-xl"></div>
             ))}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-64 bg-gray-200 rounded-xl"></div>
+              <div key={i} className="h-64 bg-slate-700 rounded-xl"></div>
             ))}
           </div>
         </div>
@@ -143,10 +143,10 @@ export default function CoursesContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#1e293b] font-semibold font-montserrat">Gestão de Cursos</h1>
+        <h1 className="text-3xl font-bold text-white font-semibold font-montserrat">Gestão de Cursos</h1>
         <button 
           onClick={() => setShowModal(true)}
-          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+          className="relative z-50 cursor-pointer bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
           style={{ pointerEvents: 'auto' }}
         >
           + Novo Curso
@@ -155,33 +155,33 @@ export default function CoursesContent() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Total de Cursos</h3>
-          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.totalCourses || 0}</p>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-slate-300 font-medium text-sm">Total de Cursos</h3>
+          <p className="text-2xl font-bold text-white">{stats?.totalCourses || 0}</p>
         </div>
-        <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Cursos Ativos</h3>
-          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.activeCourses || 0}</p>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-slate-300 font-medium text-sm">Cursos Ativos</h3>
+          <p className="text-2xl font-bold text-white">{stats?.activeCourses || 0}</p>
         </div>
-        <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Em Desenvolvimento</h3>
-          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.draftCourses || 0}</p>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-slate-300 font-medium text-sm">Em Desenvolvimento</h3>
+          <p className="text-2xl font-bold text-white">{stats?.draftCourses || 0}</p>
         </div>
-        <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Total de Matrículas</h3>
-          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.totalEnrollments || 0}</p>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-slate-300 font-medium text-sm">Total de Matrículas</h3>
+          <p className="text-2xl font-bold text-white">{stats?.totalEnrollments || 0}</p>
         </div>
       </div>
 
       {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
-          <div key={course.id} className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
+          <div key={course.id} className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-2">{course.title}</h3>
-                <p className="text-[#1e293b] font-semibold font-medium text-sm mb-2">Categoria: {course.category}</p>
-                <p className="text-[#1e293b] font-semibold font-medium text-sm">Instrutor: {course.instructor?.full_name || 'N/A'}</p>
+                <h3 className="text-lg font-bold text-white mb-2">{course.title}</h3>
+                <p className="text-slate-300 font-medium text-sm mb-2">Categoria: {course.category}</p>
+                <p className="text-slate-300 font-medium text-sm">Instrutor: {course.instructor?.full_name || 'N/A'}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                 course.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
@@ -192,32 +192,32 @@ export default function CoursesContent() {
 
             <div className="mb-4">
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-[#1e293b] font-semibold font-medium">Matrículas</span>
-                <span className="text-[#1e293b] font-semibold font-medium">{course.enrollment_count || 0}</span>
+                <span className="text-slate-300 font-medium">Matrículas</span>
+                <span className="text-slate-300 font-medium">{course.enrollment_count || 0}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] h-2 rounded-full" style={{width: `${Math.min(100, (course.enrollment_count || 0) * 2)}%`}}></div>
+              <div className="w-full bg-slate-700 rounded-full h-2">
+                <div className="bg-gradient-to-r from-sky-400 to-sky-500 h-2 rounded-full" style={{width: `${Math.min(100, (course.enrollment_count || 0) * 2)}%`}}></div>
               </div>
             </div>
 
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
-                <span className="text-[#1e293b] font-semibold font-medium text-sm">📅 {course.duration_hours}h</span>
-                <span className="text-[#1e293b] font-semibold font-medium text-sm ml-4">💰 R$ {course.price}</span>
+                <span className="text-slate-300 font-medium text-sm">📅 {course.duration_hours}h</span>
+                <span className="text-slate-300 font-medium text-sm ml-4">💰 R$ {course.price}</span>
               </div>
             </div>
 
             <div className="flex space-x-2">
               <button 
                 onClick={() => handleEditCourse(course)}
-                className="relative z-50 cursor-pointer flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all text-sm"
+                className="relative z-50 cursor-pointer flex-1 bg-gradient-to-r from-sky-600 to-sky-700 text-white py-2 rounded-lg hover:from-sky-700 hover:to-sky-800 transition-all text-sm"
                 style={{ pointerEvents: 'auto' }}
               >
                 Editar
               </button>
               <button 
                 onClick={() => handleViewCourse(course.id)}
-                className="relative z-50 cursor-pointer px-4 py-2 border-2 border-[#94a3b8] text-[#1e293b] font-semibold font-medium rounded-lg hover:bg-[#FFD700]/20 transition-colors text-sm"
+                className="relative z-50 cursor-pointer px-4 py-2 border-2 border-slate-600 text-slate-300 font-medium rounded-lg hover:bg-slate-800/50 transition-colors text-sm"
                 style={{ pointerEvents: 'auto' }}
               >
                 Ver Detalhes
@@ -230,15 +230,15 @@ export default function CoursesContent() {
       {/* Course Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
-            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Novo Curso</h3>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30 w-full max-w-lg mx-4">
+            <h3 className="text-xl font-bold text-white mb-4">Novo Curso</h3>
             <form onSubmit={handleCreateCourse} className="space-y-4">
               <input
                 type="text"
                 placeholder="Título do curso"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 required
               />
               <textarea
@@ -246,13 +246,13 @@ export default function CoursesContent() {
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 required
               />
               <select 
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
                 <option value="">Selecionar categoria</option>
@@ -265,7 +265,7 @@ export default function CoursesContent() {
               <select 
                 value={formData.instructor_id}
                 onChange={(e) => setFormData({...formData, instructor_id: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
                 <option value="">Selecionar instrutor</option>
@@ -279,7 +279,7 @@ export default function CoursesContent() {
                   placeholder="Carga horária"
                   value={formData.duration_hours || ''}
                   onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   required
                 />
                 <input
@@ -287,7 +287,7 @@ export default function CoursesContent() {
                   placeholder="Preço (R$)"
                   value={formData.price || ''}
                   onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   required
                 />
               </div>
@@ -296,14 +296,14 @@ export default function CoursesContent() {
                   type="button"
                   onClick={() => setShowModal(false)}
                   disabled={submitting}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
+                  className="flex-1 bg-slate-600 text-slate-200 py-2 rounded-lg hover:bg-slate-500 transition-colors disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
+                  className="flex-1 bg-gradient-to-r from-sky-600 to-sky-700 text-white py-2 rounded-lg hover:from-sky-700 hover:to-sky-800 transition-all disabled:opacity-50"
                 >
                   {submitting ? 'Criando...' : 'Salvar'}
                 </button>
@@ -316,15 +316,15 @@ export default function CoursesContent() {
       {/* Edit Course Modal */}
       {showEditModal && editingCourse && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
-            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Editar Curso</h3>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30 w-full max-w-lg mx-4">
+            <h3 className="text-xl font-bold text-white mb-4">Editar Curso</h3>
             <form onSubmit={handleUpdateCourse} className="space-y-4">
               <input
                 type="text"
                 placeholder="Título do curso"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 required
               />
               <textarea
@@ -332,13 +332,13 @@ export default function CoursesContent() {
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 required
               />
               <select 
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
                 <option value="">Selecionar categoria</option>
@@ -351,7 +351,7 @@ export default function CoursesContent() {
               <select 
                 value={formData.instructor_id}
                 onChange={(e) => setFormData({...formData, instructor_id: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
                 required
               >
                 <option value="">Selecionar instrutor</option>
@@ -365,7 +365,7 @@ export default function CoursesContent() {
                   placeholder="Carga horária"
                   value={formData.duration_hours || ''}
                   onChange={(e) => setFormData({...formData, duration_hours: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   required
                 />
                 <input
@@ -373,7 +373,7 @@ export default function CoursesContent() {
                   placeholder="Preço (R$)"
                   value={formData.price || ''}
                   onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   required
                 />
               </div>
@@ -382,14 +382,14 @@ export default function CoursesContent() {
                   type="button"
                   onClick={() => setShowEditModal(false)}
                   disabled={submitting}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
+                  className="flex-1 bg-slate-600 text-slate-200 py-2 rounded-lg hover:bg-slate-500 transition-colors disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
+                  className="flex-1 bg-gradient-to-r from-sky-600 to-sky-700 text-white py-2 rounded-lg hover:from-sky-700 hover:to-sky-800 transition-all disabled:opacity-50"
                 >
                   {submitting ? 'Salvando...' : 'Salvar'}
                 </button>
@@ -402,12 +402,12 @@ export default function CoursesContent() {
       {/* Course Detail Modal */}
       {showDetailModal && selectedCourse && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+          <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-6">
-              <h3 className="text-2xl font-bold text-[#1e293b] font-semibold">{selectedCourse.title}</h3>
+              <h3 className="text-2xl font-bold text-white">{selectedCourse.title}</h3>
               <button 
                 onClick={() => setShowDetailModal(false)}
-                className="relative z-50 cursor-pointer text-[#1e293b] text-2xl font-bold hover:text-[#475569]"
+                className="relative z-50 cursor-pointer text-slate-300 text-2xl font-bold hover:text-white"
                 style={{ pointerEvents: 'auto' }}
               >
                 ×
@@ -417,33 +417,33 @@ export default function CoursesContent() {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <p className="text-[#1e293b] font-semibold"><strong>Categoria:</strong> {selectedCourse.category}</p>
-                  <p className="text-[#1e293b] font-semibold"><strong>Instrutor:</strong> {selectedCourse.instructor?.full_name}</p>
-                  <p className="text-[#1e293b] font-semibold"><strong>Carga Horária:</strong> {selectedCourse.duration_hours}h</p>
+                  <p className="text-slate-300"><strong className="text-white">Categoria:</strong> {selectedCourse.category}</p>
+                  <p className="text-slate-300"><strong className="text-white">Instrutor:</strong> {selectedCourse.instructor?.full_name}</p>
+                  <p className="text-slate-300"><strong className="text-white">Carga Horária:</strong> {selectedCourse.duration_hours}h</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-[#1e293b] font-semibold"><strong>Preço:</strong> R$ {selectedCourse.price}</p>
-                  <p className="text-[#1e293b] font-semibold"><strong>Status:</strong> 
+                  <p className="text-slate-300"><strong className="text-white">Preço:</strong> R$ {selectedCourse.price}</p>
+                  <p className="text-slate-300"><strong className="text-white">Status:</strong> 
                     <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${
                       selectedCourse.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                     }`}>
                       {selectedCourse.status === 'published' ? 'Publicado' : 'Rascunho'}
                     </span>
                   </p>
-                  <p className="text-[#1e293b] font-semibold"><strong>Matrículas:</strong> {selectedCourse.enrollment_count || 0}</p>
+                  <p className="text-slate-300"><strong className="text-white">Matrículas:</strong> {selectedCourse.enrollment_count || 0}</p>
                 </div>
               </div>
               
               <div>
-                <h4 className="text-lg font-bold text-[#1e293b] font-semibold mb-2">Descrição</h4>
-                <p className="text-[#1e293b] font-semibold leading-relaxed">{selectedCourse.description}</p>
+                <h4 className="text-lg font-bold text-white mb-2">Descrição</h4>
+                <p className="text-slate-300 leading-relaxed">{selectedCourse.description}</p>
               </div>
               
               <div>
-                <h4 className="text-lg font-bold text-[#1e293b] font-semibold mb-2">Informações do Sistema</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-[#1e293b] font-semibold">
-                  <p><strong>Criado em:</strong> {new Date(selectedCourse.created_at).toLocaleDateString('pt-BR')}</p>
-                  <p><strong>Atualizado em:</strong> {new Date(selectedCourse.updated_at).toLocaleDateString('pt-BR')}</p>
+                <h4 className="text-lg font-bold text-white mb-2">Informações do Sistema</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-300">
+                  <p><strong className="text-white">Criado em:</strong> {new Date(selectedCourse.created_at).toLocaleDateString('pt-BR')}</p>
+                  <p><strong className="text-white">Atualizado em:</strong> {new Date(selectedCourse.updated_at).toLocaleDateString('pt-BR')}</p>
                 </div>
               </div>
             </div>
@@ -451,7 +451,7 @@ export default function CoursesContent() {
             <div className="flex justify-end mt-6">
               <button
                 onClick={() => setShowDetailModal(false)}
-                className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                className="relative z-50 cursor-pointer bg-gradient-to-r from-sky-600 to-sky-700 text-white px-6 py-2 rounded-lg hover:from-sky-700 hover:to-sky-800 transition-all"
                 style={{ pointerEvents: 'auto' }}
               >
                 Fechar

@@ -103,8 +103,8 @@ export default function SettingsContent() {
     return (
       <div className="p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="h-96 bg-gray-200 rounded-xl"></div>
+          <div className="h-8 bg-slate-700 rounded w-1/4 mb-6"></div>
+          <div className="h-96 bg-slate-700 rounded-xl"></div>
         </div>
       </div>
     )
@@ -113,11 +113,11 @@ export default function SettingsContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#1e293b] font-semibold font-montserrat">Configurações do Sistema</h1>
+        <h1 className="text-3xl font-bold text-white font-semibold font-montserrat">Configurações do Sistema</h1>
         <button 
           onClick={handleSaveSettings}
           disabled={saving}
-          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium disabled:opacity-50"
+          className="relative z-50 cursor-pointer bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium disabled:opacity-50"
           style={{ pointerEvents: 'auto' }}
         >
           {saving ? '💾 Salvando...' : '💾 Salvar Alterações'}
@@ -125,7 +125,7 @@ export default function SettingsContent() {
       </div>
 
       {/* Tabs */}
-      <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30 mb-6">
+      <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30 mb-6">
         <div className="flex flex-wrap space-x-4">
           {[
             { id: 'general', label: 'Geral', icon: '⚙️' },
@@ -140,8 +140,8 @@ export default function SettingsContent() {
               onClick={() => setActiveTab(tab.id)}
               className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors flex items-center ${
                 activeTab === tab.id 
-                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold' 
-                  : 'text-[#1e293b] font-semibold font-medium hover:bg-[#FFD700]/20'
+                  ? 'bg-gradient-to-r from-sky-400 to-sky-500 text-slate-900 font-semibold' 
+                  : 'text-white font-medium hover:bg-sky-400/20'
               }`}
               style={{ pointerEvents: 'auto' }}
             >
@@ -154,50 +154,50 @@ export default function SettingsContent() {
 
       {/* General Settings */}
       {activeTab === 'general' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Configurações Gerais</h3>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-lg font-bold text-white mb-4">Configurações Gerais</h3>
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Nome da Plataforma</label>
+                <label className="block text-slate-300 font-medium mb-2">Nome da Plataforma</label>
                 <input
                   type="text"
                   value={systemSettings?.site_name || ''}
                   onChange={(e) => setSystemSettings(prev => prev ? {...prev, site_name: e.target.value} : null)}
-                  className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Máximo de Alunos por Curso</label>
+                <label className="block text-slate-300 font-medium mb-2">Máximo de Alunos por Curso</label>
                 <input
                   type="number"
                   value={systemSettings?.max_students_per_course || ''}
                   onChange={(e) => setSystemSettings(prev => prev ? {...prev, max_students_per_course: parseInt(e.target.value)} : null)}
-                  className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 />
               </div>
             </div>
             
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Descrição da Plataforma</label>
+              <label className="block text-slate-300 font-medium mb-2">Descrição da Plataforma</label>
               <textarea
                 value={systemSettings?.site_description || ''}
                 onChange={(e) => setSystemSettings(prev => prev ? {...prev, site_description: e.target.value} : null)}
                 rows={3}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
               />
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-slate-800/80 rounded-lg">
                 <div>
-                  <h4 className="text-[#1e293b] font-semibold font-medium">Permitir Auto-registro</h4>
-                  <p className="text-[#1e293b] font-semibold font-medium text-sm">Permitir que novos usuários se cadastrem automaticamente</p>
+                  <h4 className="text-white font-medium">Permitir Auto-registro</h4>
+                  <p className="text-slate-300 text-sm">Permitir que novos usuários se cadastrem automaticamente</p>
                 </div>
                 <button
                   onClick={() => setSystemSettings(prev => prev ? {...prev, allow_registration: !prev.allow_registration} : null)}
                   className={`relative z-50 cursor-pointer w-12 h-6 rounded-full transition-colors ${
-                    systemSettings?.allow_registration ? 'bg-green-500' : 'bg-gray-300'
+                    systemSettings?.allow_registration ? 'bg-green-500' : 'bg-slate-600'
                   }`}
                   style={{ pointerEvents: 'auto' }}
                 >
@@ -207,15 +207,15 @@ export default function SettingsContent() {
                 </button>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-slate-800/80 rounded-lg">
                 <div>
-                  <h4 className="text-[#1e293b] font-semibold font-medium">Modo de Manutenção</h4>
-                  <p className="text-[#1e293b] font-semibold font-medium text-sm">Desabilitar acesso temporariamente</p>
+                  <h4 className="text-white font-medium">Modo de Manutenção</h4>
+                  <p className="text-slate-300 text-sm">Desabilitar acesso temporariamente</p>
                 </div>
                 <button
                   onClick={() => setSystemSettings(prev => prev ? {...prev, maintenance_mode: !prev.maintenance_mode} : null)}
                   className={`relative z-50 cursor-pointer w-12 h-6 rounded-full transition-colors ${
-                    systemSettings?.maintenance_mode ? 'bg-red-500' : 'bg-gray-300'
+                    systemSettings?.maintenance_mode ? 'bg-red-500' : 'bg-slate-600'
                   }`}
                   style={{ pointerEvents: 'auto' }}
                 >
@@ -231,49 +231,49 @@ export default function SettingsContent() {
 
       {/* Appearance Settings */}
       {activeTab === 'appearance' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Personalização Visual</h3>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-lg font-bold text-white mb-4">Personalização Visual</h3>
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Cor Primária</label>
+                <label className="block text-slate-300 font-medium mb-2">Cor Primária</label>
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
-                    value={systemSettings?.primary_color || '#654321'}
+                    value={systemSettings?.primary_color || '#0ea5e9'}
                     onChange={(e) => setSystemSettings(prev => prev ? {...prev, primary_color: e.target.value} : null)}
-                    className="w-12 h-10 border-2 border-[#94a3b8] rounded-lg"
+                    className="w-12 h-10 border-2 border-slate-600 rounded-lg"
                   />
                   <input
                     type="text"
-                    value={systemSettings?.primary_color || '#654321'}
+                    value={systemSettings?.primary_color || '#0ea5e9'}
                     onChange={(e) => setSystemSettings(prev => prev ? {...prev, primary_color: e.target.value} : null)}
-                    className="flex-1 px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                    className="flex-1 px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Cor Secundária</label>
+                <label className="block text-slate-300 font-medium mb-2">Cor Secundária</label>
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
-                    value={systemSettings?.secondary_color || '#FFD700'}
+                    value={systemSettings?.secondary_color || '#fbbf24'}
                     onChange={(e) => setSystemSettings(prev => prev ? {...prev, secondary_color: e.target.value} : null)}
-                    className="w-12 h-10 border-2 border-[#94a3b8] rounded-lg"
+                    className="w-12 h-10 border-2 border-slate-600 rounded-lg"
                   />
                   <input
                     type="text"
-                    value={systemSettings?.secondary_color || '#FFD700'}
+                    value={systemSettings?.secondary_color || '#fbbf24'}
                     onChange={(e) => setSystemSettings(prev => prev ? {...prev, secondary_color: e.target.value} : null)}
-                    className="flex-1 px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                    className="flex-1 px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Upload de Logo</label>
-              <div className="border-2 border-dashed border-[#94a3b8] rounded-lg p-6 text-center">
+              <label className="block text-slate-300 font-medium mb-2">Upload de Logo</label>
+              <div className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center">
                 <input
                   type="file"
                   id="logo-upload"
@@ -285,24 +285,24 @@ export default function SettingsContent() {
                   }}
                 />
                 <label htmlFor="logo-upload" className="cursor-pointer block">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg mx-auto mb-3 flex items-center justify-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg mx-auto mb-3 flex items-center justify-center">
                     {uploadingLogo ? (
-                      <span className="text-[#1e293b] animate-spin">⏳</span>
+                      <span className="text-slate-900 animate-spin">⏳</span>
                     ) : (
-                      <span className="text-[#1e293b] font-semibold font-bold text-xl">S</span>
+                      <span className="text-slate-900 font-bold text-xl">S</span>
                     )}
                   </div>
-                  <p className="text-[#1e293b] font-semibold font-medium mb-2">
+                  <p className="text-slate-300 font-medium mb-2">
                     {uploadingLogo ? 'Fazendo upload...' : 'Clique para fazer upload ou arraste aqui'}
                   </p>
-                  <p className="text-[#1e293b] font-semibold font-medium text-sm">PNG, JPG até 2MB</p>
+                  <p className="text-slate-400 text-sm">PNG, JPG até 2MB</p>
                 </label>
               </div>
             </div>
 
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Fonte Principal</label>
-              <select className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
+              <label className="block text-slate-300 font-medium mb-2">Fonte Principal</label>
+              <select className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white">
                 <option>Poppins (Atual)</option>
                 <option>Montserrat</option>
                 <option>Roboto</option>
@@ -321,15 +321,15 @@ export default function SettingsContent() {
 
       {/* Certificates Settings */}
       {activeTab === 'certificates' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Configurações de Certificados</h3>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-lg font-bold text-white mb-4">Configurações de Certificados</h3>
           <div className="space-y-6">
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Template de Certificado</label>
+              <label className="block text-slate-300 font-medium mb-2">Template de Certificado</label>
               <select 
                 value={systemSettings?.certificate_template || 'modern'}
                 onChange={(e) => setSystemSettings(prev => prev ? {...prev, certificate_template: e.target.value as 'modern' | 'classic' | 'elegant' | 'minimal'} : null)}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
               >
                 <option value="modern">Moderno</option>
                 <option value="classic">Clássico</option>
@@ -340,42 +340,42 @@ export default function SettingsContent() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Assinatura Digital (Diretor)</label>
+                <label className="block text-slate-300 font-medium mb-2">Assinatura Digital (Diretor)</label>
                 <input
                   type="text"
                   placeholder="Nome do diretor"
                   value={systemSettings?.director_name || ''}
                   onChange={(e) => setSystemSettings(prev => prev ? {...prev, director_name: e.target.value} : null)}
-                  className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-[#1e293b] font-semibold font-medium mb-2">Cargo do Signatário</label>
+                <label className="block text-slate-300 font-medium mb-2">Cargo do Signatário</label>
                 <input
                   type="text"
                   placeholder="Ex: Diretor Acadêmico"
-                  className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Texto do Certificado</label>
+              <label className="block text-slate-300 font-medium mb-2">Texto do Certificado</label>
               <textarea
                 placeholder="Certificamos que [NOME] concluiu com sucesso o curso [CURSO]..."
                 rows={4}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white placeholder-slate-400"
               />
             </div>
 
-            <div className="p-4 bg-white/50 rounded-lg">
-              <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Preview do Certificado</h4>
-              <div className="border-2 border-[#FFD700] rounded-lg p-6 bg-gradient-to-br from-white to-[#FFD700]/10">
+            <div className="p-4 bg-slate-800/80 rounded-lg">
+              <h4 className="text-white font-medium mb-2">Preview do Certificado</h4>
+              <div className="border-2 border-sky-400 rounded-lg p-6 bg-gradient-to-br from-slate-800 to-slate-900">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-[#1e293b] font-semibold mb-2">CERTIFICADO DE CONCLUSÃO</h3>
-                  <p className="text-[#1e293b] font-semibold font-medium mb-4">Certificamos que <strong>João Silva</strong> concluiu com sucesso</p>
-                  <p className="text-lg font-bold text-[#1e293b] font-semibold mb-4">JavaScript Fundamentals</p>
-                  <p className="text-[#1e293b] font-semibold font-medium text-sm">Data: 15/01/2024 | Carga Horária: 40h</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">CERTIFICADO DE CONCLUSÃO</h3>
+                  <p className="text-slate-300 font-medium mb-4">Certificamos que <strong className="text-white">João Silva</strong> concluiu com sucesso</p>
+                  <p className="text-lg font-bold text-white mb-4">JavaScript Fundamentals</p>
+                  <p className="text-slate-300 text-sm">Data: 15/01/2024 | Carga Horária: 40h</p>
                 </div>
               </div>
             </div>
@@ -385,15 +385,15 @@ export default function SettingsContent() {
 
       {/* Backup Settings */}
       {activeTab === 'backup' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Backup e Manutenção</h3>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-lg font-bold text-white mb-4">Backup e Manutenção</h3>
           <div className="space-y-6">
             <div>
-              <label className="block text-[#1e293b] font-semibold font-medium mb-2">Frequência de Backup</label>
+              <label className="block text-slate-300 font-medium mb-2">Frequência de Backup</label>
               <select 
                 value={systemSettings?.backup_frequency || 'daily'}
                 onChange={(e) => setSystemSettings(prev => prev ? {...prev, backup_frequency: e.target.value as 'daily' | 'weekly' | 'monthly'} : null)}
-                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
               >
                 <option value="daily">Diário</option>
                 <option value="weekly">Semanal</option>
@@ -402,32 +402,32 @@ export default function SettingsContent() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Último Backup</h4>
-                <p className="text-[#1e293b] font-semibold font-medium text-sm">15/01/2024 às 03:00</p>
-                <p className="text-green-600 text-xs">✓ Sucesso</p>
+              <div className="p-4 bg-slate-800/80 rounded-lg">
+                <h4 className="text-white font-medium mb-2">Último Backup</h4>
+                <p className="text-slate-300 text-sm">15/01/2024 às 03:00</p>
+                <p className="text-green-400 text-xs">✓ Sucesso</p>
               </div>
-              <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Tamanho do Backup</h4>
-                <p className="text-[#1e293b] font-semibold font-medium text-sm">2.3 GB</p>
-                <p className="text-blue-600 text-xs">📁 Armazenado na nuvem</p>
+              <div className="p-4 bg-slate-800/80 rounded-lg">
+                <h4 className="text-white font-medium mb-2">Tamanho do Backup</h4>
+                <p className="text-slate-300 text-sm">2.3 GB</p>
+                <p className="text-sky-400 text-xs">📁 Armazenado na nuvem</p>
               </div>
-              <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Próximo Backup</h4>
-                <p className="text-[#1e293b] font-semibold font-medium text-sm">16/01/2024 às 03:00</p>
-                <p className="text-orange-600 text-xs">⏰ Agendado</p>
+              <div className="p-4 bg-slate-800/80 rounded-lg">
+                <h4 className="text-white font-medium mb-2">Próximo Backup</h4>
+                <p className="text-slate-300 text-sm">16/01/2024 às 03:00</p>
+                <p className="text-amber-400 text-xs">⏰ Agendado</p>
               </div>
             </div>
 
             <div className="flex space-x-4">
               <button 
                 onClick={handleBackup}
-                className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                className="relative z-50 cursor-pointer bg-gradient-to-r from-sky-600 to-sky-700 text-white px-6 py-2 rounded-lg hover:from-sky-700 hover:to-sky-800 transition-all"
                 style={{ pointerEvents: 'auto' }}
               >
                 🔄 Backup Manual
               </button>
-              <button className="relative z-50 cursor-pointer border-2 border-[#94a3b8] text-[#1e293b] font-semibold font-medium px-6 py-2 rounded-lg hover:bg-[#FFD700]/20 transition-colors" style={{ pointerEvents: 'auto' }}>
+              <button className="relative z-50 cursor-pointer border-2 border-slate-600 text-slate-300 px-6 py-2 rounded-lg hover:bg-slate-800/50 transition-colors" style={{ pointerEvents: 'auto' }}>
                 📥 Restaurar Backup
               </button>
             </div>
@@ -437,26 +437,26 @@ export default function SettingsContent() {
 
       {/* Integrations Settings */}
       {activeTab === 'integrations' && (
-        <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Integrações</h3>
+        <div className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
+          <h3 className="text-lg font-bold text-white mb-4">Integrações</h3>
           <div className="space-y-4">
             {integrations.length > 0 ? integrations.map((integration, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 bg-slate-800/80 rounded-lg">
                 <div className="flex items-center">
                   <div className={`w-4 h-4 rounded-full mr-3 ${
-                    integration.status === 'connected' ? 'bg-green-500' : 'bg-gray-400'
+                    integration.status === 'connected' ? 'bg-green-500' : 'bg-slate-500'
                   }`}></div>
                   <div>
-                    <h4 className="text-[#1e293b] font-semibold font-medium">{integration.name}</h4>
-                    <p className="text-[#1e293b] font-semibold font-medium text-sm">{integration.description}</p>
+                    <h4 className="text-white font-medium">{integration.name}</h4>
+                    <p className="text-slate-300 text-sm">{integration.description}</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => handleToggleIntegration(integration)}
                   className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg text-sm transition-colors ${
                     integration.status === 'connected' 
-                      ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                      : 'bg-green-100 text-green-700 hover:bg-green-200'
+                      ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
+                      : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
                   }`}
                   style={{ pointerEvents: 'auto' }}
                 >
@@ -465,7 +465,7 @@ export default function SettingsContent() {
               </div>
             )) : (
               <div className="text-center py-8">
-                <p className="text-[#1e293b] font-medium">Nenhuma integração configurada</p>
+                <p className="text-slate-300 font-medium">Nenhuma integração configurada</p>
               </div>
             )}
           </div>

@@ -58,15 +58,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#334155]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0B1426] via-[#1e3a8a] to-[#1f2937]">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-white/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0`}>
-        <div className="flex items-center justify-center h-16 bg-gradient-to-r from-[#FFD700] to-[#B8860B] border-b-2 border-[#1e293b]">
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-slate-900/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-[#0ea5e9]/20`}>
+        <div className="flex items-center justify-center h-16 bg-gradient-to-r from-[#1e40af] to-[#0ea5e9] border-b-2 border-[#fbbf24]">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-[#1e293b] rounded-lg flex items-center justify-center mr-2">
-              <span className="text-[#FFD700] font-bold text-sm">S</span>
+            <div className="w-8 h-8 bg-[#fbbf24] rounded-lg flex items-center justify-center mr-2 border border-[#0ea5e9]/30">
+              <span className="text-[#1e40af] font-bold text-sm">S</span>
             </div>
-            <h1 className="text-xl font-bold text-[#1e293b] font-montserrat">SwiftEDU</h1>
+            <h1 className="text-xl font-bold text-white font-montserrat">SwiftEDU</h1>
           </div>
         </div>
 
@@ -77,8 +77,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               onClick={() => setActiveSection(item.id)}
               className={`group flex items-center w-full px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors duration-200 ${
                 activeSection === item.id
-                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] shadow-lg font-semibold'
-                  : 'text-[#475569] hover:bg-[#FFD700]/20 hover:text-[#1e293b] font-medium'
+                  ? 'bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white shadow-lg font-semibold border border-[#fbbf24]/30'
+                  : 'text-[#cbd5e1] hover:bg-[#0ea5e9]/20 hover:text-white font-medium'
               }`}
             >
               <span className="mr-3">{item.icon}</span>
@@ -91,7 +91,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="absolute bottom-4 left-2 right-2">
           <button
             onClick={handleLogout}
-            className="group flex items-center w-full px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200"
+            className="group flex items-center w-full px-3 py-2 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-colors duration-200"
           >
             <span className="mr-3">🚪</span>
             Sair
@@ -102,9 +102,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="lg:pl-64 xl:pl-80 min-h-screen">
         {/* Header */}
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white/90 backdrop-blur-xl border-b-2 border-[#FFD700] shadow-lg">
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-slate-900/90 backdrop-blur-xl border-b-2 border-[#0ea5e9] shadow-lg">
           <button
-            className="px-4 border-r border-[#94a3b8] text-[#475569] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#FFD700] lg:hidden"
+            className="px-4 border-r border-[#475569] text-[#cbd5e1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0ea5e9] lg:hidden"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             <span className="sr-only">Abrir sidebar</span>
@@ -115,7 +115,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
           <div className="flex-1 px-4 flex justify-between items-center">
             <div className="flex-1">
-              <h2 className="text-lg font-bold text-[#1e293b] capitalize font-montserrat">
+              <h2 className="text-lg font-bold text-white capitalize font-montserrat">
                 {menuItems.find(item => item.id === activeSection)?.label || 'Dashboard'}
               </h2>
             </div>
@@ -124,10 +124,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <NotificationCenter />
               <div className="relative">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-full flex items-center justify-center">
-                    <span className="text-[#1e293b] font-bold text-sm">A</span>
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#fbbf24] to-[#f59e0b] rounded-full flex items-center justify-center border border-[#0ea5e9]/30">
+                    <span className="text-[#1e40af] font-bold text-sm">A</span>
                   </div>
-                  <span className="ml-2 text-sm font-semibold text-[#1e293b] hidden md:block">Admin</span>
+                  <span className="ml-2 text-sm font-semibold text-white hidden md:block">Admin</span>
                 </div>
               </div>
             </div>

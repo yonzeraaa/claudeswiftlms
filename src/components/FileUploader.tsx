@@ -187,26 +187,26 @@ export default function FileUploader({
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
           isDragging
-            ? 'border-[#FFD700] bg-[#FFD700]/10'
-            : 'border-[#94a3b8] hover:border-[#FFD700] hover:bg-[#FFD700]/5'
+            ? 'border-sky-400 bg-sky-400/10'
+            : 'border-slate-600 hover:border-sky-400 hover:bg-sky-400/5'
         }`}
       >
         <div className="space-y-4">
-          <div className="mx-auto w-16 h-16 rounded-full bg-[#FFD700]/20 flex items-center justify-center">
-            <svg className="w-8 h-8 text-[#8B4513]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mx-auto w-16 h-16 rounded-full bg-sky-400/20 flex items-center justify-center">
+            <svg className="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-[#1e293b]">
+            <h3 className="text-lg font-semibold text-white">
               Arrastar e soltar arquivos aqui
             </h3>
-            <p className="text-[#5D3A1F] mt-1">
+            <p className="text-slate-300 mt-1">
               ou{' '}
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="text-[#8B4513] hover:text-[#654321] font-medium underline relative z-50 cursor-pointer"
+                className="text-sky-400 hover:text-sky-300 font-medium underline relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 selecione os arquivos
@@ -214,7 +214,7 @@ export default function FileUploader({
             </p>
           </div>
 
-          <div className="text-sm text-[#5D3A1F] space-y-1">
+          <div className="text-sm text-slate-400 space-y-1">
             <p>Tamanho máximo: {formatFileSize(maxSize)}</p>
             <p>Tipos permitidos: {allowedTypes.map(t => t.replace('/*', '')).join(', ')}</p>
             {!multiple && <p>⚠️ Apenas um arquivo por vez</p>}
@@ -233,16 +233,16 @@ export default function FileUploader({
 
       {/* Errors */}
       {errors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <h4 className="font-semibold text-red-800 mb-2">Erros encontrados:</h4>
-          <ul className="text-sm text-red-700 space-y-1">
+        <div className="bg-red-500/10 border border-red-400/30 rounded-lg p-4 backdrop-blur-sm">
+          <h4 className="font-semibold text-red-400 mb-2">Erros encontrados:</h4>
+          <ul className="text-sm text-red-300 space-y-1">
             {errors.map((error, index) => (
               <li key={index}>• {error}</li>
             ))}
           </ul>
           <button
             onClick={() => setErrors([])}
-            className="mt-2 text-red-600 hover:text-red-800 text-sm underline relative z-50 cursor-pointer"
+            className="mt-2 text-red-400 hover:text-red-300 text-sm underline relative z-50 cursor-pointer"
             style={{ pointerEvents: 'auto' }}
           >
             Limpar erros
@@ -253,16 +253,16 @@ export default function FileUploader({
       {/* Selected Files */}
       {selectedFiles.length > 0 && (
         <div className="space-y-4">
-          <h4 className="font-semibold text-[#1e293b]">
+          <h4 className="font-semibold text-white">
             Arquivos Selecionados ({selectedFiles.length})
           </h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {selectedFiles.map((file) => (
-              <div key={file.name} className="glass-card p-4 rounded-lg border border-[#94a3b8]">
+              <div key={file.name} className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-lg border border-sky-400/30">
                 {/* Preview */}
                 {previews[file.name] ? (
-                  <div className="w-full h-32 rounded-lg overflow-hidden mb-3 bg-gray-100">
+                  <div className="w-full h-32 rounded-lg overflow-hidden mb-3 bg-slate-800">
                     {file.type.startsWith('image/') ? (
                       <img
                         src={previews[file.name]}
@@ -276,24 +276,24 @@ export default function FileUploader({
                     )}
                   </div>
                 ) : (
-                  <div className="w-full h-32 rounded-lg bg-gray-100 flex items-center justify-center mb-3">
+                  <div className="w-full h-32 rounded-lg bg-slate-800 flex items-center justify-center mb-3">
                     <span className="text-4xl">{getFileIcon(file.type)}</span>
                   </div>
                 )}
 
                 {/* File Info */}
                 <div className="space-y-2">
-                  <h5 className="font-medium text-[#1e293b] text-sm truncate" title={file.name}>
+                  <h5 className="font-medium text-white text-sm truncate" title={file.name}>
                     {file.name}
                   </h5>
-                  <div className="flex justify-between text-xs text-[#5D3A1F]">
+                  <div className="flex justify-between text-xs text-slate-300">
                     <span>{formatFileSize(file.size)}</span>
                     <span>{file.type.split('/')[1]?.toUpperCase()}</span>
                   </div>
                   
                   <button
                     onClick={() => removeFile(file.name)}
-                    className="w-full text-red-600 hover:text-red-800 text-sm py-1 relative z-50 cursor-pointer"
+                    className="w-full text-red-400 hover:text-red-300 text-sm py-1 relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                   >
                     Remover
@@ -308,7 +308,7 @@ export default function FileUploader({
             <button
               onClick={handleUpload}
               disabled={uploading || selectedFiles.length === 0}
-              className="px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer"
+              className="px-6 py-3 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer border border-amber-400/30"
               style={{ pointerEvents: 'auto' }}
             >
               {uploading ? `Enviando... ${Math.round(uploadProgress)}%` : `Enviar ${selectedFiles.length} arquivo(s)`}
@@ -317,9 +317,9 @@ export default function FileUploader({
 
           {/* Progress Bar */}
           {uploading && (
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-slate-700 rounded-full h-2">
               <div
-                className="bg-[#FFD700] h-2 rounded-full transition-all duration-300"
+                className="bg-sky-400 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
@@ -330,19 +330,19 @@ export default function FileUploader({
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (
         <div className="space-y-4">
-          <h4 className="font-semibold text-[#1e293b] text-green-700">
+          <h4 className="font-semibold text-emerald-400">
             ✅ Arquivos Enviados com Sucesso ({uploadedFiles.length})
           </h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {uploadedFiles.map((file) => (
-              <div key={file.id} className="glass-card p-4 rounded-lg border border-green-200 bg-green-50">
+              <div key={file.id} className="bg-emerald-500/10 backdrop-blur-xl p-4 rounded-lg border border-emerald-400/30">
                 <div className="space-y-2">
-                  <h5 className="font-medium text-green-800 text-sm flex items-center">
+                  <h5 className="font-medium text-emerald-300 text-sm flex items-center">
                     <span className="mr-2">{getFileIcon(file.type)}</span>
                     {file.name}
                   </h5>
-                  <div className="flex justify-between text-xs text-green-600">
+                  <div className="flex justify-between text-xs text-emerald-400">
                     <span>{formatFileSize(file.size)}</span>
                     <span>✅ Enviado</span>
                   </div>
@@ -351,7 +351,7 @@ export default function FileUploader({
                     href={file.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center text-green-700 hover:text-green-900 text-sm py-1 underline relative z-50 cursor-pointer"
+                    className="block w-full text-center text-emerald-400 hover:text-emerald-300 text-sm py-1 underline relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                   >
                     Ver arquivo
