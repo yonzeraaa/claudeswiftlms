@@ -14,7 +14,7 @@ export default function UsersContent() {
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
-    role: 'student' as 'admin' | 'student',
+    role: 'student' as 'admin' | 'student' | 'instructor',
     password: ''
   })
   const [submitting, setSubmitting] = useState(false)
@@ -222,9 +222,11 @@ export default function UsersContent() {
                   <td className="p-3 text-slate-300 font-medium">{user.email}</td>
                   <td className="p-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'
+                      user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
+                      user.role === 'instructor' ? 'bg-blue-100 text-blue-800' : 
+                      'bg-green-100 text-green-800'
                     }`}>
-                      {user.role === 'admin' ? 'Admin' : 'Estudante'}
+                      {user.role === 'admin' ? 'Admin' : user.role === 'instructor' ? 'Instrutor' : 'Estudante'}
                     </span>
                   </td>
                   <td className="p-3">
@@ -294,6 +296,7 @@ export default function UsersContent() {
                 className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
               >
                 <option value="student">Estudante</option>
+                <option value="instructor">Instrutor</option>
                 <option value="admin">Admin</option>
               </select>
               <div className="flex space-x-4">
@@ -345,6 +348,7 @@ export default function UsersContent() {
                 className="w-full px-4 py-2 border-2 border-slate-600 rounded-lg focus:border-sky-400 focus:outline-none bg-slate-800/90 text-white"
               >
                 <option value="student">Estudante</option>
+                <option value="instructor">Instrutor</option>
                 <option value="admin">Admin</option>
               </select>
               <div className="flex space-x-4">

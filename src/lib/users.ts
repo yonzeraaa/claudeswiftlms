@@ -4,7 +4,7 @@ export interface UserProfile {
   id: string
   full_name: string
   email: string
-  role: 'admin' | 'student'
+  role: 'admin' | 'student' | 'instructor'
   created_at: string
   updated_at: string
   avatar_url?: string
@@ -51,6 +51,7 @@ export async function getUserStats(): Promise<UserStats> {
     acc.totalUsers++
     acc.activeUsers++ // Todos são ativos por padrão
     if (user.role === 'student') acc.studentCount++
+    if (user.role === 'instructor') acc.instructorCount++
     if (user.role === 'admin') acc.adminCount++
     return acc
   }, {
@@ -118,7 +119,7 @@ export async function getUsersWithEnrollmentCount(): Promise<Array<UserProfile &
 export async function createUser(userData: {
   email: string
   full_name: string
-  role: 'admin' | 'student'
+  role: 'admin' | 'student' | 'instructor'
   password: string
 }): Promise<UserProfile> {
   // Criar usuário no Supabase Auth
