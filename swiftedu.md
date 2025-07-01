@@ -338,7 +338,13 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - [x] Centro de notificações na interface
 - [x] Configurações de preferências de notificação
 
-### 💬 Estágio 33: Chat e Mensagens ⏳
+### 🔧 Estágio 33: Correção de Upload de Arquivos ✅
+- [x] Identificar problema no sistema de gestão de conteúdo
+- [x] Melhorar tratamento de erros no FileUploader
+- [x] Adicionar logging detalhado no storage.ts
+- [x] Implementar mensagens de erro específicas para usuários
+
+### 💬 Estágio 34: Chat e Mensagens ⏳
 - [ ] Chat em tempo real entre alunos e professores
 - [ ] Fóruns de discussão por curso/módulo
 - [ ] Sistema de mensagens privadas

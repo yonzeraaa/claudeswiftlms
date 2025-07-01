@@ -20,6 +20,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [activeSection, setActiveSection] = useState('dashboard')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const router = useRouter()
   const { } = useAuth()
 
@@ -49,18 +50,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ]
 
   const handleLogout = async () => {
+    if (isLoggingOut) return
+    
+    setIsLoggingOut(true)
     try {
       await signOut()
+      // Close sidebar on mobile after logout
+      setSidebarOpen(false)
       router.push('/')
     } catch (error) {
       console.error('Logout error:', error)
+      alert('Erro ao fazer logout. Tente novamente.')
+    } finally {
+      setIsLoggingOut(false)
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1426] via-[#1e3a8a] to-[#1f2937]">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-slate-900/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-[#0ea5e9]/20`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 xl:w-80 bg-slate-900/95 backdrop-blur-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-[#0ea5e9]/20 flex flex-col`}>
         <div className="flex items-center justify-center h-16 bg-gradient-to-r from-[#1e40af] to-[#0ea5e9] border-b-2 border-[#fbbf24]">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-[#fbbf24] rounded-lg flex items-center justify-center mr-2 border border-[#0ea5e9]/30">
@@ -70,7 +79,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
         </div>
 
-        <nav className="mt-5 px-2 h-full overflow-y-auto pb-20">
+        <nav className="mt-5 px-2 flex-1 overflow-y-auto">
           {menuItems.map((item) => (
             <button
               key={item.id}
@@ -88,13 +97,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </nav>
 
         {/* Logout Button */}
-        <div className="absolute bottom-4 left-2 right-2">
+        <div className="p-2 border-t border-slate-700/50">
           <button
             onClick={handleLogout}
-            className="group flex items-center w-full px-3 py-2 text-sm font-medium text-red-400 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-colors duration-200"
+            disabled={isLoggingOut}
+            style={{ pointerEvents: 'auto' }}
+            className={`group flex items-center w-full px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 relative z-50 cursor-pointer ${
+              isLoggingOut 
+                ? 'text-red-600 bg-red-500/10 cursor-not-allowed'
+                : 'text-red-400 hover:bg-red-500/20 hover:text-red-300'
+            }`}
           >
-            <span className="mr-3">🚪</span>
-            Sair
+            <span className="mr-3">{isLoggingOut ? '⏳' : '🚪'}</span>
+            {isLoggingOut ? 'Saindo...' : 'Sair'}
           </button>
         </div>
       </div>
