@@ -149,6 +149,29 @@ export async function deleteCourse(id: string): Promise<void> {
     throw new Error('Apenas administradores podem excluir cursos')
   }
   
+  // Primeiro, excluir todas as avaliações relacionadas ao curso
+  const { error: assessmentsError } = await supabase
+    .from('assessments')
+    .delete()
+    .eq('course_id', id)
+  
+  if (assessmentsError) {
+    console.error('Erro ao excluir avaliações do curso:', assessmentsError)
+    throw new Error(`Falha ao excluir avaliações do curso: ${assessmentsError.message}`)
+  }
+  
+  // Em seguida, excluir todas as matrículas relacionadas ao curso
+  const { error: enrollmentsError } = await supabase
+    .from('enrollments')
+    .delete()
+    .eq('course_id', id)
+  
+  if (enrollmentsError) {
+    console.error('Erro ao excluir matrículas do curso:', enrollmentsError)
+    throw new Error(`Falha ao excluir matrículas do curso: ${enrollmentsError.message}`)
+  }
+  
+  // Por fim, excluir o curso
   const { data, error } = await supabase
     .from('courses')
     .delete()
