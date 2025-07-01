@@ -141,7 +141,7 @@ export async function importQuestionsFromCSV(csvContent: string, assessmentId: s
     
     if (values.length < headers.length) continue
 
-    const questionData: any = {
+    const questionData: Partial<Question> = {
       assessment_id: assessmentId,
       order: i
     }
@@ -151,7 +151,7 @@ export async function importQuestionsFromCSV(csvContent: string, assessmentId: s
       
       switch (header.toLowerCase()) {
         case 'type':
-          questionData.type = value
+          questionData.type = value as 'multiple_choice' | 'true_false' | 'essay' | 'fill_blank'
           break
         case 'title':
           questionData.title = value
@@ -169,7 +169,7 @@ export async function importQuestionsFromCSV(csvContent: string, assessmentId: s
           questionData.points = parseInt(value) || 1
           break
         case 'difficulty':
-          questionData.difficulty = value || 'medium'
+          questionData.difficulty = (value as 'easy' | 'medium' | 'hard') || 'medium'
           break
         case 'category':
           questionData.category = value
@@ -183,8 +183,8 @@ export async function importQuestionsFromCSV(csvContent: string, assessmentId: s
       }
     })
 
-    if (questionData.title && questionData.content) {
-      questions.push(await createQuestion(questionData))
+    if (questionData.title && questionData.content && questionData.type) {
+      questions.push(await createQuestion(questionData as Omit<Question, 'id' | 'created_at' | 'updated_at'>))
     }
   }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Question, deleteQuestion, duplicateQuestion, exportQuestionsToCSV, importQuestionsFromCSV, getQuestionStats } from '@/lib/questions'
 import { supabase } from '@/lib/supabase'
 import QuestionEditor from './QuestionEditor'
@@ -21,7 +21,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedDifficulty, setSelectedDifficulty] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [stats, setStats] = useState<Record<string, any>>({})
+  const [stats, setStats] = useState<{ total?: number; byType?: Record<string, number>; byDifficulty?: Record<string, number>; byCategory?: Record<string, number> }>({})
   const [showImport, setShowImport] = useState(false)
   const [csvContent, setCsvContent] = useState('')
 
@@ -30,9 +30,25 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
     loadStats()
   }, [])
 
+  const filterQuestions = useCallback(() => {
+    const filtered = questions.filter(q => {
+      const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          q.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          q.category?.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = !selectedCategory || q.category === selectedCategory
+      const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty
+      const matchesTags = selectedTags.length === 0 || 
+                         selectedTags.some(tag => q.tags?.includes(tag))
+      
+      return matchesSearch && matchesCategory && matchesDifficulty && matchesTags
+    })
+    
+    setFilteredQuestions(filtered)
+  }, [questions, searchTerm, selectedCategory, selectedDifficulty, selectedTags])
+
   useEffect(() => {
     filterQuestions()
-  }, [questions, searchTerm, selectedCategory, selectedDifficulty, selectedTags])
+  }, [filterQuestions])
 
   const loadQuestions = async () => {
     setLoading(true)
@@ -61,32 +77,6 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
     }
   }
 
-  const filterQuestions = () => {
-    let filtered = questions
-
-    if (searchTerm) {
-      filtered = filtered.filter(q => 
-        q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        q.content.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    }
-
-    if (selectedCategory) {
-      filtered = filtered.filter(q => q.category === selectedCategory)
-    }
-
-    if (selectedDifficulty) {
-      filtered = filtered.filter(q => q.difficulty === selectedDifficulty)
-    }
-
-    if (selectedTags.length > 0) {
-      filtered = filtered.filter(q => 
-        q.tags?.some(tag => selectedTags.includes(tag))
-      )
-    }
-
-    setFilteredQuestions(filtered)
-  }
 
   const handleSaveQuestion = (question: Question) => {
     if (editingQuestion) {
@@ -105,7 +95,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
         await deleteQuestion(id)
         setQuestions(prev => prev.filter(q => q.id !== id))
         loadStats()
-      } catch (error) {
+      } catch {
         alert('Erro ao excluir questão')
       }
     }
@@ -116,7 +106,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       const duplicated = await duplicateQuestion(id)
       setQuestions(prev => [duplicated, ...prev])
       loadStats()
-    } catch (error) {
+    } catch {
       alert('Erro ao duplicar questão')
     }
   }
@@ -131,7 +121,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       a.download = `questoes_${new Date().toISOString().split('T')[0]}.csv`
       a.click()
       URL.revokeObjectURL(url)
-    } catch (error) {
+    } catch {
       alert('Erro ao exportar questões')
     }
   }
@@ -146,7 +136,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       setCsvContent('')
       loadStats()
       alert(`${imported.length} questões importadas com sucesso!`)
-    } catch (error) {
+    } catch {
       alert('Erro ao importar questões. Verifique o formato do CSV.')
     }
   }

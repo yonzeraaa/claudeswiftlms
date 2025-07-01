@@ -21,7 +21,7 @@ export interface UploadedFile {
 
 // Upload de arquivo
 export async function uploadFile({ file, path, bucket }: FileUpload): Promise<UploadedFile> {
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from(bucket)
     .upload(path, file, {
       cacheControl: '3600',
@@ -59,15 +59,14 @@ export async function uploadFile({ file, path, bucket }: FileUpload): Promise<Up
 export async function uploadVideoWithCompression(
   file: File, 
   courseId: string, 
-  lessonId: string,
-  onProgress?: (progress: number) => void
+  lessonId: string
 ): Promise<UploadedFile> {
   const fileName = `${Date.now()}_${file.name}`
   const path = `courses/${courseId}/lessons/${lessonId}/videos/${fileName}`
 
   // Para implementação futura: compressão de vídeo
   // Por enquanto, upload direto
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from('course-content')
     .upload(path, file, {
       cacheControl: '3600',

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getFiles, deleteFile, getStorageStats, formatFileSize, UploadedFile } from '@/lib/storage'
 import { getAllCourses, Course } from '@/lib/courses'
 import FileUploader from './FileUploader'
@@ -13,18 +13,14 @@ export default function ContentManager() {
   const [selectedCourse, setSelectedCourse] = useState('')
   const [selectedLesson, setSelectedLesson] = useState('')
   const [loading, setLoading] = useState(true)
-  const [stats, setStats] = useState<Record<string, any>>({})
+  const [stats, setStats] = useState<{ totalFiles?: number; totalSize?: number; byType?: Record<string, { count: number; size: number }>; byCourse?: Record<string, { count: number; size: number }> }>({})
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedFileType, setSelectedFileType] = useState('')
   const [showPreview, setShowPreview] = useState(false)
   const [previewFile, setPreviewFile] = useState<UploadedFile | null>(null)
   const [organizationMode, setOrganizationMode] = useState<'list' | 'grid' | 'organized'>('grid')
 
-  useEffect(() => {
-    loadData()
-  }, [selectedCourse, selectedFileType])
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true)
     try {
       const [coursesData, filesData, statsData] = await Promise.all([
@@ -45,7 +41,11 @@ export default function ContentManager() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [selectedCourse, selectedFileType])
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
 
   const handleUploadComplete = (uploadedFiles: UploadedFile[]) => {
     setFiles(prev => [...uploadedFiles, ...prev])
@@ -356,7 +356,7 @@ export default function ContentManager() {
 
               <select
                 value={organizationMode}
-                onChange={(e) => setOrganizationMode(e.target.value as any)}
+                onChange={(e) => setOrganizationMode(e.target.value as 'list' | 'grid' | 'organized')}
                 className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >

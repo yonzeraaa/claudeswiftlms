@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 
 interface VideoPlayerProps {
@@ -56,14 +56,7 @@ export default function VideoPlayer({
 
   let controlsTimeout: NodeJS.Timeout
 
-  useEffect(() => {
-    if (autoSaveProgress && userId && lessonId) {
-      loadProgress()
-      loadNotesAndBookmarks()
-    }
-  }, [userId, lessonId, autoSaveProgress])
-
-  const loadProgress = async () => {
+  const loadProgress = useCallback(async () => {
     try {
       const { data } = await supabase
         .from('lesson_progress')
@@ -75,30 +68,12 @@ export default function VideoPlayer({
       if (data?.last_position && videoRef.current) {
         videoRef.current.currentTime = data.last_position
       }
-    } catch (error) {
+    } catch {
       // Progress not found
     }
-  }
+  }, [userId, lessonId])
 
-  const saveProgress = async (currentPos: number, progressPercentage: number) => {
-    if (!autoSaveProgress || !userId || !lessonId) return
-
-    try {
-      await supabase
-        .from('lesson_progress')
-        .upsert({
-          user_id: userId,
-          lesson_id: lessonId,
-          progress_percentage: progressPercentage,
-          last_position: currentPos,
-          updated_at: new Date().toISOString()
-        })
-    } catch (error) {
-      // Error saving progress
-    }
-  }
-
-  const loadNotesAndBookmarks = async () => {
+  const loadNotesAndBookmarks = useCallback(async () => {
     if (!userId || !lessonId) return
 
     try {
@@ -117,12 +92,39 @@ export default function VideoPlayer({
           .order('timestamp')
       ])
 
-      if (notesData.data) setNotes(notesData.data)
-      if (bookmarksData.data) setBookmarks(bookmarksData.data)
-    } catch (error) {
-      // Error loading notes/bookmarks
+      setNotes(notesData.data || [])
+      setBookmarks(bookmarksData.data || [])
+    } catch {
+      // Error loading data
+    }
+  }, [userId, lessonId])
+
+  useEffect(() => {
+    if (autoSaveProgress && userId && lessonId) {
+      loadProgress()
+      loadNotesAndBookmarks()
+    }
+  }, [autoSaveProgress, userId, lessonId, loadProgress, loadNotesAndBookmarks])
+
+
+  const saveProgress = async (currentPos: number, progressPercentage: number) => {
+    if (!autoSaveProgress || !userId || !lessonId) return
+
+    try {
+      await supabase
+        .from('lesson_progress')
+        .upsert({
+          user_id: userId,
+          lesson_id: lessonId,
+          progress_percentage: progressPercentage,
+          last_position: currentPos,
+          updated_at: new Date().toISOString()
+        })
+    } catch {
+      // Error saving progress
     }
   }
+
 
   const handlePlayPause = () => {
     if (!videoRef.current) return
@@ -228,7 +230,7 @@ export default function VideoPlayer({
         setNotes(prev => [...prev, { ...note, id: data.id }])
         setNewNote('')
       }
-    } catch (error) {
+    } catch {
       // Error adding note
     }
   }
@@ -258,7 +260,7 @@ export default function VideoPlayer({
         setBookmarks(prev => [...prev, { ...bookmark, id: data.id }])
         setNewBookmarkTitle('')
       }
-    } catch (error) {
+    } catch {
       // Error adding bookmark
     }
   }

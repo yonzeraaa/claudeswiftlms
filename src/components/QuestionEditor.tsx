@@ -71,7 +71,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
         : await createQuestion(questionData)
 
       onSave(savedQuestion)
-    } catch (error) {
+    } catch {
       alert('Erro ao salvar questão')
     } finally {
       setLoading(false)
