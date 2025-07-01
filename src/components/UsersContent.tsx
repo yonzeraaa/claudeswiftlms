@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getUsersWithEnrollmentCount, deactivateUser, activateUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
+import { getUsersWithEnrollmentCount, deleteUser, freezeUser, unfreezeUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -35,10 +35,9 @@ export default function UsersContent() {
       filtered = filtered.filter(user => user.role === roleFilter)
     }
 
-    // Removendo filtro de status por enquanto - não temos campo status na tabela
-    // if (statusFilter) {
-    //   filtered = filtered.filter(user => user.status === statusFilter)
-    // }
+    if (statusFilter) {
+      filtered = filtered.filter(user => user.status === statusFilter)
+    }
 
     setFilteredUsers(filtered)
   }, [users, searchTerm, roleFilter, statusFilter])
@@ -54,16 +53,37 @@ export default function UsersContent() {
     }
   }
 
-  async function handleToggleUserStatus(userId: string, currentStatus: string) {
+  async function handleDeleteUser(userId: string) {
+    if (!confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) {
+      return
+    }
+    
     try {
-      if (currentStatus === 'active') {
-        await deactivateUser(userId)
-      } else {
-        await activateUser(userId)
-      }
+      await deleteUser(userId)
       await loadUsers()
     } catch (error) {
-      console.error('Error toggling user status:', error)
+      console.error('Error deleting user:', error)
+      alert('Erro ao excluir usuário.')
+    }
+  }
+
+  async function handleFreezeUser(userId: string) {
+    try {
+      await freezeUser(userId)
+      await loadUsers()
+    } catch (error) {
+      console.error('Error freezing user:', error)
+      alert('Erro ao congelar usuário.')
+    }
+  }
+
+  async function handleUnfreezeUser(userId: string) {
+    try {
+      await unfreezeUser(userId)
+      await loadUsers()
+    } catch (error) {
+      console.error('Error unfreezing user:', error)
+      alert('Erro ao descongelar usuário.')
     }
   }
 
@@ -188,7 +208,7 @@ export default function UsersContent() {
           >
             <option value="">Todos os status</option>
             <option value="active">Ativo</option>
-            <option value="inactive">Inativo</option>
+            <option value="frozen">Congelado</option>
           </select>
         </div>
       </div>
@@ -230,8 +250,13 @@ export default function UsersContent() {
                     </span>
                   </td>
                   <td className="p-3">
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      Ativo
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      user.status === 'active' ? 'bg-green-100 text-green-800' :
+                      user.status === 'frozen' ? 'bg-blue-100 text-blue-800' :
+                      'bg-red-100 text-red-800'
+                    }`}>
+                      {user.status === 'active' ? 'Ativo' :
+                       user.status === 'frozen' ? 'Congelado' : 'Inativo'}
                     </span>
                   </td>
                   <td className="p-3 text-slate-300 font-medium">{user.course_count}</td>
@@ -244,11 +269,19 @@ export default function UsersContent() {
                       >
                         Editar
                       </button>
+                      {user.role === 'student' && (
+                        <button 
+                          onClick={() => user.status === 'frozen' ? handleUnfreezeUser(user.id) : handleFreezeUser(user.id)}
+                          className="text-blue-400 hover:text-blue-300 text-sm"
+                        >
+                          {user.status === 'frozen' ? 'Descongelar' : 'Congelar'}
+                        </button>
+                      )}
                       <button 
-                        onClick={() => handleToggleUserStatus(user.id, 'active')}
-                        className="text-amber-400 hover:text-amber-300 text-sm"
+                        onClick={() => handleDeleteUser(user.id)}
+                        className="text-red-400 hover:text-red-300 text-sm"
                       >
-                        Desativar
+                        Excluir
                       </button>
                     </div>
                   </td>

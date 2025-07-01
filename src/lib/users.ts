@@ -5,6 +5,7 @@ export interface UserProfile {
   full_name: string
   email: string
   role: 'admin' | 'student' | 'instructor'
+  status: 'active' | 'frozen' | 'deleted'
   created_at: string
   updated_at: string
   avatar_url?: string
@@ -23,6 +24,7 @@ export async function getAllUsers(): Promise<UserProfile[]> {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
+    .neq('status', 'deleted')
     .order('created_at', { ascending: false })
   
   if (error) throw error
@@ -78,14 +80,31 @@ export async function updateUserProfile(id: string, updates: Partial<UserProfile
   return data
 }
 
-export async function deactivateUser(id: string): Promise<void> {
-  // Por enquanto, vamos apenas simular - não temos coluna status
-  console.log('Deactivating user:', id)
+export async function deleteUser(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ status: 'deleted' })
+    .eq('id', id)
+  
+  if (error) throw error
 }
 
-export async function activateUser(id: string): Promise<void> {
-  // Por enquanto, vamos apenas simular - não temos coluna status
-  console.log('Activating user:', id)
+export async function freezeUser(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ status: 'frozen' })
+    .eq('id', id)
+  
+  if (error) throw error
+}
+
+export async function unfreezeUser(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('profiles')
+    .update({ status: 'active' })
+    .eq('id', id)
+  
+  if (error) throw error
 }
 
 export async function searchUsers(query: string): Promise<UserProfile[]> {
@@ -106,6 +125,7 @@ export async function getUsersWithEnrollmentCount(): Promise<Array<UserProfile &
       *,
       enrollments(count)
     `)
+    .neq('status', 'deleted')
     .order('created_at', { ascending: false })
   
   if (error) throw error

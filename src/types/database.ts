@@ -7,6 +7,7 @@ export interface Profile {
   full_name?: string
   avatar_url?: string
   role: 'admin' | 'student' | 'instructor'
+  status: 'active' | 'frozen' | 'deleted'
   created_at: string
   updated_at: string
 }
