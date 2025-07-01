@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { getUsersWithEnrollmentCount, deleteUser, freezeUser, unfreezeUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
 import { supabase } from '@/lib/supabase'
-import { notificationService } from '@/lib/notifications'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -79,24 +78,10 @@ export default function UsersContent() {
     }
     
     try {
-      const userToDelete = users.find(u => u.id === userId)
       await deleteUser(userId)
       
-      // Criar notificação de sistema
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user && userToDelete) {
-          await notificationService.sendNotificationToUser(
-            user.id,
-            'Usuário Excluído',
-            `O usuário "${userToDelete.full_name}" foi excluído com sucesso.`,
-            'warning'
-          )
-        }
-      } catch (notificationError) {
-        console.error('Erro ao criar notificação:', notificationError)
-        // Não falhar a exclusão do usuário se a notificação falhar
-      }
+      // Sistema de notificações temporariamente desabilitado
+      // TODO: Reativar quando políticas RLS estiverem configuradas
       
       await loadUsers()
     } catch (error) {
@@ -134,21 +119,8 @@ export default function UsersContent() {
       await createUser(formData)
       console.log('User created successfully, reloading list...')
       
-      // Criar notificação de sistema
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          await notificationService.sendNotificationToUser(
-            user.id,
-            'Usuário Criado',
-            `O usuário "${formData.full_name}" foi criado com sucesso.`,
-            'success'
-          )
-        }
-      } catch (notificationError) {
-        console.error('Erro ao criar notificação:', notificationError)
-        // Não falhar a criação do usuário se a notificação falhar
-      }
+      // Sistema de notificações temporariamente desabilitado
+      // TODO: Reativar quando políticas RLS estiverem configuradas
       
       await loadUsers()
       console.log('Users reloaded, closing modal...')

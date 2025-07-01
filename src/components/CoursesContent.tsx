@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { getAllCourses, getCourseStats, createCourse, updateCourse, deleteCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
 import { supabase } from '@/lib/supabase'
-import { notificationService } from '@/lib/notifications'
 
 export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
@@ -74,21 +73,8 @@ export default function CoursesContent() {
     try {
       await createCourse(formData)
       
-      // Criar notificação de sistema
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          await notificationService.sendNotificationToUser(
-            user.id,
-            'Curso Criado',
-            `O curso "${formData.title}" foi criado com sucesso.`,
-            'success'
-          )
-        }
-      } catch (notificationError) {
-        console.error('Erro ao criar notificação:', notificationError)
-        // Não falhar a criação do curso se a notificação falhar
-      }
+      // Sistema de notificações temporariamente desabilitado
+      // TODO: Reativar quando políticas RLS estiverem configuradas
       
       setShowModal(false)
       setFormData({
@@ -127,21 +113,8 @@ export default function CoursesContent() {
     try {
       await updateCourse(editingCourse.id, formData)
       
-      // Criar notificação de sistema
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          await notificationService.sendNotificationToUser(
-            user.id,
-            'Curso Atualizado',
-            `O curso "${editingCourse.title}" foi atualizado com sucesso.`,
-            'info'
-          )
-        }
-      } catch (notificationError) {
-        console.error('Erro ao criar notificação:', notificationError)
-        // Não falhar a atualização do curso se a notificação falhar
-      }
+      // Sistema de notificações temporariamente desabilitado
+      // TODO: Reativar quando políticas RLS estiverem configuradas
       
       setShowEditModal(false)
       setEditingCourse(null)
@@ -179,21 +152,8 @@ export default function CoursesContent() {
         await deleteCourse(courseId)
         console.log('Curso excluído com sucesso')
         
-        // Criar notificação de sistema
-        try {
-          const { data: { user } } = await supabase.auth.getUser()
-          if (user) {
-            await notificationService.sendNotificationToUser(
-              user.id,
-              'Curso Excluído',
-              `O curso "${courseTitle}" foi excluído com sucesso.`,
-              'warning'
-            )
-          }
-        } catch (notificationError) {
-          console.error('Erro ao criar notificação:', notificationError)
-          // Não falhar a exclusão do curso se a notificação falhar
-        }
+        // Sistema de notificações temporariamente desabilitado
+        // TODO: Reativar quando políticas RLS estiverem configuradas
         
         // Atualizar a lista local imediatamente
         setCourses(prevCourses => prevCourses.filter(course => course.id !== courseId))
