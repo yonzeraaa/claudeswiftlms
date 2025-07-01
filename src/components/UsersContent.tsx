@@ -151,10 +151,7 @@ export default function UsersContent() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Gestão de Usuários</h1>
         <button 
-          onClick={() => {
-            console.log('Botão clicado!')
-            setShowModal(true)
-          }}
+          onClick={() => setShowModal(true)}
           className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium relative z-50 cursor-pointer"
           style={{ pointerEvents: 'auto' }}
         >

@@ -267,8 +267,25 @@ Sistema de login LMS com design premium marrom/dourado desenvolvido em Next.js.
 - **Todos componentes**: Verificado 100% funcionais
 - **Build**: Passa sem erros, interatividade total
 
+### 🎯 Estágio 27: Correção de Z-Index dos Botões ✅
+- [x] Identificar problema de CSS sobrepondo eventos JavaScript
+- [x] Corrigir botão "Novo Usuário" com z-50 e pointer-events
+- [x] Aplicar correção para todos os 25 botões da dashboard
+- [x] Testar funcionalidade completa de todos os botões
+
+**Problema identificado:**
+- **CSS sobre JavaScript**: Elementos CSS impediam cliques nos botões
+- **Z-index baixo**: Botões ficavam atrás de outros elementos
+- **Pointer events**: Eventos sendo bloqueados por overlays
+
+**Correções aplicadas:**
+- **Z-index**: `relative z-50` em todos os botões
+- **Pointer events**: `style={{ pointerEvents: 'auto' }}`
+- **Cursor**: `cursor-pointer` para feedback visual
+- **25 botões**: Todos componentes corrigidos simultaneamente
+
 ---
-*Última atualização: Estágio 26 CONCLUÍDO - Correção de Interatividade dos Botões*
+*Última atualização: Estágio 27 CONCLUÍDO - Correção de Z-Index dos Botões*
 
 ---
 
