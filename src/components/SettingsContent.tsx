@@ -1,32 +1,124 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getSystemSettings, updateSystemSettings, getNotificationSettings, updateNotificationSettings, getAllIntegrations, updateIntegration, triggerBackup, uploadLogo, SystemSettings, NotificationSettings, Integration } from '@/lib/settings'
 
 export default function SettingsContent() {
   const [activeTab, setActiveTab] = useState('general')
-  const [settings, setSettings] = useState({
-    siteName: 'SwiftEDU',
-    siteDescription: 'Plataforma de ensino online premium',
-    allowRegistration: false,
-    emailNotifications: true,
-    maintenanceMode: false,
-    backupFrequency: 'daily',
-    maxStudentsPerCourse: 100,
-    certificateTemplate: 'modern',
-    primaryColor: '#654321',
-    secondaryColor: '#FFD700',
-  })
+  const [systemSettings, setSystemSettings] = useState<SystemSettings | null>(null)
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings | null>(null)
+  const [integrations, setIntegrations] = useState<Integration[]>([])  // Used in integrations tab
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
 
-  const handleSettingChange = (key: string, value: string | number | boolean) => {
-    setSettings(prev => ({ ...prev, [key]: value }))
+  useEffect(() => {
+    loadSettings()
+  }, [])
+
+  async function loadSettings() {
+    try {
+      const [systemData, notificationData, integrationsData] = await Promise.all([
+        getSystemSettings(),
+        getNotificationSettings(),
+        getAllIntegrations()
+      ])
+      
+      setSystemSettings(systemData)
+      setNotificationSettings(notificationData)
+      setIntegrations(integrationsData)
+    } catch (error) {
+      console.error('Error loading settings:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleSaveSettings() {
+    if (!systemSettings) return
+    
+    setSaving(true)
+    try {
+      await updateSystemSettings(systemSettings)
+      if (notificationSettings) {
+        await updateNotificationSettings(notificationSettings)
+      }
+      alert('Configurações salvas com sucesso!')
+    } catch (error) {
+      console.error('Error saving settings:', error)
+      alert('Erro ao salvar configurações.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function handleBackup() {
+    try {
+      const result = await triggerBackup()
+      if (result.success) {
+        alert('Backup iniciado com sucesso!')
+      } else {
+        alert(result.message)
+      }
+    } catch (error) {
+      console.error('Error triggering backup:', error)
+      alert('Erro ao iniciar backup.')
+    }
+  }
+
+  async function handleLogoUpload(file: File) {
+    setUploadingLogo(true)
+    try {
+      const logoUrl = await uploadLogo(file)
+      if (systemSettings) {
+        setSystemSettings({...systemSettings, logo_url: logoUrl})
+      }
+    } catch (error) {
+      console.error('Error uploading logo:', error)
+      alert('Erro ao fazer upload do logo.')
+    } finally {
+      setUploadingLogo(false)
+    }
+  }
+
+  async function handleToggleIntegration(integration: Integration) {
+    try {
+      const newStatus = integration.status === 'connected' ? 'disconnected' : 'connected'
+      await updateIntegration(integration.id, { status: newStatus })
+      setIntegrations(prev => 
+        prev.map(int => 
+          int.id === integration.id 
+            ? { ...int, status: newStatus }
+            : int
+        )
+      )
+    } catch (error) {
+      console.error('Error toggling integration:', error)
+      alert('Erro ao alterar status da integração.')
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="h-96 bg-gray-200 rounded-xl"></div>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Configurações do Sistema</h1>
-        <button className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium">
-          💾 Salvar Alterações
+        <button 
+          onClick={handleSaveSettings}
+          disabled={saving}
+          className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium disabled:opacity-50"
+        >
+          {saving ? '💾 Salvando...' : '💾 Salvar Alterações'}
         </button>
       </div>
 
@@ -67,8 +159,8 @@ export default function SettingsContent() {
                 <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Nome da Plataforma</label>
                 <input
                   type="text"
-                  value={settings.siteName}
-                  onChange={(e) => handleSettingChange('siteName', e.target.value)}
+                  value={systemSettings?.site_name || ''}
+                  onChange={(e) => setSystemSettings(prev => prev ? {...prev, site_name: e.target.value} : null)}
                   className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
@@ -76,8 +168,8 @@ export default function SettingsContent() {
                 <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Máximo de Alunos por Curso</label>
                 <input
                   type="number"
-                  value={settings.maxStudentsPerCourse}
-                  onChange={(e) => handleSettingChange('maxStudentsPerCourse', parseInt(e.target.value))}
+                  value={systemSettings?.max_students_per_course || ''}
+                  onChange={(e) => setSystemSettings(prev => prev ? {...prev, max_students_per_course: parseInt(e.target.value)} : null)}
                   className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
@@ -86,8 +178,8 @@ export default function SettingsContent() {
             <div>
               <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Descrição da Plataforma</label>
               <textarea
-                value={settings.siteDescription}
-                onChange={(e) => handleSettingChange('siteDescription', e.target.value)}
+                value={systemSettings?.site_description || ''}
+                onChange={(e) => setSystemSettings(prev => prev ? {...prev, site_description: e.target.value} : null)}
                 rows={3}
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
@@ -100,13 +192,13 @@ export default function SettingsContent() {
                   <p className="text-[#2C1A0E] font-semibold font-medium text-sm">Permitir que novos usuários se cadastrem automaticamente</p>
                 </div>
                 <button
-                  onClick={() => handleSettingChange('allowRegistration', !settings.allowRegistration)}
+                  onClick={() => setSystemSettings(prev => prev ? {...prev, allow_registration: !prev.allow_registration} : null)}
                   className={`w-12 h-6 rounded-full transition-colors ${
-                    settings.allowRegistration ? 'bg-green-500' : 'bg-gray-300'
+                    systemSettings?.allow_registration ? 'bg-green-500' : 'bg-gray-300'
                   }`}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                    settings.allowRegistration ? 'translate-x-6' : 'translate-x-1'
+                    systemSettings?.allow_registration ? 'translate-x-6' : 'translate-x-1'
                   }`}></div>
                 </button>
               </div>
@@ -117,13 +209,13 @@ export default function SettingsContent() {
                   <p className="text-[#2C1A0E] font-semibold font-medium text-sm">Desabilitar acesso temporariamente</p>
                 </div>
                 <button
-                  onClick={() => handleSettingChange('maintenanceMode', !settings.maintenanceMode)}
+                  onClick={() => setSystemSettings(prev => prev ? {...prev, maintenance_mode: !prev.maintenance_mode} : null)}
                   className={`w-12 h-6 rounded-full transition-colors ${
-                    settings.maintenanceMode ? 'bg-red-500' : 'bg-gray-300'
+                    systemSettings?.maintenance_mode ? 'bg-red-500' : 'bg-gray-300'
                   }`}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
-                    settings.maintenanceMode ? 'translate-x-6' : 'translate-x-1'
+                    systemSettings?.maintenance_mode ? 'translate-x-6' : 'translate-x-1'
                   }`}></div>
                 </button>
               </div>
@@ -143,14 +235,14 @@ export default function SettingsContent() {
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
-                    value={settings.primaryColor}
-                    onChange={(e) => handleSettingChange('primaryColor', e.target.value)}
+                    value={systemSettings?.primary_color || '#654321'}
+                    onChange={(e) => setSystemSettings(prev => prev ? {...prev, primary_color: e.target.value} : null)}
                     className="w-12 h-10 border-2 border-[#D2B48C] rounded-lg"
                   />
                   <input
                     type="text"
-                    value={settings.primaryColor}
-                    onChange={(e) => handleSettingChange('primaryColor', e.target.value)}
+                    value={systemSettings?.primary_color || '#654321'}
+                    onChange={(e) => setSystemSettings(prev => prev ? {...prev, primary_color: e.target.value} : null)}
                     className="flex-1 px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                   />
                 </div>
@@ -160,14 +252,14 @@ export default function SettingsContent() {
                 <div className="flex items-center space-x-2">
                   <input
                     type="color"
-                    value={settings.secondaryColor}
-                    onChange={(e) => handleSettingChange('secondaryColor', e.target.value)}
+                    value={systemSettings?.secondary_color || '#FFD700'}
+                    onChange={(e) => setSystemSettings(prev => prev ? {...prev, secondary_color: e.target.value} : null)}
                     className="w-12 h-10 border-2 border-[#D2B48C] rounded-lg"
                   />
                   <input
                     type="text"
-                    value={settings.secondaryColor}
-                    onChange={(e) => handleSettingChange('secondaryColor', e.target.value)}
+                    value={systemSettings?.secondary_color || '#FFD700'}
+                    onChange={(e) => setSystemSettings(prev => prev ? {...prev, secondary_color: e.target.value} : null)}
                     className="flex-1 px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                   />
                 </div>
@@ -177,11 +269,29 @@ export default function SettingsContent() {
             <div>
               <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Upload de Logo</label>
               <div className="border-2 border-dashed border-[#D2B48C] rounded-lg p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg mx-auto mb-3 flex items-center justify-center">
-                  <span className="text-[#2C1A0E] font-semibold font-bold text-xl">S</span>
-                </div>
-                <p className="text-[#2C1A0E] font-semibold font-medium mb-2">Clique para fazer upload ou arraste aqui</p>
-                <p className="text-[#2C1A0E] font-semibold font-medium text-sm">PNG, JPG até 2MB</p>
+                <input
+                  type="file"
+                  id="logo-upload"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleLogoUpload(file)
+                  }}
+                />
+                <label htmlFor="logo-upload" className="cursor-pointer block">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg mx-auto mb-3 flex items-center justify-center">
+                    {uploadingLogo ? (
+                      <span className="text-[#2C1A0E] animate-spin">⏳</span>
+                    ) : (
+                      <span className="text-[#2C1A0E] font-semibold font-bold text-xl">S</span>
+                    )}
+                  </div>
+                  <p className="text-[#2C1A0E] font-semibold font-medium mb-2">
+                    {uploadingLogo ? 'Fazendo upload...' : 'Clique para fazer upload ou arraste aqui'}
+                  </p>
+                  <p className="text-[#2C1A0E] font-semibold font-medium text-sm">PNG, JPG até 2MB</p>
+                </label>
               </div>
             </div>
 
@@ -233,8 +343,8 @@ export default function SettingsContent() {
             <div>
               <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Template de Certificado</label>
               <select 
-                value={settings.certificateTemplate}
-                onChange={(e) => handleSettingChange('certificateTemplate', e.target.value)}
+                value={systemSettings?.certificate_template || 'modern'}
+                onChange={(e) => setSystemSettings(prev => prev ? {...prev, certificate_template: e.target.value as 'modern' | 'classic' | 'elegant' | 'minimal'} : null)}
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="modern">Moderno</option>
@@ -250,6 +360,8 @@ export default function SettingsContent() {
                 <input
                   type="text"
                   placeholder="Nome do diretor"
+                  value={systemSettings?.director_name || ''}
+                  onChange={(e) => setSystemSettings(prev => prev ? {...prev, director_name: e.target.value} : null)}
                   className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
@@ -295,8 +407,8 @@ export default function SettingsContent() {
             <div>
               <label className="block text-[#2C1A0E] font-semibold font-medium mb-2">Frequência de Backup</label>
               <select 
-                value={settings.backupFrequency}
-                onChange={(e) => handleSettingChange('backupFrequency', e.target.value)}
+                value={systemSettings?.backup_frequency || 'daily'}
+                onChange={(e) => setSystemSettings(prev => prev ? {...prev, backup_frequency: e.target.value as 'daily' | 'weekly' | 'monthly'} : null)}
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="daily">Diário</option>
@@ -324,7 +436,10 @@ export default function SettingsContent() {
             </div>
 
             <div className="flex space-x-4">
-              <button className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all">
+              <button 
+                onClick={handleBackup}
+                className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+              >
                 🔄 Backup Manual
               </button>
               <button className="border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium px-6 py-2 rounded-lg hover:bg-[#FFD700]/20 transition-colors">
@@ -340,13 +455,7 @@ export default function SettingsContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-4">Integrações</h3>
           <div className="space-y-4">
-            {[
-              { name: 'Google Analytics', status: 'connected', description: 'Análise de tráfego e comportamento' },
-              { name: 'SendGrid', status: 'connected', description: 'Envio de emails transacionais' },
-              { name: 'Stripe', status: 'disconnected', description: 'Processamento de pagamentos' },
-              { name: 'Zoom', status: 'disconnected', description: 'Aulas ao vivo e webinars' },
-              { name: 'Slack', status: 'connected', description: 'Notificações em tempo real' },
-            ].map((integration, index) => (
+            {integrations.length > 0 ? integrations.map((integration, index) => (
               <div key={index} className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
                 <div className="flex items-center">
                   <div className={`w-4 h-4 rounded-full mr-3 ${
@@ -357,15 +466,22 @@ export default function SettingsContent() {
                     <p className="text-[#2C1A0E] font-semibold font-medium text-sm">{integration.description}</p>
                   </div>
                 </div>
-                <button className={`px-4 py-2 rounded-lg text-sm transition-colors ${
-                  integration.status === 'connected' 
-                    ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                    : 'bg-green-100 text-green-700 hover:bg-green-200'
-                }`}>
+                <button 
+                  onClick={() => handleToggleIntegration(integration)}
+                  className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+                    integration.status === 'connected' 
+                      ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                      : 'bg-green-100 text-green-700 hover:bg-green-200'
+                  }`}
+                >
                   {integration.status === 'connected' ? 'Desconectar' : 'Conectar'}
                 </button>
               </div>
-            ))}
+            )) : (
+              <div className="text-center py-8">
+                <p className="text-[#2C1A0E] font-medium">Nenhuma integração configurada</p>
+              </div>
+            )}
           </div>
         </div>
       )}

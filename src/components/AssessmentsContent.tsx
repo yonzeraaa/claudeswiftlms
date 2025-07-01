@@ -1,23 +1,141 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getAllAssessments, getAssessmentStats, createAssessment, updateAssessment, getQuestionsByAssessment, Assessment, AssessmentStats, Question } from '@/lib/assessments'
+import { getAllCourses, Course } from '@/lib/courses'
 
 export default function AssessmentsContent() {
   const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState('assessments')
+  const [assessments, setAssessments] = useState<Assessment[]>([])
+  const [stats, setStats] = useState<AssessmentStats | null>(null)
+  const [courses, setCourses] = useState<Course[]>([])
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    course_id: '',
+    type: 'quiz' as 'quiz' | 'exam' | 'project',
+    time_limit: 60,
+    passing_score: 7.0
+  })
+  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(null)
+  const [showEditModal, setShowEditModal] = useState(false)
 
-  const assessments = [
-    { id: 1, title: 'JavaScript Quiz', course: 'JavaScript Fundamentals', type: 'quiz', questions: 20, submissions: 45, avgScore: 8.2, status: 'active' },
-    { id: 2, title: 'React Final Exam', course: 'React para Iniciantes', type: 'exam', questions: 35, submissions: 32, avgScore: 7.8, status: 'active' },
-    { id: 3, title: 'Node.js Project', course: 'Node.js Backend', type: 'project', questions: 5, submissions: 18, avgScore: 9.1, status: 'active' },
-    { id: 4, title: 'Python Practice', course: 'Python Básico', type: 'quiz', questions: 15, submissions: 0, avgScore: 0, status: 'draft' },
-  ]
+  useEffect(() => {
+    loadData()
+  }, [])
 
-  const questions = [
-    { id: 1, question: 'O que é JavaScript?', type: 'multiple', options: 4, difficulty: 'easy', category: 'Conceitos Básicos' },
-    { id: 2, question: 'Explique closures em JavaScript', type: 'essay', options: 0, difficulty: 'hard', category: 'Avançado' },
-    { id: 3, question: 'Qual é a diferença entre let e var?', type: 'multiple', options: 4, difficulty: 'medium', category: 'Variáveis' },
-  ]
+  async function loadData() {
+    try {
+      const [assessmentsData, statsData, coursesData] = await Promise.all([
+        getAllAssessments(),
+        getAssessmentStats(),
+        getAllCourses()
+      ])
+      setAssessments(assessmentsData)
+      setStats(statsData)
+      setCourses(coursesData)
+    } catch (error) {
+      console.error('Error loading assessments data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleCreateAssessment(e: React.FormEvent) {
+    e.preventDefault()
+    setSubmitting(true)
+    try {
+      await createAssessment({
+        ...formData,
+        status: 'draft'
+      })
+      setShowModal(false)
+      setFormData({
+        title: '',
+        description: '',
+        course_id: '',
+        type: 'quiz',
+        time_limit: 60,
+        passing_score: 7.0
+      })
+      await loadData()
+    } catch (error) {
+      console.error('Error creating assessment:', error)
+      alert('Erro ao criar avaliação.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleEditAssessment(assessment: Assessment) {
+    setEditingAssessment(assessment)
+    setFormData({
+      title: assessment.title,
+      description: assessment.description || '',
+      course_id: assessment.course_id,
+      type: assessment.type,
+      time_limit: assessment.time_limit || 60,
+      passing_score: assessment.passing_score
+    })
+    setShowEditModal(true)
+  }
+
+  async function handleUpdateAssessment(e: React.FormEvent) {
+    e.preventDefault()
+    if (!editingAssessment) return
+    
+    setSubmitting(true)
+    try {
+      await updateAssessment(editingAssessment.id, formData)
+      setShowEditModal(false)
+      setEditingAssessment(null)
+      setFormData({
+        title: '',
+        description: '',
+        course_id: '',
+        type: 'quiz',
+        time_limit: 60,
+        passing_score: 7.0
+      })
+      await loadData()
+    } catch (error) {
+      console.error('Error updating assessment:', error)
+      alert('Erro ao atualizar avaliação.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function loadQuestions(assessmentId: string) {
+    try {
+      const questionsData = await getQuestionsByAssessment(assessmentId)
+      setQuestions(questionsData)
+      setActiveTab('questions')
+    } catch (error) {
+      console.error('Error loading questions:', error)
+      alert('Erro ao carregar questões.')
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-20 bg-gray-200 rounded-xl"></div>
+            ))}
+          </div>
+          <div className="h-96 bg-gray-200 rounded-xl"></div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6">
@@ -35,19 +153,19 @@ export default function AssessmentsContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
           <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Total de Avaliações</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">24</p>
+          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.totalAssessments || 0}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
           <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Pendentes de Correção</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">15</p>
+          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.pendingGrading || 0}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
           <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Média Geral</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">8.4</p>
+          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.averageScore.toFixed(1) || '0.0'}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
           <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Taxa de Aprovação</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">89%</p>
+          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.passRate.toFixed(0) || 0}%</p>
         </div>
       </div>
 
@@ -108,7 +226,7 @@ export default function AssessmentsContent() {
                 {assessments.map((assessment) => (
                   <tr key={assessment.id} className="border-b border-[#D2B48C]/30 hover:bg-white/50">
                     <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.title}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.course}</td>
+                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.course?.title}</td>
                     <td className="p-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         assessment.type === 'quiz' ? 'bg-blue-100 text-blue-800' : 
@@ -117,9 +235,9 @@ export default function AssessmentsContent() {
                         {assessment.type === 'quiz' ? 'Quiz' : assessment.type === 'exam' ? 'Prova' : 'Projeto'}
                       </span>
                     </td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.questions}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.submissions}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.avgScore.toFixed(1)}</td>
+                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.questions_count}</td>
+                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.submissions_count}</td>
+                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.average_score?.toFixed(1) || '0.0'}</td>
                     <td className="p-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         assessment.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
@@ -129,8 +247,18 @@ export default function AssessmentsContent() {
                     </td>
                     <td className="p-3">
                       <div className="flex space-x-2">
-                        <button className="text-blue-600 hover:text-blue-800 text-sm">Editar</button>
-                        <button className="text-green-600 hover:text-green-800 text-sm">Ver Resultados</button>
+                        <button 
+                          onClick={() => handleEditAssessment(assessment)}
+                          className="text-blue-600 hover:text-blue-800 text-sm"
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          onClick={() => loadQuestions(assessment.id)}
+                          className="text-green-600 hover:text-green-800 text-sm"
+                        >
+                          Questões
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -146,7 +274,10 @@ export default function AssessmentsContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold">Banco de Questões</h3>
-            <button className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg text-sm">
+            <button 
+              onClick={() => alert('Funcionalidade em desenvolvimento')}
+              className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg text-sm"
+            >
               + Nova Questão
             </button>
           </div>
@@ -154,7 +285,7 @@ export default function AssessmentsContent() {
             {questions.map((question) => (
               <div key={question.id} className="p-4 bg-white/50 rounded-lg">
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-[#2C1A0E] font-semibold font-medium flex-1">{question.question}</h4>
+                  <h4 className="text-[#2C1A0E] font-semibold font-medium flex-1">{question.question_text}</h4>
                   <div className="flex space-x-2">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       question.difficulty === 'easy' ? 'bg-green-100 text-green-800' :
@@ -163,13 +294,13 @@ export default function AssessmentsContent() {
                       {question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Médio' : 'Difícil'}
                     </span>
                     <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      {question.type === 'multiple' ? 'Múltipla Escolha' : 'Dissertativa'}
+                      {question.type === 'multiple_choice' ? 'Múltipla Escolha' : question.type === 'essay' ? 'Dissertativa' : 'V/F'}
                     </span>
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-sm text-[#2C1A0E] font-semibold font-medium">
                   <span>Categoria: {question.category}</span>
-                  {question.type === 'multiple' && <span>{question.options} opções</span>}
+                  <span>Pontos: {question.points}</span>
                 </div>
               </div>
             ))}
@@ -229,33 +360,56 @@ export default function AssessmentsContent() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
             <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Nova Avaliação</h3>
-            <form className="space-y-4">
+            <form onSubmit={handleCreateAssessment} className="space-y-4">
               <input
                 type="text"
                 placeholder="Título da avaliação"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                required
                 className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
-              <select className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
-                <option>Selecionar curso</option>
-                <option>JavaScript Fundamentals</option>
-                <option>React para Iniciantes</option>
-                <option>Node.js Backend</option>
+              <textarea
+                placeholder="Descrição da avaliação"
+                rows={3}
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              />
+              <select 
+                value={formData.course_id}
+                onChange={(e) => setFormData({...formData, course_id: e.target.value})}
+                required
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="">Selecionar curso</option>
+                {courses.map(course => (
+                  <option key={course.id} value={course.id}>{course.title}</option>
+                ))}
               </select>
-              <select className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90">
-                <option>Tipo de avaliação</option>
-                <option>Quiz</option>
-                <option>Prova</option>
-                <option>Projeto</option>
+              <select 
+                value={formData.type}
+                onChange={(e) => setFormData({...formData, type: e.target.value as 'quiz' | 'exam' | 'project'})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="quiz">Quiz</option>
+                <option value="exam">Prova</option>
+                <option value="project">Projeto</option>
               </select>
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="number"
                   placeholder="Tempo (min)"
+                  value={formData.time_limit || ''}
+                  onChange={(e) => setFormData({...formData, time_limit: Number(e.target.value)})}
                   className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
                 <input
                   type="number"
+                  step="0.1"
                   placeholder="Nota mínima"
+                  value={formData.passing_score || ''}
+                  onChange={(e) => setFormData({...formData, passing_score: Number(e.target.value)})}
                   className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
@@ -263,15 +417,97 @@ export default function AssessmentsContent() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
                 >
-                  Salvar
+                  {submitting ? 'Criando...' : 'Salvar'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Assessment Modal */}
+      {showEditModal && editingAssessment && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
+            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Editar Avaliação</h3>
+            <form onSubmit={handleUpdateAssessment} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Título da avaliação"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                required
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              />
+              <textarea
+                placeholder="Descrição da avaliação"
+                rows={3}
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              />
+              <select 
+                value={formData.course_id}
+                onChange={(e) => setFormData({...formData, course_id: e.target.value})}
+                required
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="">Selecionar curso</option>
+                {courses.map(course => (
+                  <option key={course.id} value={course.id}>{course.title}</option>
+                ))}
+              </select>
+              <select 
+                value={formData.type}
+                onChange={(e) => setFormData({...formData, type: e.target.value as 'quiz' | 'exam' | 'project'})}
+                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              >
+                <option value="quiz">Quiz</option>
+                <option value="exam">Prova</option>
+                <option value="project">Projeto</option>
+              </select>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="number"
+                  placeholder="Tempo (min)"
+                  value={formData.time_limit || ''}
+                  onChange={(e) => setFormData({...formData, time_limit: Number(e.target.value)})}
+                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                />
+                <input
+                  type="number"
+                  step="0.1"
+                  placeholder="Nota mínima"
+                  value={formData.passing_score || ''}
+                  onChange={(e) => setFormData({...formData, passing_score: Number(e.target.value)})}
+                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                />
+              </div>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  disabled={submitting}
+                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50"
+                >
+                  {submitting ? 'Salvando...' : 'Salvar'}
                 </button>
               </div>
             </form>
