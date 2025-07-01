@@ -128,14 +128,22 @@ export async function updateCourse(id: string, updates: Partial<Course>): Promis
 export async function deleteCourse(id: string): Promise<void> {
   console.log('Iniciando exclusão do curso:', id)
   
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('courses')
     .delete()
     .eq('id', id)
+    .select()
   
   if (error) {
     console.error('Erro na exclusão do curso:', error)
     throw new Error(`Falha ao excluir curso: ${error.message}`)
+  }
+  
+  console.log('Resposta da exclusão:', data)
+  
+  if (!data || data.length === 0) {
+    console.warn('Nenhum curso foi excluído - pode não existir no banco')
+    throw new Error('Curso não encontrado ou já foi excluído')
   }
   
   console.log('Curso excluído com sucesso no banco')

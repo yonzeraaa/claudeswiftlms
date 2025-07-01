@@ -131,10 +131,17 @@ export default function CoursesContent() {
         // Atualizar a lista local imediatamente
         setCourses(prevCourses => prevCourses.filter(course => course.id !== courseId))
         
+        // Atualizar estatísticas
+        if (stats) {
+          setStats(prev => prev ? {
+            ...prev,
+            totalCourses: prev.totalCourses - 1,
+            activeCourses: prev.activeCourses - 1
+          } : null)
+        }
+        
         alert('Curso excluído com sucesso!')
         
-        // Recarregar dados completos
-        await loadData()
       } catch (error) {
         console.error('Error deleting course:', error)
         alert(`Erro ao excluir curso: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
