@@ -28,11 +28,16 @@ export default function CoursesContent() {
 
   async function loadData() {
     try {
+      console.log('Carregando dados dos cursos...')
       const [coursesData, statsData, instructorsData] = await Promise.all([
         getAllCourses(),
         getCourseStats(), 
         getInstructors()
       ])
+      console.log('Dados carregados:', {
+        cursos: coursesData.length,
+        stats: statsData
+      })
       setCourses(coursesData)
       setStats(statsData)
       setInstructors(instructorsData)
@@ -122,7 +127,13 @@ export default function CoursesContent() {
         console.log('Tentando excluir curso:', courseId)
         await deleteCourse(courseId)
         console.log('Curso excluído com sucesso')
+        
+        // Atualizar a lista local imediatamente
+        setCourses(prevCourses => prevCourses.filter(course => course.id !== courseId))
+        
         alert('Curso excluído com sucesso!')
+        
+        // Recarregar dados completos
         await loadData()
       } catch (error) {
         console.error('Error deleting course:', error)
