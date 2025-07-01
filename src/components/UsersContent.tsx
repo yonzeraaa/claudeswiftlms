@@ -262,26 +262,50 @@ export default function UsersContent() {
                   <td className="p-3 text-slate-300 font-medium">{user.course_count}</td>
                   <td className="p-3 text-slate-300 font-medium">{new Date(user.updated_at).toLocaleDateString('pt-BR')}</td>
                   <td className="p-3">
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-1">
+                      {/* Botão Editar */}
                       <button 
                         onClick={() => handleEditUser(user)}
-                        className="text-sky-400 hover:text-sky-300 text-sm"
+                        className="group relative flex items-center justify-center w-8 h-8 bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        title="Editar usuário"
                       >
-                        Editar
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
                       </button>
+
+                      {/* Botão Congelar/Descongelar - apenas para estudantes */}
                       {user.role === 'student' && (
                         <button 
                           onClick={() => user.status === 'frozen' ? handleUnfreezeUser(user.id) : handleFreezeUser(user.id)}
-                          className="text-blue-400 hover:text-blue-300 text-sm"
+                          className={`group relative flex items-center justify-center w-8 h-8 ${
+                            user.status === 'frozen' 
+                              ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700' 
+                              : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700'
+                          } text-white rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105`}
+                          title={user.status === 'frozen' ? 'Descongelar usuário' : 'Congelar usuário'}
                         >
-                          {user.status === 'frozen' ? 'Descongelar' : 'Congelar'}
+                          {user.status === 'frozen' ? (
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                            </svg>
+                          )}
                         </button>
                       )}
+
+                      {/* Botão Excluir */}
                       <button 
                         onClick={() => handleDeleteUser(user.id)}
-                        className="text-red-400 hover:text-red-300 text-sm"
+                        className="group relative flex items-center justify-center w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        title="Excluir usuário"
                       >
-                        Excluir
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                       </button>
                     </div>
                   </td>
