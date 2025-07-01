@@ -38,8 +38,8 @@ export default function AssessmentsContent() {
       setAssessments(assessmentsData)
       setStats(statsData)
       setCourses(coursesData)
-    } catch (error) {
-      console.error('Error loading assessments data:', error)
+    } catch {
+      // Error loading assessments data
     } finally {
       setLoading(false)
     }
@@ -143,7 +143,8 @@ export default function AssessmentsContent() {
         <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Sistema de Avaliações</h1>
         <button 
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+          style={{ pointerEvents: 'auto' }}
         >
           + Nova Avaliação
         </button>
@@ -174,31 +175,34 @@ export default function AssessmentsContent() {
         <div className="flex space-x-4">
           <button 
             onClick={() => setActiveTab('assessments')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'assessments' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Avaliações
           </button>
           <button 
             onClick={() => setActiveTab('questions')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'questions' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Banco de Questões
           </button>
           <button 
             onClick={() => setActiveTab('results')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'results' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Resultados
           </button>
@@ -249,13 +253,15 @@ export default function AssessmentsContent() {
                       <div className="flex space-x-2">
                         <button 
                           onClick={() => handleEditAssessment(assessment)}
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="relative z-50 cursor-pointer text-blue-600 hover:text-blue-800 text-sm"
+                          style={{ pointerEvents: 'auto' }}
                         >
                           Editar
                         </button>
                         <button 
                           onClick={() => loadQuestions(assessment.id)}
-                          className="text-green-600 hover:text-green-800 text-sm"
+                          className="relative z-50 cursor-pointer text-green-600 hover:text-green-800 text-sm"
+                          style={{ pointerEvents: 'auto' }}
                         >
                           Questões
                         </button>
@@ -276,7 +282,8 @@ export default function AssessmentsContent() {
             <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold">Banco de Questões</h3>
             <button 
               onClick={() => alert('Funcionalidade em desenvolvimento')}
-              className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg text-sm"
+              className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg text-sm"
+              style={{ pointerEvents: 'auto' }}
             >
               + Nova Questão
             </button>

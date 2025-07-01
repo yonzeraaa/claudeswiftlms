@@ -33,7 +33,7 @@ export default function ReportsContent() {
             <option value="quarter">Último trimestre</option>
             <option value="year">Último ano</option>
           </select>
-          <button className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all">
+          <button className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all" style={{ pointerEvents: 'auto' }}>
             📊 Exportar
           </button>
         </div>
@@ -68,41 +68,45 @@ export default function ReportsContent() {
         <div className="flex space-x-4">
           <button 
             onClick={() => setActiveTab('students')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'students' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Relatório de Alunos
           </button>
           <button 
             onClick={() => setActiveTab('courses')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'courses' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Performance de Cursos
           </button>
           <button 
             onClick={() => setActiveTab('engagement')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'engagement' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Engajamento
           </button>
           <button 
             onClick={() => setActiveTab('financial')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'financial' 
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                 : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
+            style={{ pointerEvents: 'auto' }}
           >
             Financeiro
           </button>
@@ -114,7 +118,7 @@ export default function ReportsContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold">Relatório Detalhado de Alunos</h3>
-            <button className="text-[#2C1A0E] font-semibold font-medium hover:text-[#2C1A0E] font-semibold font-medium">📄 Exportar CSV</button>
+            <button className="relative z-50 cursor-pointer text-[#2C1A0E] font-semibold font-medium hover:text-[#2C1A0E] font-semibold font-medium" style={{ pointerEvents: 'auto' }}>📄 Exportar CSV</button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">

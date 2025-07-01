@@ -116,7 +116,8 @@ export default function SettingsContent() {
         <button 
           onClick={handleSaveSettings}
           disabled={saving}
-          className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium disabled:opacity-50"
+          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium disabled:opacity-50"
+          style={{ pointerEvents: 'auto' }}
         >
           {saving ? '💾 Salvando...' : '💾 Salvar Alterações'}
         </button>
@@ -136,11 +137,12 @@ export default function SettingsContent() {
             <button 
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-lg transition-colors flex items-center ${
+              className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors flex items-center ${
                 activeTab === tab.id 
                   ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
                   : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
               }`}
+              style={{ pointerEvents: 'auto' }}
             >
               <span className="mr-2">{tab.icon}</span>
               {tab.label}
@@ -193,9 +195,10 @@ export default function SettingsContent() {
                 </div>
                 <button
                   onClick={() => setSystemSettings(prev => prev ? {...prev, allow_registration: !prev.allow_registration} : null)}
-                  className={`w-12 h-6 rounded-full transition-colors ${
+                  className={`relative z-50 cursor-pointer w-12 h-6 rounded-full transition-colors ${
                     systemSettings?.allow_registration ? 'bg-green-500' : 'bg-gray-300'
                   }`}
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
                     systemSettings?.allow_registration ? 'translate-x-6' : 'translate-x-1'
@@ -210,9 +213,10 @@ export default function SettingsContent() {
                 </div>
                 <button
                   onClick={() => setSystemSettings(prev => prev ? {...prev, maintenance_mode: !prev.maintenance_mode} : null)}
-                  className={`w-12 h-6 rounded-full transition-colors ${
+                  className={`relative z-50 cursor-pointer w-12 h-6 rounded-full transition-colors ${
                     systemSettings?.maintenance_mode ? 'bg-red-500' : 'bg-gray-300'
                   }`}
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
                     systemSettings?.maintenance_mode ? 'translate-x-6' : 'translate-x-1'
@@ -438,11 +442,12 @@ export default function SettingsContent() {
             <div className="flex space-x-4">
               <button 
                 onClick={handleBackup}
-                className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                style={{ pointerEvents: 'auto' }}
               >
                 🔄 Backup Manual
               </button>
-              <button className="border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium px-6 py-2 rounded-lg hover:bg-[#FFD700]/20 transition-colors">
+              <button className="relative z-50 cursor-pointer border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium px-6 py-2 rounded-lg hover:bg-[#FFD700]/20 transition-colors" style={{ pointerEvents: 'auto' }}>
                 📥 Restaurar Backup
               </button>
             </div>
@@ -468,11 +473,12 @@ export default function SettingsContent() {
                 </div>
                 <button 
                   onClick={() => handleToggleIntegration(integration)}
-                  className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+                  className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg text-sm transition-colors ${
                     integration.status === 'connected' 
                       ? 'bg-red-100 text-red-700 hover:bg-red-200' 
                       : 'bg-green-100 text-green-700 hover:bg-green-200'
                   }`}
+                  style={{ pointerEvents: 'auto' }}
                 >
                   {integration.status === 'connected' ? 'Desconectar' : 'Conectar'}
                 </button>

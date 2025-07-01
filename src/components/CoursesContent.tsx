@@ -146,7 +146,8 @@ export default function CoursesContent() {
         <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Gestão de Cursos</h1>
         <button 
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+          className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+          style={{ pointerEvents: 'auto' }}
         >
           + Novo Curso
         </button>
@@ -209,13 +210,15 @@ export default function CoursesContent() {
             <div className="flex space-x-2">
               <button 
                 onClick={() => handleEditCourse(course)}
-                className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all text-sm"
+                className="relative z-50 cursor-pointer flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all text-sm"
+                style={{ pointerEvents: 'auto' }}
               >
                 Editar
               </button>
               <button 
                 onClick={() => handleViewCourse(course.id)}
-                className="px-4 py-2 border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium rounded-lg hover:bg-[#FFD700]/20 transition-colors text-sm"
+                className="relative z-50 cursor-pointer px-4 py-2 border-2 border-[#D2B48C] text-[#2C1A0E] font-semibold font-medium rounded-lg hover:bg-[#FFD700]/20 transition-colors text-sm"
+                style={{ pointerEvents: 'auto' }}
               >
                 Ver Detalhes
               </button>
@@ -404,7 +407,8 @@ export default function CoursesContent() {
               <h3 className="text-2xl font-bold text-[#2C1A0E] font-semibold">{selectedCourse.title}</h3>
               <button 
                 onClick={() => setShowDetailModal(false)}
-                className="text-[#2C1A0E] text-2xl font-bold hover:text-[#8B4513]"
+                className="relative z-50 cursor-pointer text-[#2C1A0E] text-2xl font-bold hover:text-[#8B4513]"
+                style={{ pointerEvents: 'auto' }}
               >
                 ×
               </button>
@@ -447,7 +451,8 @@ export default function CoursesContent() {
             <div className="flex justify-end mt-6">
               <button
                 onClick={() => setShowDetailModal(false)}
-                className="bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-6 py-2 rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all"
+                style={{ pointerEvents: 'auto' }}
               >
                 Fechar
               </button>
