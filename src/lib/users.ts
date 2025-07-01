@@ -161,17 +161,39 @@ export async function createUser(userData: {
   })
   
   if (authError) throw authError
-  
-  // O perfil será criado automaticamente via trigger
-  // Retornamos o perfil criado
   if (!authData.user) throw new Error('Falha na criação do usuário')
+
+  // Aguardar um pouco para o trigger criar o perfil
+  await new Promise(resolve => setTimeout(resolve, 1000))
   
-  const { data: profileData, error: profileError } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', authData.user.id)
-    .single()
+  // Tentar buscar o perfil com retry
+  let retries = 5
+  let profileData: UserProfile | null = null
   
-  if (profileError) throw profileError
+  while (retries > 0 && !profileData) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', authData.user.id)
+      .single()
+    
+    if (data) {
+      profileData = data
+      break
+    }
+    
+    if (error && !error.message.includes('No rows')) {
+      throw error
+    }
+    
+    // Aguardar antes da próxima tentativa
+    await new Promise(resolve => setTimeout(resolve, 500))
+    retries--
+  }
+  
+  if (!profileData) {
+    throw new Error('Perfil não foi criado automaticamente')
+  }
+  
   return profileData
 }

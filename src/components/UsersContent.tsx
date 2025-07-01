@@ -92,8 +92,11 @@ export default function UsersContent() {
     setSubmitting(true)
     
     try {
+      console.log('Creating user with data:', formData)
       await createUser(formData)
+      console.log('User created successfully, reloading list...')
       await loadUsers()
+      console.log('Users reloaded, closing modal...')
       setShowModal(false)
       setFormData({
         full_name: '',
@@ -101,9 +104,11 @@ export default function UsersContent() {
         role: 'student',
         password: ''
       })
+      console.log('User creation process completed')
     } catch (error) {
       console.error('Error creating user:', error)
-      alert('Erro ao criar usuário. Verifique se o email não está em uso.')
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
+      alert('Erro ao criar usuário: ' + errorMessage)
     } finally {
       setSubmitting(false)
     }
