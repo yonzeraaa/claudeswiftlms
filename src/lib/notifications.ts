@@ -42,6 +42,12 @@ export const notificationService = {
   },
 
   async createNotification(notification: Omit<Notification, 'id' | 'created_at'>) {
+    // Verificar se o usuário está autenticado
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      throw new Error('Usuário não autenticado para criar notificação')
+    }
+
     const { data, error } = await supabase
       .from('notifications')
       .insert(notification)

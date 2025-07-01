@@ -75,14 +75,19 @@ export default function CoursesContent() {
       await createCourse(formData)
       
       // Criar notificação de sistema
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        await notificationService.sendNotificationToUser(
-          user.id,
-          'Curso Criado',
-          `O curso "${formData.title}" foi criado com sucesso.`,
-          'success'
-        )
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await notificationService.sendNotificationToUser(
+            user.id,
+            'Curso Criado',
+            `O curso "${formData.title}" foi criado com sucesso.`,
+            'success'
+          )
+        }
+      } catch (notificationError) {
+        console.error('Erro ao criar notificação:', notificationError)
+        // Não falhar a criação do curso se a notificação falhar
       }
       
       setShowModal(false)
@@ -123,14 +128,19 @@ export default function CoursesContent() {
       await updateCourse(editingCourse.id, formData)
       
       // Criar notificação de sistema
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        await notificationService.sendNotificationToUser(
-          user.id,
-          'Curso Atualizado',
-          `O curso "${editingCourse.title}" foi atualizado com sucesso.`,
-          'info'
-        )
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await notificationService.sendNotificationToUser(
+            user.id,
+            'Curso Atualizado',
+            `O curso "${editingCourse.title}" foi atualizado com sucesso.`,
+            'info'
+          )
+        }
+      } catch (notificationError) {
+        console.error('Erro ao criar notificação:', notificationError)
+        // Não falhar a atualização do curso se a notificação falhar
       }
       
       setShowEditModal(false)
@@ -170,14 +180,19 @@ export default function CoursesContent() {
         console.log('Curso excluído com sucesso')
         
         // Criar notificação de sistema
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          await notificationService.sendNotificationToUser(
-            user.id,
-            'Curso Excluído',
-            `O curso "${courseTitle}" foi excluído com sucesso.`,
-            'warning'
-          )
+        try {
+          const { data: { user } } = await supabase.auth.getUser()
+          if (user) {
+            await notificationService.sendNotificationToUser(
+              user.id,
+              'Curso Excluído',
+              `O curso "${courseTitle}" foi excluído com sucesso.`,
+              'warning'
+            )
+          }
+        } catch (notificationError) {
+          console.error('Erro ao criar notificação:', notificationError)
+          // Não falhar a exclusão do curso se a notificação falhar
         }
         
         // Atualizar a lista local imediatamente

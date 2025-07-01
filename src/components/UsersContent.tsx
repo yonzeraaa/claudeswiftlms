@@ -83,14 +83,19 @@ export default function UsersContent() {
       await deleteUser(userId)
       
       // Criar notificação de sistema
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user && userToDelete) {
-        await notificationService.sendNotificationToUser(
-          user.id,
-          'Usuário Excluído',
-          `O usuário "${userToDelete.full_name}" foi excluído com sucesso.`,
-          'warning'
-        )
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user && userToDelete) {
+          await notificationService.sendNotificationToUser(
+            user.id,
+            'Usuário Excluído',
+            `O usuário "${userToDelete.full_name}" foi excluído com sucesso.`,
+            'warning'
+          )
+        }
+      } catch (notificationError) {
+        console.error('Erro ao criar notificação:', notificationError)
+        // Não falhar a exclusão do usuário se a notificação falhar
       }
       
       await loadUsers()
@@ -130,14 +135,19 @@ export default function UsersContent() {
       console.log('User created successfully, reloading list...')
       
       // Criar notificação de sistema
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        await notificationService.sendNotificationToUser(
-          user.id,
-          'Usuário Criado',
-          `O usuário "${formData.full_name}" foi criado com sucesso.`,
-          'success'
-        )
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await notificationService.sendNotificationToUser(
+            user.id,
+            'Usuário Criado',
+            `O usuário "${formData.full_name}" foi criado com sucesso.`,
+            'success'
+          )
+        }
+      } catch (notificationError) {
+        console.error('Erro ao criar notificação:', notificationError)
+        // Não falhar a criação do usuário se a notificação falhar
       }
       
       await loadUsers()
