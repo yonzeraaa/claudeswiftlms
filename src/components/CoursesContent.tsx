@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getAllCourses, getCourseStats, createCourse, updateCourse, deleteCourse, getCourseById, getInstructors, Course, CourseStats } from '@/lib/courses'
 import { supabase } from '@/lib/supabase'
+import { notificationService } from '@/lib/notifications'
 
 export default function CoursesContent() {
   const [showModal, setShowModal] = useState(false)
@@ -72,6 +73,19 @@ export default function CoursesContent() {
     setSubmitting(true)
     try {
       await createCourse(formData)
+      
+      // Criar notificação de sistema
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        await notificationService.sendNotificationToUser(
+          user.id,
+          'Curso Criado',
+          `O curso "${formData.title}" foi criado com sucesso.`,
+          'success',
+          'medium'
+        )
+      }
+      
       setShowModal(false)
       setFormData({
         title: '',
@@ -108,6 +122,19 @@ export default function CoursesContent() {
     setSubmitting(true)
     try {
       await updateCourse(editingCourse.id, formData)
+      
+      // Criar notificação de sistema
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        await notificationService.sendNotificationToUser(
+          user.id,
+          'Curso Atualizado',
+          `O curso "${editingCourse.title}" foi atualizado com sucesso.`,
+          'info',
+          'medium'
+        )
+      }
+      
       setShowEditModal(false)
       setEditingCourse(null)
       setFormData({
@@ -143,6 +170,18 @@ export default function CoursesContent() {
         console.log('Tentando excluir curso:', courseId)
         await deleteCourse(courseId)
         console.log('Curso excluído com sucesso')
+        
+        // Criar notificação de sistema
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await notificationService.sendNotificationToUser(
+            user.id,
+            'Curso Excluído',
+            `O curso "${courseTitle}" foi excluído com sucesso.`,
+            'warning',
+            'medium'
+          )
+        }
         
         // Atualizar a lista local imediatamente
         setCourses(prevCourses => prevCourses.filter(course => course.id !== courseId))

@@ -161,10 +161,10 @@ export default function NotificationCenter() {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[9998]"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-12 w-96 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-xl shadow-2xl z-50">
+          <div className="absolute right-0 top-12 w-96 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-xl shadow-2xl z-[9999]">
             <div className="p-4 border-b border-slate-100">
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-lg font-semibold text-slate-700">

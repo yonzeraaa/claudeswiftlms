@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getUsersWithEnrollmentCount, deleteUser, freezeUser, unfreezeUser, createUser, updateUserProfile, UserProfile } from '@/lib/users'
 import { supabase } from '@/lib/supabase'
+import { notificationService } from '@/lib/notifications'
 
 export default function UsersContent() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -78,7 +79,21 @@ export default function UsersContent() {
     }
     
     try {
+      const userToDelete = users.find(u => u.id === userId)
       await deleteUser(userId)
+      
+      // Criar notificação de sistema
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user && userToDelete) {
+        await notificationService.sendNotificationToUser(
+          user.id,
+          'Usuário Excluído',
+          `O usuário "${userToDelete.full_name}" foi excluído com sucesso.`,
+          'warning',
+          'medium'
+        )
+      }
+      
       await loadUsers()
     } catch (error) {
       console.error('Error deleting user:', error)
@@ -114,6 +129,19 @@ export default function UsersContent() {
       console.log('Creating user with data:', formData)
       await createUser(formData)
       console.log('User created successfully, reloading list...')
+      
+      // Criar notificação de sistema
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        await notificationService.sendNotificationToUser(
+          user.id,
+          'Usuário Criado',
+          `O usuário "${formData.full_name}" foi criado com sucesso.`,
+          'success',
+          'medium'
+        )
+      }
+      
       await loadUsers()
       console.log('Users reloaded, closing modal...')
       setShowModal(false)
