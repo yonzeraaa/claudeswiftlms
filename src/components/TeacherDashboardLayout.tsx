@@ -34,7 +34,7 @@ export default function TeacherDashboardLayout() {
         .eq('id', user.id)
         .single()
 
-      if (profileData?.role !== 'teacher') {
+      if (profileData?.role !== 'instructor') {
         router.push('/')
         return
       }

@@ -71,7 +71,7 @@ export default function LoginForm() {
         // Redirect based on user role
         if (user.profile.role === 'admin') {
           router.push('/dashboard')
-        } else if (user.profile.role === 'teacher') {
+        } else if (user.profile.role === 'instructor') {
           router.push('/teacher-dashboard')
         } else {
           router.push('/student-dashboard')

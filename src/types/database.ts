@@ -6,7 +6,7 @@ export interface Profile {
   email: string
   full_name?: string
   avatar_url?: string
-  role: 'admin' | 'student' | 'teacher'
+  role: 'admin' | 'student' | 'instructor'
   created_at: string
   updated_at: string
 }
