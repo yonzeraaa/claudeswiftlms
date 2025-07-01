@@ -112,7 +112,7 @@ export default function TeacherStudentsContent() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">
+          <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">
             🎓 Meus Alunos
           </h1>
           <p className="text-[#5D3A1F] mt-1">
@@ -130,7 +130,7 @@ export default function TeacherStudentsContent() {
               placeholder="Buscar por nome ou email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+              className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
             />
           </div>
           <div className="flex space-x-2">
@@ -160,13 +160,13 @@ export default function TeacherStudentsContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">👥</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">{students.length}</h3>
+          <h3 className="text-2xl font-bold text-[#1e293b]">{students.length}</h3>
           <p className="text-[#5D3A1F]">Total de Alunos</p>
         </div>
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">✅</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {students.filter(s => s.status === 'active').length}
           </h3>
           <p className="text-[#5D3A1F]">Ativos</p>
@@ -174,7 +174,7 @@ export default function TeacherStudentsContent() {
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">📊</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {students.length > 0 ? (
               students.reduce((avg, s) => avg + s.progress_percentage, 0) / students.length
             ).toFixed(1) : '0.0'}%
@@ -184,7 +184,7 @@ export default function TeacherStudentsContent() {
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">🎯</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {students.filter(s => s.progress_percentage >= 80).length}
           </h3>
           <p className="text-[#5D3A1F]">Acima de 80%</p>
@@ -193,7 +193,7 @@ export default function TeacherStudentsContent() {
 
       {/* Students List */}
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h3 className="text-xl font-semibold text-[#2C1A0E] mb-4">
+        <h3 className="text-xl font-semibold text-[#1e293b] mb-4">
           📋 Lista de Alunos ({filteredStudents.length})
         </h3>
         
@@ -217,7 +217,7 @@ export default function TeacherStudentsContent() {
                 
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <p className="font-semibold text-[#2C1A0E]">
+                    <p className="font-semibold text-[#1e293b]">
                       {student.profiles?.full_name || 'Nome não disponível'}
                     </p>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -240,12 +240,12 @@ export default function TeacherStudentsContent() {
               <div className="flex items-center space-x-4">
                 {/* Progress */}
                 <div className="text-right min-w-[100px]">
-                  <div className="text-sm font-medium text-[#2C1A0E]">
+                  <div className="text-sm font-medium text-[#1e293b]">
                     {student.progress_percentage}% completo
                   </div>
                   <div className="w-20 bg-gray-200 rounded-full h-2 mt-1">
                     <div 
-                      className="bg-gradient-to-r from-[#8B4513] to-[#A0522D] h-2 rounded-full transition-all"
+                      className="bg-gradient-to-r from-[#334155] to-[#475569] h-2 rounded-full transition-all"
                       style={{ width: `${student.progress_percentage}%` }}
                     ></div>
                   </div>
@@ -279,7 +279,7 @@ export default function TeacherStudentsContent() {
         {filteredStudents.length === 0 && (
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🎓</div>
-            <h3 className="text-xl font-semibold text-[#2C1A0E] mb-2">
+            <h3 className="text-xl font-semibold text-[#1e293b] mb-2">
               Nenhum aluno encontrado
             </h3>
             <p className="text-[#5D3A1F]">
@@ -293,7 +293,7 @@ export default function TeacherStudentsContent() {
       {selectedStudent && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-[#D2B48C]">
+            <div className="p-6 border-b border-[#94a3b8]">
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-full bg-[#FFD700] flex items-center justify-center">
@@ -310,7 +310,7 @@ export default function TeacherStudentsContent() {
                     )}
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-[#2C1A0E]">
+                    <h3 className="text-xl font-semibold text-[#1e293b]">
                       {selectedStudent.profiles?.full_name || 'Nome não disponível'}
                     </h3>
                     <p className="text-[#5D3A1F]">{selectedStudent.profiles?.email}</p>
@@ -321,7 +321,7 @@ export default function TeacherStudentsContent() {
                 </div>
                 <button
                   onClick={() => setSelectedStudent(null)}
-                  className="text-[#5D3A1F] hover:text-[#3D2914] relative z-50 cursor-pointer"
+                  className="text-[#5D3A1F] hover:text-[#475569] relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   ✕
@@ -332,20 +332,20 @@ export default function TeacherStudentsContent() {
             <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
               {/* Progress Section */}
               <div>
-                <h4 className="text-lg font-semibold text-[#2C1A0E] mb-3">📊 Progresso</h4>
+                <h4 className="text-lg font-semibold text-[#1e293b] mb-3">📊 Progresso</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-[#2C1A0E]">
+                    <div className="text-2xl font-bold text-[#1e293b]">
                       {selectedStudent.progress_percentage}%
                     </div>
                     <div className="text-sm text-[#5D3A1F]">Conclusão</div>
                   </div>
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-[#2C1A0E]">8.5</div>
+                    <div className="text-2xl font-bold text-[#1e293b]">8.5</div>
                     <div className="text-sm text-[#5D3A1F]">Média</div>
                   </div>
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-[#2C1A0E]">5</div>
+                    <div className="text-2xl font-bold text-[#1e293b]">5</div>
                     <div className="text-sm text-[#5D3A1F]">Atividades</div>
                   </div>
                 </div>
@@ -353,25 +353,25 @@ export default function TeacherStudentsContent() {
 
               {/* Course Info */}
               <div>
-                <h4 className="text-lg font-semibold text-[#2C1A0E] mb-3">📚 Curso</h4>
+                <h4 className="text-lg font-semibold text-[#1e293b] mb-3">📚 Curso</h4>
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="font-semibold text-[#2C1A0E]">{selectedStudent.courses?.title}</p>
+                  <p className="font-semibold text-[#1e293b]">{selectedStudent.courses?.title}</p>
                   <p className="text-sm text-[#5D3A1F]">{selectedStudent.courses?.category}</p>
                 </div>
               </div>
 
               {/* Recent Activity */}
               <div>
-                <h4 className="text-lg font-semibold text-[#2C1A0E] mb-3">🕒 Atividade Recente</h4>
+                <h4 className="text-lg font-semibold text-[#1e293b] mb-3">🕒 Atividade Recente</h4>
                 <div className="space-y-2">
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm text-[#2C1A0E]">Completou a Lição 5</p>
+                    <p className="text-sm text-[#1e293b]">Completou a Lição 5</p>
                     <p className="text-xs text-[#5D3A1F]">
                       {new Date(selectedStudent.last_activity).toLocaleDateString('pt-BR')}
                     </p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm text-[#2C1A0E]">Submeteu Quiz 3</p>
+                    <p className="text-sm text-[#1e293b]">Submeteu Quiz 3</p>
                     <p className="text-xs text-[#5D3A1F]">2 dias atrás</p>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ export default function TeacherStudentsContent() {
                     const message = prompt('Digite sua mensagem:')
                     if (message) sendMessage(selectedStudent.student_id, message)
                   }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg font-medium hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg font-medium hover:from-[#475569] hover:to-[#334155] transition-all relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   💬 Enviar Mensagem

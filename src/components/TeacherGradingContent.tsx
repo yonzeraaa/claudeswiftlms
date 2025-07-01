@@ -138,7 +138,7 @@ export default function TeacherGradingContent() {
       <div className="space-y-4">
         {Object.entries(answers).map(([questionId, answer], index) => (
           <div key={questionId} className="p-4 bg-gray-50 rounded-lg">
-            <h4 className="font-semibold text-[#2C1A0E] mb-2">
+            <h4 className="font-semibold text-[#1e293b] mb-2">
               Questão {index + 1}
             </h4>
             <div className="text-[#5D3A1F]">
@@ -164,7 +164,7 @@ export default function TeacherGradingContent() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">
+          <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">
             📝 Correções
           </h1>
           <p className="text-[#5D3A1F] mt-1">
@@ -199,7 +199,7 @@ export default function TeacherGradingContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">⏳</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {submissions.filter(s => !s.grade).length}
           </h3>
           <p className="text-[#5D3A1F]">Pendentes</p>
@@ -207,7 +207,7 @@ export default function TeacherGradingContent() {
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">✅</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {submissions.filter(s => s.grade !== null).length}
           </h3>
           <p className="text-[#5D3A1F]">Corrigidas</p>
@@ -215,7 +215,7 @@ export default function TeacherGradingContent() {
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">📊</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">
+          <h3 className="text-2xl font-bold text-[#1e293b]">
             {submissions.length > 0 ? (
               submissions.filter(s => s.grade !== null).reduce((avg, s) => avg + (s.grade || 0), 0) / 
               submissions.filter(s => s.grade !== null).length || 0
@@ -227,7 +227,7 @@ export default function TeacherGradingContent() {
 
       {/* Submissions List */}
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h3 className="text-xl font-semibold text-[#2C1A0E] mb-4">
+        <h3 className="text-xl font-semibold text-[#1e293b] mb-4">
           📋 Submissões ({submissions.length})
         </h3>
         
@@ -241,7 +241,7 @@ export default function TeacherGradingContent() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-[#2C1A0E]">
+                  <p className="font-semibold text-[#1e293b]">
                     {submission.profiles?.full_name || 'Nome não disponível'}
                   </p>
                   <p className="text-sm text-[#5D3A1F]">
@@ -256,7 +256,7 @@ export default function TeacherGradingContent() {
               <div className="flex items-center space-x-4">
                 {submission.grade !== null ? (
                   <div className="text-right">
-                    <span className="text-lg font-bold text-[#2C1A0E]">
+                    <span className="text-lg font-bold text-[#1e293b]">
                       {submission.grade}/{submission.assessments?.total_points || 100}
                     </span>
                     <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium ml-2">
@@ -284,7 +284,7 @@ export default function TeacherGradingContent() {
         {submissions.length === 0 && (
           <div className="text-center py-8">
             <div className="text-6xl mb-4">📝</div>
-            <h3 className="text-xl font-semibold text-[#2C1A0E] mb-2">
+            <h3 className="text-xl font-semibold text-[#1e293b] mb-2">
               Nenhuma submissão encontrada
             </h3>
             <p className="text-[#5D3A1F]">
@@ -298,10 +298,10 @@ export default function TeacherGradingContent() {
       {selectedSubmission && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="p-6 border-b border-[#D2B48C]">
+            <div className="p-6 border-b border-[#94a3b8]">
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="text-xl font-semibold text-[#2C1A0E]">
+                  <h3 className="text-xl font-semibold text-[#1e293b]">
                     {selectedSubmission.grade !== null ? 'Visualizar Correção' : 'Corrigir Avaliação'}
                   </h3>
                   <p className="text-[#5D3A1F]">
@@ -314,7 +314,7 @@ export default function TeacherGradingContent() {
                     setGradeValue('')
                     setFeedback('')
                   }}
-                  className="text-[#5D3A1F] hover:text-[#3D2914] relative z-50 cursor-pointer"
+                  className="text-[#5D3A1F] hover:text-[#475569] relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   ✕
@@ -325,7 +325,7 @@ export default function TeacherGradingContent() {
             <div className="p-6 overflow-y-auto max-h-[70vh] space-y-6">
               {/* Student Answers */}
               <div>
-                <h4 className="text-lg font-semibold text-[#2C1A0E] mb-3">
+                <h4 className="text-lg font-semibold text-[#1e293b] mb-3">
                   📝 Respostas do Aluno
                 </h4>
                 {renderAnswers(selectedSubmission.answers)}
@@ -334,7 +334,7 @@ export default function TeacherGradingContent() {
               {/* Grading Section */}
               {selectedSubmission.grade === null ? (
                 <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-[#2C1A0E]">
+                  <h4 className="text-lg font-semibold text-[#1e293b]">
                     📊 Correção
                   </h4>
                   
@@ -349,7 +349,7 @@ export default function TeacherGradingContent() {
                       step="0.1"
                       value={gradeValue}
                       onChange={(e) => setGradeValue(e.target.value)}
-                      className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                      className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                       placeholder="Ex: 8.5"
                     />
                   </div>
@@ -361,7 +361,7 @@ export default function TeacherGradingContent() {
                     <textarea
                       value={feedback}
                       onChange={(e) => setFeedback(e.target.value)}
-                      className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] h-24"
+                      className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] h-24"
                       placeholder="Comentários sobre o desempenho do aluno..."
                     />
                   </div>
@@ -370,7 +370,7 @@ export default function TeacherGradingContent() {
                     <button
                       onClick={handleGradeSubmission}
                       disabled={!gradeValue}
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg font-medium hover:from-[#654321] hover:to-[#8B4513] transition-all disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer"
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg font-medium hover:from-[#475569] hover:to-[#334155] transition-all disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer"
                       style={{ pointerEvents: 'auto' }}
                     >
                       ✅ Salvar Correção
@@ -390,13 +390,13 @@ export default function TeacherGradingContent() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-[#2C1A0E]">
+                  <h4 className="text-lg font-semibold text-[#1e293b]">
                     📊 Correção
                   </h4>
                   
                   <div className="p-4 bg-green-50 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-[#2C1A0E]">Nota:</span>
+                      <span className="font-medium text-[#1e293b]">Nota:</span>
                       <span className="text-xl font-bold text-green-600">
                         {selectedSubmission.grade}/{selectedSubmission.assessments?.total_points || 100}
                       </span>
@@ -404,7 +404,7 @@ export default function TeacherGradingContent() {
                     
                     {selectedSubmission.feedback && (
                       <div>
-                        <span className="font-medium text-[#2C1A0E]">Feedback:</span>
+                        <span className="font-medium text-[#1e293b]">Feedback:</span>
                         <p className="text-[#5D3A1F] mt-1">{selectedSubmission.feedback}</p>
                       </div>
                     )}

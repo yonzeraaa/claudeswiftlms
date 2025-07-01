@@ -138,7 +138,7 @@ export default function ContentManager() {
 
           {/* File Info */}
           <div className="space-y-2">
-            <h5 className="font-semibold text-[#2C1A0E] text-sm truncate" title={file.name}>
+            <h5 className="font-semibold text-[#1e293b] text-sm truncate" title={file.name}>
               {file.name}
             </h5>
             <div className="flex justify-between text-xs text-[#5D3A1F]">
@@ -160,31 +160,31 @@ export default function ContentManager() {
         <table className="min-w-full">
           <thead className="bg-[#FFD700]/10">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-[#2C1A0E] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[#1e293b] uppercase tracking-wider">
                 Arquivo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-[#2C1A0E] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[#1e293b] uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-[#2C1A0E] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[#1e293b] uppercase tracking-wider">
                 Tamanho
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-[#2C1A0E] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[#1e293b] uppercase tracking-wider">
                 Data
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-[#2C1A0E] uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[#1e293b] uppercase tracking-wider">
                 Ações
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D2B48C]/30">
+          <tbody className="divide-y divide-[#94a3b8]/30">
             {filteredFiles.map((file) => (
               <tr key={file.id} className="hover:bg-[#FFD700]/5">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <span className="mr-3 text-2xl">{getFileIcon(file.type)}</span>
                     <div>
-                      <div className="text-sm font-semibold text-[#2C1A0E]">{file.name}</div>
+                      <div className="text-sm font-semibold text-[#1e293b]">{file.name}</div>
                       {file.course_id && (
                         <div className="text-xs text-[#5D3A1F]">
                           Curso: {courses.find(c => c.id === file.course_id)?.title || 'Desconhecido'}
@@ -193,13 +193,13 @@ export default function ContentManager() {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#3D2914]">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#475569]">
                   {file.type}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#3D2914]">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#475569]">
                   {formatFileSize(file.size)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#3D2914]">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-[#475569]">
                   {new Date(file.uploaded_at).toLocaleDateString('pt-BR')}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
@@ -238,7 +238,7 @@ export default function ContentManager() {
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">
+        <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">
           Gestão de Conteúdo
         </h1>
         <div className="flex space-x-2">
@@ -283,12 +283,12 @@ export default function ContentManager() {
         <div className="space-y-6">
           {/* Course Selection */}
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-            <h3 className="text-lg font-semibold text-[#2C1A0E] mb-4">Selecionar Destino</h3>
+            <h3 className="text-lg font-semibold text-[#1e293b] mb-4">Selecionar Destino</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <select
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 <option value="">Upload Geral</option>
@@ -302,7 +302,7 @@ export default function ContentManager() {
                 value={selectedLesson}
                 onChange={(e) => setSelectedLesson(e.target.value)}
                 placeholder="ID da Lição (opcional)"
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
               />
             </div>
           </div>
@@ -327,13 +327,13 @@ export default function ContentManager() {
                 placeholder="Buscar arquivos..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
               />
               
               <select
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 <option value="">Todos os cursos</option>
@@ -345,7 +345,7 @@ export default function ContentManager() {
               <select
                 value={selectedFileType}
                 onChange={(e) => setSelectedFileType(e.target.value)}
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 <option value="">Todos os tipos</option>
@@ -357,7 +357,7 @@ export default function ContentManager() {
               <select
                 value={organizationMode}
                 onChange={(e) => setOrganizationMode(e.target.value as 'list' | 'grid' | 'organized')}
-                className="p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 <option value="grid">Grade</option>
@@ -380,7 +380,7 @@ export default function ContentManager() {
           ) : (
             <>
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-[#2C1A0E]">
+                <h3 className="text-lg font-semibold text-[#1e293b]">
                   {filteredFiles.length} arquivo(s) encontrado(s)
                 </h3>
               </div>
@@ -397,19 +397,19 @@ export default function ContentManager() {
           {/* Overview Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-              <h3 className="text-2xl font-bold text-[#2C1A0E]">{stats.totalFiles || 0}</h3>
+              <h3 className="text-2xl font-bold text-[#1e293b]">{stats.totalFiles || 0}</h3>
               <p className="text-[#5D3A1F]">Total de Arquivos</p>
             </div>
             <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-              <h3 className="text-2xl font-bold text-[#2C1A0E]">{formatFileSize(stats.totalSize || 0)}</h3>
+              <h3 className="text-2xl font-bold text-[#1e293b]">{formatFileSize(stats.totalSize || 0)}</h3>
               <p className="text-[#5D3A1F]">Espaço Usado</p>
             </div>
             <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-              <h3 className="text-2xl font-bold text-[#2C1A0E]">{Object.keys(stats.byType || {}).length}</h3>
+              <h3 className="text-2xl font-bold text-[#1e293b]">{Object.keys(stats.byType || {}).length}</h3>
               <p className="text-[#5D3A1F]">Tipos de Arquivo</p>
             </div>
             <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-              <h3 className="text-2xl font-bold text-[#2C1A0E]">{Object.keys(stats.byCourse || {}).length}</h3>
+              <h3 className="text-2xl font-bold text-[#1e293b]">{Object.keys(stats.byCourse || {}).length}</h3>
               <p className="text-[#5D3A1F]">Cursos com Conteúdo</p>
             </div>
           </div>
@@ -417,18 +417,18 @@ export default function ContentManager() {
           {/* Type Distribution */}
           {stats.byType && (
             <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-              <h3 className="text-lg font-semibold text-[#2C1A0E] mb-4">Distribuição por Tipo</h3>
+              <h3 className="text-lg font-semibold text-[#1e293b] mb-4">Distribuição por Tipo</h3>
               <div className="space-y-4">
                 {Object.entries(stats.byType).map(([type, data]: [string, { count: number; size: number }]) => (
                   <div key={type} className="flex justify-between items-center">
                     <div className="flex items-center space-x-3">
                       <span className="text-2xl">{getFileIcon(type)}</span>
                       <div>
-                        <span className="font-medium text-[#2C1A0E]">{type.toUpperCase()}</span>
+                        <span className="font-medium text-[#1e293b]">{type.toUpperCase()}</span>
                         <p className="text-sm text-[#5D3A1F]">{data.count} arquivo(s)</p>
                       </div>
                     </div>
-                    <span className="font-semibold text-[#2C1A0E]">{formatFileSize(data.size)}</span>
+                    <span className="font-semibold text-[#1e293b]">{formatFileSize(data.size)}</span>
                   </div>
                 ))}
               </div>
@@ -441,11 +441,11 @@ export default function ContentManager() {
       {showPreview && previewFile && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="p-4 border-b border-[#D2B48C] flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-[#2C1A0E]">{previewFile.name}</h3>
+            <div className="p-4 border-b border-[#94a3b8] flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-[#1e293b]">{previewFile.name}</h3>
               <button
                 onClick={() => setShowPreview(false)}
-                className="text-[#5D3A1F] hover:text-[#3D2914] relative z-50 cursor-pointer"
+                className="text-[#5D3A1F] hover:text-[#475569] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 ✕

@@ -69,7 +69,7 @@ export default function TeacherDashboardLayout() {
       case 'grading':
         return <TeacherGradingContent />
       case 'reports':
-        return <div className="p-6"><h2 className="text-2xl font-bold text-[#2C1A0E]">Relatórios em desenvolvimento...</h2></div>
+        return <div className="p-6"><h2 className="text-2xl font-bold text-[#1e293b]">Relatórios em desenvolvimento...</h2></div>
       default:
         return <TeacherDashboardContent />
     }
@@ -77,14 +77,14 @@ export default function TeacherDashboardLayout() {
 
   if (!user || !profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#8B4513] via-[#A0522D] to-[#CD853F]">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#334155]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#8B4513] via-[#A0522D] to-[#CD853F] relative">
+    <div className="min-h-screen bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#334155] relative">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 pattern-dots"></div>
@@ -98,13 +98,13 @@ export default function TeacherDashboardLayout() {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}>
           {/* Header */}
-          <div className="p-6 border-b border-[#D2B48C]/30">
+          <div className="p-6 border-b border-[#94a3b8]/30">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD700] to-[#B8860B] flex items-center justify-center">
                 <span className="text-[#8B4513] font-bold text-lg">S</span>
               </div>
               <div>
-                <h1 className="text-lg font-bold text-[#2C1A0E] font-montserrat">SwiftEDU</h1>
+                <h1 className="text-lg font-bold text-[#1e293b] font-montserrat">SwiftEDU</h1>
                 <p className="text-xs text-[#5D3A1F]">Professor</p>
               </div>
             </div>
@@ -118,8 +118,8 @@ export default function TeacherDashboardLayout() {
                 onClick={() => setActiveSection(item.id as Section)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all relative z-50 cursor-pointer ${
                   activeSection === item.id
-                    ? 'bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white shadow-lg'
-                    : 'text-[#5D3A1F] hover:bg-[#FFD700]/20 hover:text-[#2C1A0E]'
+                    ? 'bg-gradient-to-r from-[#334155] to-[#475569] text-white shadow-lg'
+                    : 'text-[#5D3A1F] hover:bg-[#FFD700]/20 hover:text-[#1e293b]'
                 }`}
                 style={{ pointerEvents: 'auto' }}
               >
@@ -130,7 +130,7 @@ export default function TeacherDashboardLayout() {
           </nav>
 
           {/* User Profile */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#D2B48C]/30">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#94a3b8]/30">
             <div className="flex items-center space-x-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FFD700] to-[#B8860B] flex items-center justify-center">
                 <span className="text-[#8B4513] font-semibold text-sm">
@@ -138,7 +138,7 @@ export default function TeacherDashboardLayout() {
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#2C1A0E] truncate">
+                <p className="text-sm font-semibold text-[#1e293b] truncate">
                   {profile?.full_name || 'Professor'}
                 </p>
                 <p className="text-xs text-[#5D3A1F] truncate">{user?.email}</p>
@@ -146,7 +146,7 @@ export default function TeacherDashboardLayout() {
             </div>
             <button
               onClick={handleLogout}
-              className="w-full px-4 py-2 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg font-medium hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer"
+              className="w-full px-4 py-2 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg font-medium hover:from-[#475569] hover:to-[#334155] transition-all relative z-50 cursor-pointer"
               style={{ pointerEvents: 'auto' }}
             >
               Sair
@@ -178,7 +178,7 @@ export default function TeacherDashboardLayout() {
                   </svg>
                 </button>
                 <div>
-                  <h2 className="text-xl font-bold text-[#2C1A0E] font-montserrat">
+                  <h2 className="text-xl font-bold text-[#1e293b] font-montserrat">
                     {sidebarItems.find(item => item.id === activeSection)?.label}
                   </h2>
                   <p className="text-sm text-[#5D3A1F]">

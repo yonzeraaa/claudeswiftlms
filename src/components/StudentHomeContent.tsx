@@ -4,8 +4,8 @@ export default function StudentHomeContent() {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] mb-2 font-montserrat">Bem-vindo, João!</h1>
-        <p className="text-[#3D2914] font-medium">Continue seus estudos e alcance seus objetivos</p>
+        <h1 className="text-3xl font-bold text-[#1e293b] mb-2 font-montserrat">Bem-vindo, João!</h1>
+        <p className="text-[#475569] font-medium">Continue seus estudos e alcance seus objetivos</p>
       </div>
 
       {/* Quick Stats */}
@@ -13,12 +13,12 @@ export default function StudentHomeContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[#3D2914] text-sm font-semibold">Cursos Ativos</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">4</p>
+              <p className="text-[#475569] text-sm font-semibold">Cursos Ativos</p>
+              <p className="text-2xl font-bold text-[#1e293b]">4</p>
               <p className="text-green-600 text-xs">2 em progresso</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
-              <span className="text-[#2C1A0E] font-bold">📚</span>
+              <span className="text-[#1e293b] font-bold">📚</span>
             </div>
           </div>
         </div>
@@ -26,12 +26,12 @@ export default function StudentHomeContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[#3D2914] text-sm font-semibold">Progresso Geral</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">68%</p>
+              <p className="text-[#475569] text-sm font-semibold">Progresso Geral</p>
+              <p className="text-2xl font-bold text-[#1e293b]">68%</p>
               <p className="text-blue-600 text-xs">+12% este mês</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
-              <span className="text-[#2C1A0E] font-bold">📊</span>
+              <span className="text-[#1e293b] font-bold">📊</span>
             </div>
           </div>
         </div>
@@ -39,12 +39,12 @@ export default function StudentHomeContent() {
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[#3D2914] text-sm font-semibold">Certificados</p>
-              <p className="text-2xl font-bold text-[#2C1A0E]">2</p>
+              <p className="text-[#475569] text-sm font-semibold">Certificados</p>
+              <p className="text-2xl font-bold text-[#1e293b]">2</p>
               <p className="text-green-600 text-xs">1 próximo</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-lg flex items-center justify-center">
-              <span className="text-[#2C1A0E] font-bold">🏆</span>
+              <span className="text-[#1e293b] font-bold">🏆</span>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function StudentHomeContent() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Continue Learning */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Continue Aprendendo</h2>
+          <h2 className="text-xl font-bold text-[#1e293b] mb-4 font-montserrat">Continue Aprendendo</h2>
           <div className="space-y-4">
             {[
               { course: 'JavaScript Avançado', progress: 75, lesson: 'Promises e Async/Await' },
@@ -62,13 +62,13 @@ export default function StudentHomeContent() {
             ].map((item, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-white/50 rounded-lg hover:bg-white/70 transition-colors duration-200 cursor-pointer">
                 <div className="flex-1">
-                  <p className="text-[#2C1A0E] font-semibold">{item.course}</p>
-                  <p className="text-[#3D2914] font-medium text-sm">{item.lesson}</p>
+                  <p className="text-[#1e293b] font-semibold">{item.course}</p>
+                  <p className="text-[#475569] font-medium text-sm">{item.lesson}</p>
                   <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                     <div className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] h-2 rounded-full" style={{width: `${item.progress}%`}}></div>
                   </div>
                 </div>
-                <span className="text-[#2C1A0E] font-bold ml-4">{item.progress}%</span>
+                <span className="text-[#1e293b] font-bold ml-4">{item.progress}%</span>
               </div>
             ))}
           </div>
@@ -76,7 +76,7 @@ export default function StudentHomeContent() {
 
         {/* Upcoming Activities */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Próximas Atividades</h2>
+          <h2 className="text-xl font-bold text-[#1e293b] mb-4 font-montserrat">Próximas Atividades</h2>
           <div className="space-y-4">
             {[
               { type: 'quiz', title: 'Quiz: JavaScript ES6', due: 'Hoje, 18:00', color: 'orange' },
@@ -91,8 +91,8 @@ export default function StudentHomeContent() {
                     </span>
                   </div>
                   <div>
-                    <p className="text-[#2C1A0E] font-semibold">{activity.title}</p>
-                    <p className="text-[#3D2914] font-medium text-sm">{activity.due}</p>
+                    <p className="text-[#1e293b] font-semibold">{activity.title}</p>
+                    <p className="text-[#475569] font-medium text-sm">{activity.due}</p>
                   </div>
                 </div>
               </div>

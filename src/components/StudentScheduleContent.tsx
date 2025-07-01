@@ -89,7 +89,7 @@ export default function StudentScheduleContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">Agenda & Tarefas</h1>
+        <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">Agenda & Tarefas</h1>
         
         {/* View Toggle */}
         <div className="flex space-x-2">
@@ -102,8 +102,8 @@ export default function StudentScheduleContent() {
               onClick={() => setView(viewOption.id)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                 view === viewOption.id
-                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold'
-                  : 'bg-white/50 text-[#3D2914] hover:bg-white/70 font-medium'
+                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold'
+                  : 'bg-white/50 text-[#475569] hover:bg-white/70 font-medium'
               }`}
             >
               {viewOption.label}
@@ -115,43 +115,43 @@ export default function StudentScheduleContent() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* Today's Overview */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-lg font-bold text-[#2C1A0E] mb-4 font-montserrat flex items-center">
+          <h2 className="text-lg font-bold text-[#1e293b] mb-4 font-montserrat flex items-center">
             <span className="mr-2">📅</span>
             Hoje
           </h2>
           <div className="space-y-3">
             <div className="p-3 bg-white/50 rounded-lg">
-              <p className="text-[#2C1A0E] font-semibold text-sm">Aula: JavaScript ES6</p>
-              <p className="text-[#3D2914] font-medium text-xs">19:00 - 20:30</p>
+              <p className="text-[#1e293b] font-semibold text-sm">Aula: JavaScript ES6</p>
+              <p className="text-[#475569] font-medium text-xs">19:00 - 20:30</p>
             </div>
             <div className="p-3 bg-white/50 rounded-lg">
-              <p className="text-[#2C1A0E] font-semibold text-sm">Revisar: React Hooks</p>
-              <p className="text-[#3D2914] font-medium text-xs">Tarefa pendente</p>
+              <p className="text-[#1e293b] font-semibold text-sm">Revisar: React Hooks</p>
+              <p className="text-[#475569] font-medium text-xs">Tarefa pendente</p>
             </div>
           </div>
         </div>
 
         {/* This Week */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-lg font-bold text-[#2C1A0E] mb-4 font-montserrat flex items-center">
+          <h2 className="text-lg font-bold text-[#1e293b] mb-4 font-montserrat flex items-center">
             <span className="mr-2">📋</span>
             Esta Semana
           </h2>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-[#3D2914] font-medium text-sm">Aulas ao vivo</span>
-              <span className="text-[#2C1A0E] font-bold text-sm">2</span>
+              <span className="text-[#475569] font-medium text-sm">Aulas ao vivo</span>
+              <span className="text-[#1e293b] font-bold text-sm">2</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[#3D2914] font-medium text-sm">Tarefas</span>
-              <span className="text-[#2C1A0E] font-bold text-sm">5</span>
+              <span className="text-[#475569] font-medium text-sm">Tarefas</span>
+              <span className="text-[#1e293b] font-bold text-sm">5</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[#3D2914] font-medium text-sm">Quizzes</span>
-              <span className="text-[#2C1A0E] font-bold text-sm">1</span>
+              <span className="text-[#475569] font-medium text-sm">Quizzes</span>
+              <span className="text-[#1e293b] font-bold text-sm">1</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[#3D2914] font-medium text-sm">Prazos</span>
+              <span className="text-[#475569] font-medium text-sm">Prazos</span>
               <span className="text-red-600 font-bold text-sm">3</span>
             </div>
           </div>
@@ -159,17 +159,17 @@ export default function StudentScheduleContent() {
 
         {/* Study Time */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-lg font-bold text-[#2C1A0E] mb-4 font-montserrat flex items-center">
+          <h2 className="text-lg font-bold text-[#1e293b] mb-4 font-montserrat flex items-center">
             <span className="mr-2">⏱️</span>
             Tempo de Estudo
           </h2>
           <div className="text-center">
-            <p className="text-3xl font-bold text-[#2C1A0E]">4h 30min</p>
-            <p className="text-[#3D2914] font-medium text-sm">Esta semana</p>
+            <p className="text-3xl font-bold text-[#1e293b]">4h 30min</p>
+            <p className="text-[#475569] font-medium text-sm">Esta semana</p>
             <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
               <div className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] h-2 rounded-full" style={{width: '75%'}}></div>
             </div>
-            <p className="text-[#3D2914] font-medium text-xs mt-1">Meta: 6h/semana</p>
+            <p className="text-[#475569] font-medium text-xs mt-1">Meta: 6h/semana</p>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function StudentScheduleContent() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Upcoming Events */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Próximos Eventos</h2>
+          <h2 className="text-xl font-bold text-[#1e293b] mb-4 font-montserrat">Próximos Eventos</h2>
           <div className="space-y-4">
             {upcomingEvents.map(event => (
               <div key={event.id} className="p-4 bg-white/50 rounded-lg border-l-4 border-[#FFD700]">
@@ -189,15 +189,15 @@ export default function StudentScheduleContent() {
                          event.type === 'assignment' ? '📋' : 
                          event.type === 'quiz' ? '📝' : '🌐'}
                       </span>
-                      <p className="text-[#2C1A0E] font-semibold">{event.title}</p>
+                      <p className="text-[#1e293b] font-semibold">{event.title}</p>
                     </div>
-                    <p className="text-[#3D2914] font-medium text-sm">{event.date} às {event.time}</p>
-                    <p className="text-[#3D2914] font-medium text-xs">{event.duration}</p>
+                    <p className="text-[#475569] font-medium text-sm">{event.date} às {event.time}</p>
+                    <p className="text-[#475569] font-medium text-xs">{event.duration}</p>
                     {event.instructor && (
-                      <p className="text-[#3D2914] font-medium text-xs">{event.instructor}</p>
+                      <p className="text-[#475569] font-medium text-xs">{event.instructor}</p>
                     )}
                     {event.course && (
-                      <p className="text-[#3D2914] font-medium text-xs">{event.course}</p>
+                      <p className="text-[#475569] font-medium text-xs">{event.course}</p>
                     )}
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -210,10 +210,10 @@ export default function StudentScheduleContent() {
                   </span>
                 </div>
                 <div className="mt-3 flex space-x-2">
-                  <button className="px-3 py-1 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white text-xs font-semibold rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all duration-300">
+                  <button className="px-3 py-1 bg-gradient-to-r from-[#334155] to-[#475569] text-white text-xs font-semibold rounded-lg hover:from-[#475569] hover:to-[#334155] transition-all duration-300">
                     {event.type === 'live' ? 'Entrar' : event.type === 'assignment' ? 'Enviar' : 'Fazer'}
                   </button>
-                  <button className="px-3 py-1 bg-white/50 hover:bg-white/70 text-[#2C1A0E] text-xs font-semibold rounded-lg transition-colors duration-200">
+                  <button className="px-3 py-1 bg-white/50 hover:bg-white/70 text-[#1e293b] text-xs font-semibold rounded-lg transition-colors duration-200">
                     Lembrete
                   </button>
                 </div>
@@ -224,7 +224,7 @@ export default function StudentScheduleContent() {
 
         {/* Tasks & Reminders */}
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Tarefas Pendentes</h2>
+          <h2 className="text-xl font-bold text-[#1e293b] mb-4 font-montserrat">Tarefas Pendentes</h2>
           <div className="space-y-4">
             {pendingTasks.map(task => (
               <div key={task.id} className="p-4 bg-white/50 rounded-lg">
@@ -235,9 +235,9 @@ export default function StudentScheduleContent() {
                       className="mt-1 mr-3 w-4 h-4 text-[#FFD700] bg-gray-100 border-gray-300 rounded focus:ring-[#FFD700]"
                     />
                     <div className="flex-1">
-                      <p className="text-[#2C1A0E] font-semibold">{task.title}</p>
-                      <p className="text-[#3D2914] font-medium text-sm">{task.course}</p>
-                      <p className="text-[#3D2914] font-medium text-xs">Prazo: {task.dueDate}</p>
+                      <p className="text-[#1e293b] font-semibold">{task.title}</p>
+                      <p className="text-[#475569] font-medium text-sm">{task.course}</p>
+                      <p className="text-[#475569] font-medium text-xs">Prazo: {task.dueDate}</p>
                     </div>
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -255,11 +255,11 @@ export default function StudentScheduleContent() {
 
           {/* Quick Actions */}
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center p-3 bg-gradient-to-r from-[#8B4513] to-[#654321] text-white font-semibold rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all duration-300 text-sm">
+            <button className="flex items-center justify-center p-3 bg-gradient-to-r from-[#334155] to-[#475569] text-white font-semibold rounded-lg hover:from-[#475569] hover:to-[#334155] transition-all duration-300 text-sm">
               <span className="mr-2">➕</span>
               Nova Tarefa
             </button>
-            <button className="flex items-center justify-center p-3 bg-white/50 hover:bg-white/70 text-[#2C1A0E] font-semibold rounded-lg transition-colors duration-200 text-sm">
+            <button className="flex items-center justify-center p-3 bg-white/50 hover:bg-white/70 text-[#1e293b] font-semibold rounded-lg transition-colors duration-200 text-sm">
               <span className="mr-2">📊</span>
               Relatório
             </button>

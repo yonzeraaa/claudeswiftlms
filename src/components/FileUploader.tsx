@@ -188,7 +188,7 @@ export default function FileUploader({
         className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
           isDragging
             ? 'border-[#FFD700] bg-[#FFD700]/10'
-            : 'border-[#D2B48C] hover:border-[#FFD700] hover:bg-[#FFD700]/5'
+            : 'border-[#94a3b8] hover:border-[#FFD700] hover:bg-[#FFD700]/5'
         }`}
       >
         <div className="space-y-4">
@@ -199,7 +199,7 @@ export default function FileUploader({
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-[#2C1A0E]">
+            <h3 className="text-lg font-semibold text-[#1e293b]">
               Arrastar e soltar arquivos aqui
             </h3>
             <p className="text-[#5D3A1F] mt-1">
@@ -253,13 +253,13 @@ export default function FileUploader({
       {/* Selected Files */}
       {selectedFiles.length > 0 && (
         <div className="space-y-4">
-          <h4 className="font-semibold text-[#2C1A0E]">
+          <h4 className="font-semibold text-[#1e293b]">
             Arquivos Selecionados ({selectedFiles.length})
           </h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {selectedFiles.map((file) => (
-              <div key={file.name} className="glass-card p-4 rounded-lg border border-[#D2B48C]">
+              <div key={file.name} className="glass-card p-4 rounded-lg border border-[#94a3b8]">
                 {/* Preview */}
                 {previews[file.name] ? (
                   <div className="w-full h-32 rounded-lg overflow-hidden mb-3 bg-gray-100">
@@ -283,7 +283,7 @@ export default function FileUploader({
 
                 {/* File Info */}
                 <div className="space-y-2">
-                  <h5 className="font-medium text-[#2C1A0E] text-sm truncate" title={file.name}>
+                  <h5 className="font-medium text-[#1e293b] text-sm truncate" title={file.name}>
                     {file.name}
                   </h5>
                   <div className="flex justify-between text-xs text-[#5D3A1F]">
@@ -308,7 +308,7 @@ export default function FileUploader({
             <button
               onClick={handleUpload}
               disabled={uploading || selectedFiles.length === 0}
-              className="px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer"
+              className="px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed relative z-50 cursor-pointer"
               style={{ pointerEvents: 'auto' }}
             >
               {uploading ? `Enviando... ${Math.round(uploadProgress)}%` : `Enviar ${selectedFiles.length} arquivo(s)`}
@@ -330,7 +330,7 @@ export default function FileUploader({
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (
         <div className="space-y-4">
-          <h4 className="font-semibold text-[#2C1A0E] text-green-700">
+          <h4 className="font-semibold text-[#1e293b] text-green-700">
             ✅ Arquivos Enviados com Sucesso ({uploadedFiles.length})
           </h4>
           

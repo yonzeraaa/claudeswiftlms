@@ -141,7 +141,7 @@ export default function AssessmentsContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Sistema de Avaliações</h1>
+        <h1 className="text-3xl font-bold text-[#1e293b] font-semibold font-montserrat">Sistema de Avaliações</h1>
         <div className="flex space-x-3">
           <button 
             onClick={() => setActiveTab('questions')}
@@ -152,7 +152,7 @@ export default function AssessmentsContent() {
           </button>
           <button 
             onClick={() => setShowModal(true)}
-            className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
+            className="relative z-50 cursor-pointer bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium"
             style={{ pointerEvents: 'auto' }}
           >
             + Nova Avaliação
@@ -163,20 +163,20 @@ export default function AssessmentsContent() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Total de Avaliações</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.totalAssessments || 0}</p>
+          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Total de Avaliações</h3>
+          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.totalAssessments || 0}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Pendentes de Correção</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.pendingGrading || 0}</p>
+          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Pendentes de Correção</h3>
+          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.pendingGrading || 0}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Média Geral</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.averageScore.toFixed(1) || '0.0'}</p>
+          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Média Geral</h3>
+          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.averageScore.toFixed(1) || '0.0'}</p>
         </div>
         <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-[#2C1A0E] font-semibold font-medium text-sm font-medium">Taxa de Aprovação</h3>
-          <p className="text-2xl font-bold text-[#2C1A0E] font-semibold">{stats?.passRate.toFixed(0) || 0}%</p>
+          <h3 className="text-[#1e293b] font-semibold font-medium text-sm font-medium">Taxa de Aprovação</h3>
+          <p className="text-2xl font-bold text-[#1e293b] font-semibold">{stats?.passRate.toFixed(0) || 0}%</p>
         </div>
       </div>
 
@@ -187,8 +187,8 @@ export default function AssessmentsContent() {
             onClick={() => setActiveTab('assessments')}
             className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'assessments' 
-                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
-                : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
+                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold' 
+                : 'text-[#1e293b] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
             style={{ pointerEvents: 'auto' }}
           >
@@ -198,8 +198,8 @@ export default function AssessmentsContent() {
             onClick={() => setActiveTab('questions')}
             className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'questions' 
-                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
-                : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
+                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold' 
+                : 'text-[#1e293b] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
             style={{ pointerEvents: 'auto' }}
           >
@@ -209,8 +209,8 @@ export default function AssessmentsContent() {
             onClick={() => setActiveTab('results')}
             className={`relative z-50 cursor-pointer px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'results' 
-                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold' 
-                : 'text-[#2C1A0E] font-semibold font-medium hover:bg-[#FFD700]/20'
+                ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold' 
+                : 'text-[#1e293b] font-semibold font-medium hover:bg-[#FFD700]/20'
             }`}
             style={{ pointerEvents: 'auto' }}
           >
@@ -225,22 +225,22 @@ export default function AssessmentsContent() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b-2 border-[#D2B48C]">
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Título</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Curso</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Tipo</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Questões</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Submissões</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Média</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Status</th>
-                  <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Ações</th>
+                <tr className="border-b-2 border-[#94a3b8]">
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Título</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Curso</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Tipo</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Questões</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Submissões</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Média</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Status</th>
+                  <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {assessments.map((assessment) => (
-                  <tr key={assessment.id} className="border-b border-[#D2B48C]/30 hover:bg-white/50">
-                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.title}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.course?.title}</td>
+                  <tr key={assessment.id} className="border-b border-[#94a3b8]/30 hover:bg-white/50">
+                    <td className="p-3 text-[#1e293b] font-semibold font-medium">{assessment.title}</td>
+                    <td className="p-3 text-[#1e293b] font-semibold font-medium">{assessment.course?.title}</td>
                     <td className="p-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         assessment.type === 'quiz' ? 'bg-blue-100 text-blue-800' : 
@@ -249,9 +249,9 @@ export default function AssessmentsContent() {
                         {assessment.type === 'quiz' ? 'Quiz' : assessment.type === 'exam' ? 'Prova' : 'Projeto'}
                       </span>
                     </td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.questions_count}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold">{assessment.submissions_count}</td>
-                    <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{assessment.average_score?.toFixed(1) || '0.0'}</td>
+                    <td className="p-3 text-[#1e293b] font-semibold">{assessment.questions_count}</td>
+                    <td className="p-3 text-[#1e293b] font-semibold">{assessment.submissions_count}</td>
+                    <td className="p-3 text-[#1e293b] font-semibold font-medium">{assessment.average_score?.toFixed(1) || '0.0'}</td>
                     <td className="p-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         assessment.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
@@ -293,7 +293,7 @@ export default function AssessmentsContent() {
       {activeTab === 'questions-old' && (
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold">Banco de Questões</h3>
+            <h3 className="text-lg font-bold text-[#1e293b] font-semibold">Banco de Questões</h3>
             <button 
               onClick={() => alert('Funcionalidade em desenvolvimento')}
               className="relative z-50 cursor-pointer bg-gradient-to-r from-[#8B4513] to-[#654321] text-white px-4 py-2 rounded-lg text-sm"
@@ -306,7 +306,7 @@ export default function AssessmentsContent() {
             {questions.map((question) => (
               <div key={question.id} className="p-4 bg-white/50 rounded-lg">
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-[#2C1A0E] font-semibold font-medium flex-1">{question.question_text}</h4>
+                  <h4 className="text-[#1e293b] font-semibold font-medium flex-1">{question.question_text}</h4>
                   <div className="flex space-x-2">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       question.difficulty === 'easy' ? 'bg-green-100 text-green-800' :
@@ -319,7 +319,7 @@ export default function AssessmentsContent() {
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center text-sm text-[#2C1A0E] font-semibold font-medium">
+                <div className="flex justify-between items-center text-sm text-[#1e293b] font-semibold font-medium">
                   <span>Categoria: {question.category}</span>
                   <span>Pontos: {question.points}</span>
                 </div>
@@ -332,43 +332,43 @@ export default function AssessmentsContent() {
       {/* Results Tab */}
       {activeTab === 'results' && (
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-          <h3 className="text-lg font-bold text-[#2C1A0E] font-semibold mb-4">Relatório de Desempenho</h3>
+          <h3 className="text-lg font-bold text-[#1e293b] font-semibold mb-4">Relatório de Desempenho</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-4 bg-white/50 rounded-lg">
-              <h4 className="text-[#2C1A0E] font-semibold font-medium mb-2">Distribuição de Notas</h4>
+              <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Distribuição de Notas</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-[#2C1A0E] font-semibold font-medium text-sm">9.0 - 10.0</span>
-                  <span className="text-[#2C1A0E] font-semibold font-medium">35%</span>
+                  <span className="text-[#1e293b] font-semibold font-medium text-sm">9.0 - 10.0</span>
+                  <span className="text-[#1e293b] font-semibold font-medium">35%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#2C1A0E] font-semibold font-medium text-sm">8.0 - 8.9</span>
-                  <span className="text-[#2C1A0E] font-semibold font-medium">28%</span>
+                  <span className="text-[#1e293b] font-semibold font-medium text-sm">8.0 - 8.9</span>
+                  <span className="text-[#1e293b] font-semibold font-medium">28%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#2C1A0E] font-semibold font-medium text-sm">7.0 - 7.9</span>
-                  <span className="text-[#2C1A0E] font-semibold font-medium">22%</span>
+                  <span className="text-[#1e293b] font-semibold font-medium text-sm">7.0 - 7.9</span>
+                  <span className="text-[#1e293b] font-semibold font-medium">22%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#2C1A0E] font-semibold font-medium text-sm">&lt; 7.0</span>
-                  <span className="text-[#2C1A0E] font-semibold font-medium">15%</span>
+                  <span className="text-[#1e293b] font-semibold font-medium text-sm">&lt; 7.0</span>
+                  <span className="text-[#1e293b] font-semibold font-medium">15%</span>
                 </div>
               </div>
             </div>
             <div className="p-4 bg-white/50 rounded-lg">
-              <h4 className="text-[#2C1A0E] font-semibold font-medium mb-2">Questões mais Difíceis</h4>
+              <h4 className="text-[#1e293b] font-semibold font-medium mb-2">Questões mais Difíceis</h4>
               <div className="space-y-2">
                 <div className="text-sm">
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Closures em JavaScript</p>
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Taxa de acerto: 45%</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Closures em JavaScript</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Taxa de acerto: 45%</p>
                 </div>
                 <div className="text-sm">
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Async/Await vs Promises</p>
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Taxa de acerto: 52%</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Async/Await vs Promises</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Taxa de acerto: 52%</p>
                 </div>
                 <div className="text-sm">
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Event Loop</p>
-                  <p className="text-[#2C1A0E] font-semibold font-medium">Taxa de acerto: 58%</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Event Loop</p>
+                  <p className="text-[#1e293b] font-semibold font-medium">Taxa de acerto: 58%</p>
                 </div>
               </div>
             </div>
@@ -380,7 +380,7 @@ export default function AssessmentsContent() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
-            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Nova Avaliação</h3>
+            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Nova Avaliação</h3>
             <form onSubmit={handleCreateAssessment} className="space-y-4">
               <input
                 type="text"
@@ -388,20 +388,20 @@ export default function AssessmentsContent() {
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <textarea
                 placeholder="Descrição da avaliação"
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <select 
                 value={formData.course_id}
                 onChange={(e) => setFormData({...formData, course_id: e.target.value})}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="">Selecionar curso</option>
                 {courses.map(course => (
@@ -411,7 +411,7 @@ export default function AssessmentsContent() {
               <select 
                 value={formData.type}
                 onChange={(e) => setFormData({...formData, type: e.target.value as 'quiz' | 'exam' | 'project'})}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="quiz">Quiz</option>
                 <option value="exam">Prova</option>
@@ -423,7 +423,7 @@ export default function AssessmentsContent() {
                   placeholder="Tempo (min)"
                   value={formData.time_limit || ''}
                   onChange={(e) => setFormData({...formData, time_limit: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
                 <input
                   type="number"
@@ -431,7 +431,7 @@ export default function AssessmentsContent() {
                   placeholder="Nota mínima"
                   value={formData.passing_score || ''}
                   onChange={(e) => setFormData({...formData, passing_score: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
               <div className="flex space-x-4">
@@ -460,7 +460,7 @@ export default function AssessmentsContent() {
       {showEditModal && editingAssessment && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-lg mx-4">
-            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Editar Avaliação</h3>
+            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Editar Avaliação</h3>
             <form onSubmit={handleUpdateAssessment} className="space-y-4">
               <input
                 type="text"
@@ -468,20 +468,20 @@ export default function AssessmentsContent() {
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <textarea
                 placeholder="Descrição da avaliação"
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <select 
                 value={formData.course_id}
                 onChange={(e) => setFormData({...formData, course_id: e.target.value})}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="">Selecionar curso</option>
                 {courses.map(course => (
@@ -491,7 +491,7 @@ export default function AssessmentsContent() {
               <select 
                 value={formData.type}
                 onChange={(e) => setFormData({...formData, type: e.target.value as 'quiz' | 'exam' | 'project'})}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="quiz">Quiz</option>
                 <option value="exam">Prova</option>
@@ -503,7 +503,7 @@ export default function AssessmentsContent() {
                   placeholder="Tempo (min)"
                   value={formData.time_limit || ''}
                   onChange={(e) => setFormData({...formData, time_limit: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
                 <input
                   type="number"
@@ -511,7 +511,7 @@ export default function AssessmentsContent() {
                   placeholder="Nota mínima"
                   value={formData.passing_score || ''}
                   onChange={(e) => setFormData({...formData, passing_score: Number(e.target.value)})}
-                  className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                  className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
                 />
               </div>
               <div className="flex space-x-4">

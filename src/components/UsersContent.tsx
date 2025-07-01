@@ -149,10 +149,10 @@ export default function UsersContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] font-semibold font-montserrat">Gestão de Usuários</h1>
+        <h1 className="text-3xl font-bold text-[#1e293b] font-semibold font-montserrat">Gestão de Usuários</h1>
         <button 
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium relative z-50 cursor-pointer"
+          className="bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium relative z-50 cursor-pointer"
           style={{ pointerEvents: 'auto' }}
         >
           + Novo Usuário
@@ -168,13 +168,13 @@ export default function UsersContent() {
               placeholder="Buscar usuários..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+              className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
             />
           </div>
           <select 
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+            className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
           >
             <option value="">Todos os papéis</option>
             <option value="student">Estudante</option>
@@ -184,7 +184,7 @@ export default function UsersContent() {
           <select 
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+            className="px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
           >
             <option value="">Todos os status</option>
             <option value="active">Ativo</option>
@@ -198,28 +198,28 @@ export default function UsersContent() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b-2 border-[#D2B48C]">
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Nome</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Email</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Papel</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Status</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Cursos</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Último Login</th>
-                <th className="text-left p-3 text-[#2C1A0E] font-semibold font-semibold">Ações</th>
+              <tr className="border-b-2 border-[#94a3b8]">
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Nome</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Email</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Papel</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Status</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Cursos</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Último Login</th>
+                <th className="text-left p-3 text-[#1e293b] font-semibold font-semibold">Ações</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.map((user) => (
-                <tr key={user.id} className="border-b border-[#D2B48C]/30 hover:bg-white/50">
+                <tr key={user.id} className="border-b border-[#94a3b8]/30 hover:bg-white/50">
                   <td className="p-3">
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-gradient-to-br from-[#FFD700] to-[#B8860B] rounded-full flex items-center justify-center mr-3">
-                        <span className="text-[#2C1A0E] font-semibold font-bold text-sm">{user.full_name[0]}</span>
+                        <span className="text-[#1e293b] font-semibold font-bold text-sm">{user.full_name[0]}</span>
                       </div>
-                      <span className="text-[#2C1A0E] font-semibold font-medium">{user.full_name}</span>
+                      <span className="text-[#1e293b] font-semibold font-medium">{user.full_name}</span>
                     </div>
                   </td>
-                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.email}</td>
+                  <td className="p-3 text-[#1e293b] font-semibold font-medium">{user.email}</td>
                   <td className="p-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'
@@ -232,8 +232,8 @@ export default function UsersContent() {
                       Ativo
                     </span>
                   </td>
-                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{user.course_count}</td>
-                  <td className="p-3 text-[#2C1A0E] font-semibold font-medium">{new Date(user.updated_at).toLocaleDateString('pt-BR')}</td>
+                  <td className="p-3 text-[#1e293b] font-semibold font-medium">{user.course_count}</td>
+                  <td className="p-3 text-[#1e293b] font-semibold font-medium">{new Date(user.updated_at).toLocaleDateString('pt-BR')}</td>
                   <td className="p-3">
                     <div className="flex space-x-2">
                       <button 
@@ -261,7 +261,7 @@ export default function UsersContent() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-md mx-4">
-            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Novo Usuário</h3>
+            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Novo Usuário</h3>
             <form onSubmit={handleCreateUser} className="space-y-4">
               <input
                 type="text"
@@ -269,7 +269,7 @@ export default function UsersContent() {
                 value={formData.full_name}
                 onChange={(e) => handleInputChange('full_name', e.target.value)}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <input
                 type="email"
@@ -277,7 +277,7 @@ export default function UsersContent() {
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <input
                 type="password"
@@ -286,12 +286,12 @@ export default function UsersContent() {
                 onChange={(e) => handleInputChange('password', e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <select 
                 value={formData.role}
                 onChange={(e) => handleInputChange('role', e.target.value)}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="student">Estudante</option>
                 <option value="admin">Admin</option>
@@ -322,7 +322,7 @@ export default function UsersContent() {
       {showEditModal && editingUser && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 w-full max-w-md mx-4">
-            <h3 className="text-xl font-bold text-[#2C1A0E] font-semibold mb-4">Editar Usuário</h3>
+            <h3 className="text-xl font-bold text-[#1e293b] font-semibold mb-4">Editar Usuário</h3>
             <form onSubmit={handleUpdateUser} className="space-y-4">
               <input
                 type="text"
@@ -330,19 +330,19 @@ export default function UsersContent() {
                 value={formData.full_name}
                 onChange={(e) => handleInputChange('full_name', e.target.value)}
                 required
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               />
               <input
                 type="email"
                 placeholder="Email"
                 value={formData.email}
                 disabled
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-gray-100 opacity-60"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-gray-100 opacity-60"
               />
               <select 
                 value={formData.role}
                 onChange={(e) => handleInputChange('role', e.target.value)}
-                className="w-full px-4 py-2 border-2 border-[#D2B48C] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
+                className="w-full px-4 py-2 border-2 border-[#94a3b8] rounded-lg focus:border-[#FFD700] focus:outline-none bg-white/90"
               >
                 <option value="student">Estudante</option>
                 <option value="admin">Admin</option>

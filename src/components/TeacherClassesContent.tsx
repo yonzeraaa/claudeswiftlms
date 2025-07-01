@@ -91,14 +91,14 @@ export default function TeacherClassesContent() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">
+          <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">
             👥 Minhas Turmas
           </h1>
           <p className="text-[#5D3A1F] mt-1">
             Gerencie suas turmas e acompanhe o progresso dos alunos
           </p>
         </div>
-        <button className="px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-xl font-medium hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+        <button className="px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-xl font-medium hover:from-[#475569] hover:to-[#334155] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
           📚 Nova Turma
         </button>
       </div>
@@ -113,7 +113,7 @@ export default function TeacherClassesContent() {
               {/* Course Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-[#2C1A0E] mb-1">
+                  <h3 className="text-lg font-semibold text-[#1e293b] mb-1">
                     {classItem.courses.title}
                   </h3>
                   <p className="text-sm text-[#5D3A1F] mb-2">
@@ -129,11 +129,11 @@ export default function TeacherClassesContent() {
               {/* Stats */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="text-center p-3 bg-white/50 rounded-lg">
-                  <div className="text-xl font-bold text-[#2C1A0E]">{stats.totalStudents}</div>
+                  <div className="text-xl font-bold text-[#1e293b]">{stats.totalStudents}</div>
                   <div className="text-xs text-[#5D3A1F]">Alunos</div>
                 </div>
                 <div className="text-center p-3 bg-white/50 rounded-lg">
-                  <div className="text-xl font-bold text-[#2C1A0E]">{stats.completionRate}%</div>
+                  <div className="text-xl font-bold text-[#1e293b]">{stats.completionRate}%</div>
                   <div className="text-xs text-[#5D3A1F]">Conclusão</div>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function TeacherClassesContent() {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-gradient-to-r from-[#8B4513] to-[#A0522D] h-2 rounded-full transition-all"
+                    className="bg-gradient-to-r from-[#334155] to-[#475569] h-2 rounded-full transition-all"
                     style={{ width: `${stats.completionRate}%` }}
                   ></div>
                 </div>
@@ -177,13 +177,13 @@ export default function TeacherClassesContent() {
       {classes.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">📚</div>
-          <h3 className="text-xl font-semibold text-[#2C1A0E] mb-2">
+          <h3 className="text-xl font-semibold text-[#1e293b] mb-2">
             Nenhuma turma encontrada
           </h3>
           <p className="text-[#5D3A1F] mb-4">
             Comece criando sua primeira turma
           </p>
-          <button className="px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-xl font-medium hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+          <button className="px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-xl font-medium hover:from-[#475569] hover:to-[#334155] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
             📚 Criar Primeira Turma
           </button>
         </div>
@@ -193,10 +193,10 @@ export default function TeacherClassesContent() {
       {showStudents && selectedClass && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-[#D2B48C]">
+            <div className="p-6 border-b border-[#94a3b8]">
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="text-xl font-semibold text-[#2C1A0E]">
+                  <h3 className="text-xl font-semibold text-[#1e293b]">
                     Alunos - {selectedClass.courses.title}
                   </h3>
                   <p className="text-[#5D3A1F]">
@@ -205,7 +205,7 @@ export default function TeacherClassesContent() {
                 </div>
                 <button
                   onClick={() => setShowStudents(false)}
-                  className="text-[#5D3A1F] hover:text-[#3D2914] relative z-50 cursor-pointer"
+                  className="text-[#5D3A1F] hover:text-[#475569] relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   ✕
@@ -224,7 +224,7 @@ export default function TeacherClassesContent() {
                         </span>
                       </div>
                       <div>
-                        <p className="font-semibold text-[#2C1A0E]">
+                        <p className="font-semibold text-[#1e293b]">
                           {enrollment.profiles?.full_name || 'Nome não disponível'}
                         </p>
                         <p className="text-sm text-[#5D3A1F]">

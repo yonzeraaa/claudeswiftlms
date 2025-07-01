@@ -87,7 +87,7 @@ export default function TeacherDashboardContent() {
       <div className="glass-card p-6 rounded-2xl border-4 border-[#FFD700]/30">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat mb-2">
+            <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat mb-2">
               👋 Bem-vindo, Professor!
             </h1>
             <p className="text-[#5D3A1F] text-lg">
@@ -102,49 +102,49 @@ export default function TeacherDashboardContent() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">👥</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">{stats.totalClasses}</h3>
+          <h3 className="text-2xl font-bold text-[#1e293b]">{stats.totalClasses}</h3>
           <p className="text-[#5D3A1F]">Turmas Ativas</p>
         </div>
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">🎓</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">{stats.totalStudents}</h3>
+          <h3 className="text-2xl font-bold text-[#1e293b]">{stats.totalStudents}</h3>
           <p className="text-[#5D3A1F]">Total de Alunos</p>
         </div>
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">📝</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">{stats.pendingGrading}</h3>
+          <h3 className="text-2xl font-bold text-[#1e293b]">{stats.pendingGrading}</h3>
           <p className="text-[#5D3A1F]">Correções Pendentes</p>
         </div>
 
         <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30 text-center">
           <div className="text-3xl mb-2">📊</div>
-          <h3 className="text-2xl font-bold text-[#2C1A0E]">{stats.averageGrade.toFixed(1)}</h3>
+          <h3 className="text-2xl font-bold text-[#1e293b]">{stats.averageGrade.toFixed(1)}</h3>
           <p className="text-[#5D3A1F]">Média Geral</p>
         </div>
       </div>
 
       {/* Quick Actions */}
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h3 className="text-xl font-semibold text-[#2C1A0E] mb-4">🚀 Ações Rápidas</h3>
+        <h3 className="text-xl font-semibold text-[#1e293b] mb-4">🚀 Ações Rápidas</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button className="p-4 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+          <button className="p-4 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
             <div className="text-2xl mb-2">📚</div>
             <span className="font-medium">Nova Aula</span>
           </button>
 
-          <button className="p-4 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+          <button className="p-4 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
             <div className="text-2xl mb-2">📝</div>
             <span className="font-medium">Criar Prova</span>
           </button>
 
-          <button className="p-4 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+          <button className="p-4 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
             <div className="text-2xl mb-2">✅</div>
             <span className="font-medium">Corrigir Provas</span>
           </button>
 
-          <button className="p-4 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+          <button className="p-4 bg-gradient-to-r from-[#334155] to-[#475569] text-white rounded-lg hover:from-[#654321] hover:to-[#8B4513] transition-all relative z-50 cursor-pointer" style={{ pointerEvents: 'auto' }}>
             <div className="text-2xl mb-2">📈</div>
             <span className="font-medium">Relatórios</span>
           </button>
@@ -153,7 +153,7 @@ export default function TeacherDashboardContent() {
 
       {/* Recent Activity */}
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h3 className="text-xl font-semibold text-[#2C1A0E] mb-4">📋 Atividade Recente</h3>
+        <h3 className="text-xl font-semibold text-[#1e293b] mb-4">📋 Atividade Recente</h3>
         <div className="space-y-4">
           {recentActivity.length > 0 ? recentActivity.map((activity, index) => (
             <div key={index} className="flex items-center justify-between p-4 bg-white/50 rounded-lg">
@@ -164,7 +164,7 @@ export default function TeacherDashboardContent() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-[#2C1A0E]">
+                  <p className="font-semibold text-[#1e293b]">
                     {activity.profiles?.full_name || 'Aluno'}
                   </p>
                   <p className="text-sm text-[#5D3A1F]">
@@ -193,7 +193,7 @@ export default function TeacherDashboardContent() {
 
       {/* Calendar Preview */}
       <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h3 className="text-xl font-semibold text-[#2C1A0E] mb-4">📅 Próximas Aulas</h3>
+        <h3 className="text-xl font-semibold text-[#1e293b] mb-4">📅 Próximas Aulas</h3>
         <div className="space-y-3">
           <div className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
             <div className="flex items-center space-x-3">
@@ -202,7 +202,7 @@ export default function TeacherDashboardContent() {
                 <span className="font-bold text-[#8B4513]">15</span>
               </div>
               <div>
-                <p className="font-semibold text-[#2C1A0E]">Matemática Avançada</p>
+                <p className="font-semibold text-[#1e293b]">Matemática Avançada</p>
                 <p className="text-sm text-[#5D3A1F]">Turma A - 14:00</p>
               </div>
             </div>
@@ -218,7 +218,7 @@ export default function TeacherDashboardContent() {
                 <span className="font-bold text-[#8B4513]">16</span>
               </div>
               <div>
-                <p className="font-semibold text-[#2C1A0E]">Física Experimental</p>
+                <p className="font-semibold text-[#1e293b]">Física Experimental</p>
                 <p className="text-sm text-[#5D3A1F]">Turma B - 09:00</p>
               </div>
             </div>

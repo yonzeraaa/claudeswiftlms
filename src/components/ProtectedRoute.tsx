@@ -36,11 +36,11 @@ export default function ProtectedRoute({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#654321] via-[#8B4513] to-[#A0522D] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#334155] flex items-center justify-center">
         <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-8 shadow-2xl">
           <div className="flex items-center space-x-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#654321]"></div>
-            <span className="text-[#2C1A0E] font-semibold">Carregando...</span>
+            <span className="text-[#1e293b] font-semibold">Carregando...</span>
           </div>
         </div>
       </div>

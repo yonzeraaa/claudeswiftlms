@@ -118,18 +118,18 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
 
   const renderQuestionPreview = () => (
     <div className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-      <h3 className="text-lg font-semibold text-[#2C1A0E] mb-4">Preview da Questão</h3>
+      <h3 className="text-lg font-semibold text-[#1e293b] mb-4">Preview da Questão</h3>
       
       <div className="bg-white/50 p-4 rounded-lg">
         <div className="flex justify-between items-start mb-3">
-          <span className="text-sm font-medium text-[#3D2914] bg-[#FFD700]/20 px-2 py-1 rounded">
+          <span className="text-sm font-medium text-[#475569] bg-[#FFD700]/20 px-2 py-1 rounded">
             {formData.type.replace('_', ' ').toUpperCase()}
           </span>
-          <span className="text-sm text-[#5D3A1F]">{formData.points} ponto(s)</span>
+          <span className="text-sm text-[#1e293b]">{formData.points} ponto(s)</span>
         </div>
 
-        <h4 className="font-semibold text-[#2C1A0E] mb-2">{formData.title || 'Título da questão'}</h4>
-        <p className="text-[#3D2914] mb-4">{formData.content || 'Conteúdo da questão'}</p>
+        <h4 className="font-semibold text-[#1e293b] mb-2">{formData.title || 'Título da questão'}</h4>
+        <p className="text-[#475569] mb-4">{formData.content || 'Conteúdo da questão'}</p>
 
         {formData.type === 'multiple_choice' && (
           <div className="space-y-2">
@@ -141,7 +141,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                   className="text-[#8B4513]"
                   disabled
                 />
-                <span className="text-[#3D2914]">{option}</span>
+                <span className="text-[#475569]">{option}</span>
               </label>
             ))}
           </div>
@@ -151,18 +151,18 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
           <div className="space-y-2">
             <label className="flex items-center space-x-2 cursor-pointer">
               <input type="radio" name="preview" disabled />
-              <span className="text-[#3D2914]">Verdadeiro</span>
+              <span className="text-[#475569]">Verdadeiro</span>
             </label>
             <label className="flex items-center space-x-2 cursor-pointer">
               <input type="radio" name="preview" disabled />
-              <span className="text-[#3D2914]">Falso</span>
+              <span className="text-[#475569]">Falso</span>
             </label>
           </div>
         )}
 
         {formData.type === 'essay' && (
           <textarea 
-            className="w-full p-3 border border-[#D2B48C] rounded-lg resize-none"
+            className="w-full p-3 border border-[#94a3b8] rounded-lg resize-none"
             rows={4}
             placeholder="Área para resposta dissertativa..."
             disabled
@@ -183,9 +183,9 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-[#D2B48C]">
+        <div className="p-6 border-b border-[#94a3b8]">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-[#2C1A0E] font-montserrat">
+            <h2 className="text-2xl font-bold text-[#1e293b] font-montserrat">
               {question ? 'Editar Questão' : 'Nova Questão'}
             </h2>
             <div className="flex space-x-2">
@@ -198,7 +198,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
               </button>
               <button
                 onClick={onCancel}
-                className="text-[#5D3A1F] hover:text-[#3D2914] relative z-50 cursor-pointer"
+                className="text-[#1e293b] hover:text-[#475569] relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 ✕
@@ -215,13 +215,13 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
               {/* Tipo e Configurações Básicas */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Tipo de Questão
                   </label>
                   <select
                     value={formData.type}
                     onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as Question['type'] }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                   >
                     <option value="multiple_choice">Múltipla Escolha</option>
@@ -232,7 +232,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Pontuação
                   </label>
                   <input
@@ -240,18 +240,18 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                     min="1"
                     value={formData.points}
                     onChange={(e) => setFormData(prev => ({ ...prev, points: parseInt(e.target.value) || 1 }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Dificuldade
                   </label>
                   <select
                     value={formData.difficulty}
                     onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as Question['difficulty'] }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                   >
                     <option value="easy">Fácil</option>
@@ -264,26 +264,26 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
               {/* Título e Conteúdo */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Título da Questão *
                   </label>
                   <input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Enunciado da Questão *
                   </label>
                   <textarea
                     value={formData.content}
                     onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
                     rows={4}
                     required
                   />
@@ -294,7 +294,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
               {formData.type === 'multiple_choice' && (
                 <div>
                   <div className="flex justify-between items-center mb-4">
-                    <label className="block text-sm font-semibold text-[#2C1A0E]">
+                    <label className="block text-sm font-semibold text-[#1e293b]">
                       Opções de Resposta
                     </label>
                     <button
@@ -309,14 +309,14 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                   <div className="space-y-3">
                     {formData.options.map((option, index) => (
                       <div key={index} className="flex items-center space-x-3">
-                        <span className="text-sm font-medium text-[#5D3A1F] w-8">
+                        <span className="text-sm font-medium text-[#1e293b] w-8">
                           {String.fromCharCode(65 + index)}:
                         </span>
                         <input
                           type="text"
                           value={option}
                           onChange={(e) => updateOption(index, e.target.value)}
-                          className="flex-1 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                          className="flex-1 p-2 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                           placeholder={`Opção ${String.fromCharCode(65 + index)}`}
                         />
                         {formData.options.length > 2 && (
@@ -337,14 +337,14 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
 
               {/* Resposta Correta */}
               <div>
-                <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                   Resposta Correta *
                 </label>
                 {formData.type === 'multiple_choice' ? (
                   <select
                     value={formData.correct_answer}
                     onChange={(e) => setFormData(prev => ({ ...prev, correct_answer: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                     required
                   >
@@ -361,7 +361,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                   <select
                     value={formData.correct_answer}
                     onChange={(e) => setFormData(prev => ({ ...prev, correct_answer: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                     required
                   >
@@ -373,7 +373,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                   <textarea
                     value={formData.correct_answer}
                     onChange={(e) => setFormData(prev => ({ ...prev, correct_answer: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
                     rows={3}
                     placeholder="Resposta modelo ou palavras-chave"
                   />
@@ -383,20 +383,20 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
               {/* Categoria e Tags */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Categoria
                   </label>
                   <input
                     type="text"
                     value={formData.category}
                     onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                    className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                    className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                     placeholder="Ex: Matemática, História..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                     Tags
                   </label>
                   <div className="flex space-x-2">
@@ -405,7 +405,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                      className="flex-1 p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+                      className="flex-1 p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
                       placeholder="Digite uma tag..."
                     />
                     <button
@@ -422,7 +422,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                       {formData.tags.map((tag, index) => (
                         <span 
                           key={index}
-                          className="bg-[#FFD700]/20 text-[#3D2914] px-2 py-1 rounded text-sm flex items-center space-x-1"
+                          className="bg-[#FFD700]/20 text-[#475569] px-2 py-1 rounded text-sm flex items-center space-x-1"
                         >
                           <span>{tag}</span>
                           <button
@@ -442,24 +442,24 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
 
               {/* Explicação */}
               <div>
-                <label className="block text-sm font-semibold text-[#2C1A0E] mb-2">
+                <label className="block text-sm font-semibold text-[#1e293b] mb-2">
                   Explicação (Opcional)
                 </label>
                 <textarea
                   value={formData.explanation}
                   onChange={(e) => setFormData(prev => ({ ...prev, explanation: e.target.value }))}
-                  className="w-full p-3 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
+                  className="w-full p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] resize-none"
                   rows={3}
                   placeholder="Explicação que será mostrada após a resposta..."
                 />
               </div>
 
               {/* Botões */}
-              <div className="flex justify-end space-x-4 pt-4 border-t border-[#D2B48C]">
+              <div className="flex justify-end space-x-4 pt-4 border-t border-[#94a3b8]">
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="px-6 py-3 border border-[#D2B48C] text-[#5D3A1F] rounded-lg hover:bg-[#D2B48C]/20 transition-colors relative z-50 cursor-pointer"
+                  className="px-6 py-3 border border-[#94a3b8] text-[#1e293b] rounded-lg hover:bg-[#94a3b8]/20 transition-colors relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   Cancelar
@@ -467,7 +467,7 @@ export default function QuestionEditor({ assessmentId, question, onSave, onCance
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 relative z-50 cursor-pointer"
+                  className="px-6 py-3 bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white rounded-lg transition-all duration-300 font-medium disabled:opacity-50 relative z-50 cursor-pointer"
                   style={{ pointerEvents: 'auto' }}
                 >
                   {loading ? 'Salvando...' : (question ? 'Atualizar' : 'Criar Questão')}

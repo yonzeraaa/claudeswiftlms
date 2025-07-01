@@ -147,7 +147,7 @@ export default function NotificationCenter() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-amber-700 hover:text-amber-900 hover:bg-amber-50 rounded-lg transition-all duration-200"
+        className="relative p-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all duration-200"
         style={{ pointerEvents: 'auto' }}
       >
         <Bell className="w-6 h-6" />
@@ -164,23 +164,23 @@ export default function NotificationCenter() {
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-12 w-96 bg-white/95 backdrop-blur-xl border border-amber-200 rounded-xl shadow-2xl z-50">
-            <div className="p-4 border-b border-amber-100">
+          <div className="absolute right-0 top-12 w-96 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-xl shadow-2xl z-50">
+            <div className="p-4 border-b border-slate-100">
               <div className="flex justify-between items-center mb-3">
-                <h3 className="text-lg font-semibold text-amber-900">
+                <h3 className="text-lg font-semibold text-slate-700">
                   Notificações
                 </h3>
                 <div className="flex gap-2">
                   <button
                     onClick={requestNotificationPermission}
-                    className="p-1 text-amber-600 hover:text-amber-800 hover:bg-amber-50 rounded transition-colors"
+                    className="p-1 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded transition-colors"
                     title="Permitir notificações"
                   >
                     <Settings className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-1 text-amber-600 hover:text-amber-800 hover:bg-amber-50 rounded transition-colors"
+                    className="p-1 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>

@@ -66,7 +66,7 @@ export default function StudentCoursesContent() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#2C1A0E] font-montserrat">Meus Cursos</h1>
+        <h1 className="text-3xl font-bold text-[#1e293b] font-montserrat">Meus Cursos</h1>
         
         {/* Filter Tabs */}
         <div className="flex space-x-2">
@@ -80,8 +80,8 @@ export default function StudentCoursesContent() {
               onClick={() => setFilter(tab.id)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                 filter === tab.id
-                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#2C1A0E] font-semibold'
-                  : 'bg-white/50 text-[#3D2914] hover:bg-white/70 font-medium'
+                  ? 'bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-[#1e293b] font-semibold'
+                  : 'bg-white/50 text-[#475569] hover:bg-white/70 font-medium'
               }`}
             >
               {tab.label} ({tab.count})
@@ -100,9 +100,9 @@ export default function StudentCoursesContent() {
                   <span className="text-2xl">{course.thumbnail}</span>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[#2C1A0E] font-montserrat">{course.title}</h3>
-                  <p className="text-[#3D2914] font-medium text-sm">{course.instructor}</p>
-                  <p className="text-[#3D2914] font-medium text-xs">{course.category}</p>
+                  <h3 className="text-lg font-bold text-[#1e293b] font-montserrat">{course.title}</h3>
+                  <p className="text-[#475569] font-medium text-sm">{course.instructor}</p>
+                  <p className="text-[#475569] font-medium text-xs">{course.category}</p>
                 </div>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -117,8 +117,8 @@ export default function StudentCoursesContent() {
             {/* Progress */}
             <div className="mb-4">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-[#3D2914] font-medium text-sm">Progresso</span>
-                <span className="text-[#2C1A0E] font-bold text-sm">{course.progress}%</span>
+                <span className="text-[#475569] font-medium text-sm">Progresso</span>
+                <span className="text-[#1e293b] font-bold text-sm">{course.progress}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -127,7 +127,7 @@ export default function StudentCoursesContent() {
                 ></div>
               </div>
               <div className="flex justify-between items-center mt-1">
-                <span className="text-[#3D2914] font-medium text-xs">
+                <span className="text-[#475569] font-medium text-xs">
                   {course.completedLessons}/{course.totalLessons} aulas
                 </span>
               </div>
@@ -135,18 +135,18 @@ export default function StudentCoursesContent() {
 
             {/* Next Lesson */}
             <div className="mb-4">
-              <p className="text-[#3D2914] font-semibold text-sm mb-1">
+              <p className="text-[#475569] font-semibold text-sm mb-1">
                 {course.status === 'completed' ? 'Status:' : 'Próxima aula:'}
               </p>
-              <p className="text-[#2C1A0E] font-semibold">{course.nextLesson}</p>
+              <p className="text-[#1e293b] font-semibold">{course.nextLesson}</p>
             </div>
 
             {/* Actions */}
             <div className="flex space-x-2">
-              <button className="flex-1 bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] hover:to-[#8B4513] text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm">
+              <button className="flex-1 bg-gradient-to-r from-[#334155] to-[#475569] hover:from-[#475569] hover:to-[#334155] text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm">
                 {course.status === 'completed' ? 'Revisar' : 'Continuar'}
               </button>
-              <button className="px-4 py-2 bg-white/50 hover:bg-white/70 text-[#2C1A0E] font-semibold rounded-lg transition-colors duration-200 text-sm">
+              <button className="px-4 py-2 bg-white/50 hover:bg-white/70 text-[#1e293b] font-semibold rounded-lg transition-colors duration-200 text-sm">
                 Detalhes
               </button>
             </div>
@@ -156,19 +156,19 @@ export default function StudentCoursesContent() {
 
       {/* Quick Actions */}
       <div className="mt-8 glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
-        <h2 className="text-xl font-bold text-[#2C1A0E] mb-4 font-montserrat">Ações Rápidas</h2>
+        <h2 className="text-xl font-bold text-[#1e293b] mb-4 font-montserrat">Ações Rápidas</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button className="flex items-center justify-center p-4 bg-white/50 hover:bg-white/70 rounded-lg transition-colors duration-200">
             <span className="mr-2">🔍</span>
-            <span className="text-[#2C1A0E] font-semibold">Explorar Cursos</span>
+            <span className="text-[#1e293b] font-semibold">Explorar Cursos</span>
           </button>
           <button className="flex items-center justify-center p-4 bg-white/50 hover:bg-white/70 rounded-lg transition-colors duration-200">
             <span className="mr-2">📋</span>
-            <span className="text-[#2C1A0E] font-semibold">Minhas Notas</span>
+            <span className="text-[#1e293b] font-semibold">Minhas Notas</span>
           </button>
           <button className="flex items-center justify-center p-4 bg-white/50 hover:bg-white/70 rounded-lg transition-colors duration-200">
             <span className="mr-2">🏆</span>
-            <span className="text-[#2C1A0E] font-semibold">Certificados</span>
+            <span className="text-[#1e293b] font-semibold">Certificados</span>
           </button>
         </div>
       </div>
