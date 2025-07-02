@@ -149,10 +149,10 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-[#1e293b] font-montserrat">
+          <h2 className="text-2xl font-bold text-white font-montserrat">
             {mode === 'bank' ? 'Banco de Questões' : 'Selecionar Questão'}
           </h2>
-          <p className="text-[#1e293b]">{filteredQuestions.length} questões encontradas</p>
+          <p className="text-slate-300">{filteredQuestions.length} questões encontradas</p>
         </div>
         
         {mode === 'bank' && (
@@ -185,40 +185,40 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       {/* Stats */}
       {mode === 'bank' && Object.keys(stats).length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-            <h3 className="text-lg font-semibold text-[#1e293b]">{stats.total}</h3>
-            <p className="text-[#1e293b]">Total de Questões</p>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+            <h3 className="text-lg font-semibold text-white">{stats.total}</h3>
+            <p className="text-slate-300">Total de Questões</p>
           </div>
-          <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-            <h3 className="text-lg font-semibold text-[#1e293b]">{Object.keys(stats.byCategory || {}).length}</h3>
-            <p className="text-[#1e293b]">Categorias</p>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+            <h3 className="text-lg font-semibold text-white">{Object.keys(stats.byCategory || {}).length}</h3>
+            <p className="text-slate-300">Categorias</p>
           </div>
-          <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-            <h3 className="text-lg font-semibold text-[#1e293b]">{stats.byDifficulty?.medium || 0}</h3>
-            <p className="text-[#1e293b]">Nível Médio</p>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+            <h3 className="text-lg font-semibold text-white">{stats.byDifficulty?.medium || 0}</h3>
+            <p className="text-slate-300">Nível Médio</p>
           </div>
-          <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
-            <h3 className="text-lg font-semibold text-[#1e293b]">{stats.byType?.multiple_choice || 0}</h3>
-            <p className="text-[#1e293b]">Múltipla Escolha</p>
+          <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
+            <h3 className="text-lg font-semibold text-white">{stats.byType?.multiple_choice || 0}</h3>
+            <p className="text-slate-300">Múltipla Escolha</p>
           </div>
         </div>
       )}
 
       {/* Filters */}
-      <div className="glass-card p-4 rounded-xl border-2 border-[#FFD700]/30">
+      <div className="bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border-2 border-sky-400/30">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
             type="text"
             placeholder="Buscar questões..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700]"
+            className="p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-sky-400 bg-slate-800/50 text-white placeholder-slate-400"
           />
           
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+            className="p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-sky-400 bg-slate-800/50 text-white relative z-50 cursor-pointer"
             style={{ pointerEvents: 'auto' }}
           >
             <option value="">Todas as categorias</option>
@@ -230,7 +230,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
           <select
             value={selectedDifficulty}
             onChange={(e) => setSelectedDifficulty(e.target.value)}
-            className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] relative z-50 cursor-pointer"
+            className="p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-sky-400 bg-slate-800/50 text-white relative z-50 cursor-pointer"
             style={{ pointerEvents: 'auto' }}
           >
             <option value="">Todas as dificuldades</option>
@@ -244,16 +244,16 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
               multiple
               value={selectedTags}
               onChange={(e) => setSelectedTags(Array.from(e.target.selectedOptions, option => option.value))}
-              className="p-3 border border-[#94a3b8] rounded-lg focus:ring-2 focus:ring-[#FFD700] h-12 relative z-50 cursor-pointer"
+              className="p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-sky-400 bg-slate-800/50 text-white h-12 relative z-50 cursor-pointer"
               style={{ pointerEvents: 'auto' }}
             >
               {allTags.map(tag => (
                 <option key={tag} value={tag}>{tag}</option>
               ))}
             </select>
-            <label className="absolute -top-2 left-2 bg-white px-1 text-xs text-[#1e293b]">
+            <span className="text-xs text-slate-300 absolute -top-3 left-2 bg-slate-900 px-2 rounded">
               Tags (Ctrl+Click)
-            </label>
+            </span>
           </div>
         </div>
       </div>
@@ -262,39 +262,39 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       <div className="space-y-4">
         {loading ? (
           <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#8B4513] mx-auto"></div>
-            <p className="text-[#1e293b] mt-2">Carregando questões...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-400 mx-auto"></div>
+            <p className="text-slate-300 mt-2">Carregando questões...</p>
           </div>
         ) : filteredQuestions.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-[#1e293b]">Nenhuma questão encontrada</p>
+            <p className="text-slate-300">Nenhuma questão encontrada</p>
           </div>
         ) : (
           filteredQuestions.map(question => (
-            <div key={question.id} className="glass-card p-6 rounded-xl border-2 border-[#FFD700]/30">
+            <div key={question.id} className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-xl border-2 border-sky-400/30">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
-                    <span className="px-2 py-1 bg-[#FFD700]/20 text-[#475569] rounded text-xs font-medium">
+                    <span className="px-2 py-1 bg-sky-100 text-sky-800 rounded text-xs font-medium">
                       {question.type.replace('_', ' ').toUpperCase()}
                     </span>
                     <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
                       {question.difficulty.toUpperCase()}
                     </span>
-                    <span className="text-xs text-[#1e293b]">{question.points} pts</span>
+                    <span className="text-xs text-slate-300">{question.points} pts</span>
                     {question.category && (
                       <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">
                         {question.category}
                       </span>
                     )}
                   </div>
-                  <h3 className="font-semibold text-[#1e293b] mb-2">{question.title}</h3>
-                  <p className="text-[#475569] text-sm mb-3 line-clamp-2">{question.content}</p>
+                  <h3 className="font-semibold text-white mb-2">{question.title}</h3>
+                  <p className="text-slate-300 text-sm mb-3 line-clamp-2">{question.content}</p>
                   
                   {question.tags && question.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-3">
                       {question.tags.map(tag => (
-                        <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
+                        <span key={tag} className="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">
                           #{tag}
                         </span>
                       ))}
@@ -346,11 +346,11 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
 
               {/* Preview of options for multiple choice */}
               {question.type === 'multiple_choice' && question.options && (
-                <div className="bg-white/50 p-3 rounded-lg">
-                  <p className="text-xs text-[#1e293b] mb-2">Opções:</p>
+                <div className="bg-slate-800/50 p-3 rounded-lg">
+                  <p className="text-xs text-slate-300 mb-2">Opções:</p>
                   <div className="grid grid-cols-2 gap-2">
                     {question.options.slice(0, 4).map((option, index) => (
-                      <div key={index} className="text-sm text-[#475569] flex items-center">
+                      <div key={index} className="text-sm text-slate-300 flex items-center">
                         <span className="font-medium mr-2">{String.fromCharCode(65 + index)}:</span>
                         <span className="truncate">{option}</span>
                       </div>
@@ -367,8 +367,8 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
       {showImport && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-2xl w-full p-6">
-            <h3 className="text-xl font-bold text-[#1e293b] mb-4">Importar Questões</h3>
-            <p className="text-[#1e293b] mb-4">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Importar Questões</h3>
+            <p className="text-slate-700 mb-4">
               Cole o conteúdo CSV ou carregue um arquivo. Formato: type,title,content,options,correct_answer,points,difficulty,category,tags,explanation
             </p>
             <textarea
@@ -380,7 +380,7 @@ export default function QuestionBank({ assessmentId, onSelectQuestion, mode = 'b
             <div className="flex justify-end space-x-4 mt-4">
               <button
                 onClick={() => setShowImport(false)}
-                className="px-4 py-2 border border-[#94a3b8] text-[#1e293b] rounded-lg hover:bg-[#94a3b8]/20 transition-colors relative z-50 cursor-pointer"
+                className="px-4 py-2 border border-[#94a3b8] text-slate-700 rounded-lg hover:bg-[#94a3b8]/20 transition-colors relative z-50 cursor-pointer"
                 style={{ pointerEvents: 'auto' }}
               >
                 Cancelar
