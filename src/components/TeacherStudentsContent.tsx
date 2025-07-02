@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 
 interface Student {
   id: string
@@ -203,9 +204,11 @@ export default function TeacherStudentsContent() {
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 rounded-full bg-[#FFD700] flex items-center justify-center">
                   {student.profiles?.avatar_url ? (
-                    <img 
+                    <Image 
                       src={student.profiles.avatar_url} 
                       alt={student.profiles.full_name || 'Avatar'}
+                      width={48}
+                      height={48}
                       className="w-full h-full rounded-full object-cover"
                     />
                   ) : (
@@ -298,9 +301,11 @@ export default function TeacherStudentsContent() {
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-full bg-[#FFD700] flex items-center justify-center">
                     {selectedStudent.profiles?.avatar_url ? (
-                      <img 
+                      <Image 
                         src={selectedStudent.profiles.avatar_url} 
                         alt={selectedStudent.profiles.full_name || 'Avatar'}
+                        width={64}
+                        height={64}
                         className="w-full h-full rounded-full object-cover"
                       />
                     ) : (
